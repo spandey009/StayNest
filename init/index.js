@@ -2,7 +2,7 @@ const mongoose = require('mongoose');
 const initData = require('./data.js');
 const Listing = require('../models/listing.js');
 
-const MONGO_URL = "mongodb://127.0.0.1:27017/wanderlust";
+const MONGO_URL = "mongodb://127.0.0.1:27017/StayNest";
 
 main()
   .then(() => {
@@ -22,11 +22,10 @@ const initDB = async () => {
 
   const data = initData.data.map((obj) => ({
     ...obj,
-    owner: "64a7e0f3c1b8f5d2e4a1b2c3"
+    owner: "6a3fb1a8c796f9a5a0a18c90"
   }));
 
   await Listing.insertMany(data);
 
   console.log("Database initialized with sample data");
 };
-initDB();

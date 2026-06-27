@@ -6,7 +6,7 @@ const { listingSchema,reviewSchema } = require('../schema.js');
 const Review = require('../models/review.js');
 const Listing = require('../models/listing.js');
 const { isLoggedIn, validateReview, isReviewAuthor } = require('../middleware.js');
-const reviewController = require('../controller/review.js');
+const reviewController = require('../controllers/review.js');
 
 //review post route
 router.post(

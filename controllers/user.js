@@ -16,7 +16,7 @@ module.exports.signup = async (req, res, next) => {
                 return next(err);
             }
 
-            req.flash("success", "Welcome to Wanderlust!");
+            req.flash("success", "Welcome to StayNest!");
             res.redirect("/listings");
         });
 
