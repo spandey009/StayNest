@@ -52,15 +52,35 @@ module.exports.createListing = async (req, res) => {
        res.render("listings/edit.ejs", { listing });
    }
 
-   module.exports.updateListing = async (req, res) => {
-    let { id } = req.params;
+//    module.exports.updateListing = async (req, res) => {
+//     let { id } = req.params;
 
-    const listingData = req.body.listing;
+//     const listingData = req.body.listing;
+
+//     if (req.file) {
+//         listingData.image = {
+//             filename: req.file.filename,
+//             url: req.file.path
+//         };
+//     }
+// if(typeof req.file !== 'undefined') {
+//    let listing = await Listing.findByIdAndUpdate(id, listingData);
+//     let url = req.file ? req.file.path : listing.image.url;
+//     let filename = req.file ? req.file.filename : listing.image.filename;
+//     listing.image = { url: url, filename: filename };
+//     await listing.save();
+// }
+//     req.flash("success", "Listing updated!");
+//     res.redirect(`/listings/${id}`);
+// };
+module.exports.updateListing = async (req, res) => {
+    let { id } = req.params;
+    let listingData = req.body.listing;
 
     if (req.file) {
         listingData.image = {
             filename: req.file.filename,
-            url: req.file.path
+            url: req.file.path,
         };
     }
 
