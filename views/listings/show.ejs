@@ -1,5 +1,12 @@
 <% layout('layouts/boilerplate') %>
 
+<script>
+    const coordinates = <%- JSON.stringify(listing.geometry.coordinates) %>;
+    const title = "<%= listing.title %>";
+     const listinglocation = "<%= listing.location %>";
+    const country = "<%= listing.country %>";
+</script>
+
 <div class="row">
     <div class="col-md-5 mx-auto">
         <h3><%= listing.title %></h3>
@@ -127,9 +134,10 @@
           <hr>
 <% } %>
       
-        <p><b>All Reviews</b></p>
-
+       
+       <%  if (listing.reviews.length > 0) {  %>
         <div class="row g-3">
+             <p><b>All Reviews</b></p>
             <% for(let review of listing.reviews) { %>
 
                 <div class="col-md-6 col-12">
@@ -152,24 +160,37 @@
                            
                         </div>
 
-                        <form
-                            class="mb-3 ms-3"
-                            method="POST"
-                            action="/listings/<%= listing._id %>/reviews/<%= review._id %>?_method=DELETE">
+                       <% if (currUser && review.author && review.author._id.equals(currUser._id)) { %>
 
-                            <button
-                                type="submit"
-                                class="btn btn-sm btn-dark">
-                                Delete
-                            </button>
+<form
+    class="mb-3 ms-3"
+    method="POST"
+    action="/listings/<%= listing._id %>/reviews/<%= review._id %>?_method=DELETE">
 
-                        </form>
+    <button
+        type="submit"
+        class="btn btn-sm btn-dark">
+        Delete
+    </button>
+
+</form>
+
+<% } %>
+
+
 
                     </div>
                 </div>
 
             <% } %>
         </div>
-
+        <% } %>
     </div>
+
+   <div class="col-md-8 mx-auto mt-4 mb-4">
+    <h3 class="mb-3">Where you'll be</h3>
+    <div id="map"></div>
 </div>
+
+</div>
+
