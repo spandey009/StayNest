@@ -50,6 +50,11 @@ const listingSchema = new Schema({
             type: [Number],
             required: true
         }
+    },
+    category: {
+        type: String,
+        enum: ['Beach', 'Island', 'Mountain', 'City', 'Countryside'],
+        required: true
     }
 });
 

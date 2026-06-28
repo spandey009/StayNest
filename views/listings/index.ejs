@@ -1,42 +1,200 @@
 <% layout('layouts/boilerplate') %> 
-<h3>All Listings</h3>
+<!-- <h3>All Listings</h3> -->
+<style>
+    
+</style>
+
+<div class="filter-container">
+
+    <button class="scroll-btn left">
+        <i class="fa-solid fa-chevron-left"></i>
+    </button>
+
+    <div id="filters">
+
+        <div class="filter active">
+            <i class="fa-solid fa-fire"></i>
+            <p>Trending</p>
+        </div>
+
+        <div class="filter">
+            <i class="fa-solid fa-bed"></i>
+            <p>Rooms</p>
+        </div>
+
+        <div class="filter">
+            <i class="fa-solid fa-mountain-city"></i>
+            <p>Cities</p>
+        </div>
+
+        <div class="filter">
+            <i class="fa-solid fa-umbrella-beach"></i>
+            <p>Beach</p>
+        </div>
+
+        <div class="filter">
+            <i class="fa-solid fa-mountain"></i>
+            <p>Mountains</p>
+        </div>
+
+        <div class="filter">
+            <i class="fa-solid fa-person-swimming"></i>
+            <p>Pools</p>
+        </div>
+
+        <div class="filter">
+            <i class="fa-solid fa-house"></i>
+            <p>Cabins</p>
+        </div>
+
+        <div class="filter">
+            <i class="fa-solid fa-gem"></i>
+            <p>Luxury</p>
+        </div>
+
+        <div class="filter">
+            <i class="fa-solid fa-paw"></i>
+            <p>Pets</p>
+        </div>
+
+        <div class="filter">
+            <i class="fa-solid fa-campground"></i>
+            <p>Camping</p>
+        </div>
+
+        <div class="filter">
+            <i class="fa-solid fa-water"></i>
+            <p>Lakefront</p>
+        </div>
+
+        <div class="filter">
+            <i class="fa-solid fa-building-columns"></i>
+            <p>Historic</p>
+        </div>
+
+    </div>
+
+    <div class="tax-toggle">
+        <div class="form-check form-switch">
+            <input
+                class="form-check-input"
+                type="checkbox"
+                id="taxSwitch">
+
+            <label
+                class="form-check-label"
+                for="taxSwitch">
+                Display total after tax
+            </label>
+        </div>
+    </div>
+
+    <button class="scroll-btn right">
+        <i class="fa-solid fa-chevron-right"></i>
+    </button>
+
+</div>
 
 <div class="row">
 
-    <% for(let listing of allListings) { %>
+<% for(let listing of allListings){ %>
 
-    <div class="col-lg-4 col-md-6 mb-4">
+<div class="col-xl-3 col-lg-4 col-md-6 col-sm-6 mb-4">
 
-        <a href="/listings/<%= listing._id %>" class="listing-link">
+    <a href="/listings/<%= listing._id %>" class="listing-link">
 
-            <div class="listing-card h-100">
+        <div class="listing-card h-100">
 
-                <img
-                    src="<%= listing.image.url %>"
-                    class="card-img-top"
-                    alt="listing_image"
-                    style="height: 20rem; object-fit: cover;"
-                >
+            <!-- Wishlist Icon -->
+            <div class="wishlist-btn">
+                <i class="fa-regular fa-heart"></i>
+            </div>
 
-                <!-- <div class="card-img-overlay"></div> -->
+            <!-- Badge -->
+            <div class="category-badge">
+                Guest Favourite
+            </div>
 
-                <div class="card-body">
-                    <p class="card-text">
-                        <b><%= listing.title %></b><br>
+            <img
+                src="<%= listing.image.url %>"
+                class="card-img-top"
+                alt="<%= listing.title %>"
+            >
 
-                        ₹ <%= listing.price.toLocaleString("en-IN") %> per night
-                        <br>
+            <div class="card-body">
 
-                        <%= listing.location %>
-                    </p>
+                <!-- Title -->
+                <div class="listing-header">
+
+                    <h5 class="listing-title">
+                        <%= listing.title %>
+                    </h5>
+
+                </div>
+
+                <!-- Price -->
+
+                <div>
+
+                    <span
+                        class="listing-price price"
+                        data-price="<%= listing.price %>">
+
+                        ₹ <%= listing.price.toLocaleString("en-IN") %>
+
+                    </span>
+
+                    <span class="night">
+                        / night
+                    </span>
+
+                </div>
+
+                <!-- Location -->
+
+                <div class="location">
+
+                    <i class="fa-solid fa-location-dot"></i>
+
+                    <%= listing.location %>
+
                 </div>
 
             </div>
 
-        </a>
+        </div>
 
-    </div>
-
-    <% } %>
+    </a>
 
 </div>
+
+<% } %>
+
+</div>
+
+
+<script>
+
+const taxSwitch = document.getElementById("taxSwitch");
+
+if(taxSwitch){
+
+    taxSwitch.addEventListener("change",()=>{
+
+        document.querySelectorAll(".price").forEach(price=>{
+
+            const original = Number(price.dataset.price);
+
+            const value = taxSwitch.checked
+                ? Math.round(original*1.18)
+                : original;
+
+            price.innerHTML = "₹ " + value.toLocaleString("en-IN");
+
+        });
+
+    });
+
+}
+
+</script>
