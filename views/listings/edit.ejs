@@ -1,82 +1,235 @@
-    <%=layout("/layouts/boilerplate")%>
-    <div class="row">
-    <div class="col-md-6 offset-md-3">
-    <h3>Edit Listing</h3>
-    <form action="/listings/<%= listing._id %>?_method=PUT" method="POST" novalidate class="needs-validation" enctype="multipart/form-data">
+<% layout("layouts/boilerplate") %>
 
-        <div class="mb-3">
-    <label for="title" class="form-label">Title:</label>
-    <input
-        type="text"
-        id="title"
-        name="listing[title]"
-        value="<%= listing.title %>"
-        class="form-control"
-        required
-    >
-    <div class="invalid-feedback">
-        Please provide a valid title.
-    </div>
+<div class="container new-listing-container">
+
+<div class="new-card">
+
+<div class="page-header">
+
+<div class="header-icon">
+<i class="fa-solid fa-pen-to-square"></i>
 </div>
 
-    <div class="mb-3">
-    <label class="form-label">Current Image</label><br>
-
-    <img
-        src="<%= listing.image.url %>"
-        alt="Listing Image"
-        class="img-fluid rounded"
-        style="max-width: 300px;"
-    >
+<div>
+<h1>Edit Listing</h1>
+<p>Update your listing details and keep your stay information up to date.</p>
 </div>
-        
 
-        <div class="mb-3">
-        <label for="image" class="form-label">Image:</label>
-        <input type="file" id="image" name="listing[image]" class="form-control" required>
-        <div class="invalid-feedback">
-        </div>
-             </div>
-
-             <div class="mb-3">
-        <label for="description" class="form-label">Description:</label>
-        <textarea id="description" name="listing[description]" class="form-control" required><%= listing.description %></textarea>
-        <div class="invalid-feedback">
-            Please provide a valid description.
-        </div>
-
-                </div>
-
-                <div class="row">
-            <div class="mb-3 col-md-4">
-        <label for="price" class="form-label">Price:</label>
-        <input type="number" id="price" name="listing[price]" value="<%= listing.price %>" class="form-control" required> 
-        <div class="invalid-feedback">
-            Please provide a valid price.
-        </div>
-                </div>
-            <div class="mb-3 col-md-8">
-        <label for="country" class="form-label">Country:</label>
-        <input type="text" id="country" name="listing[country]" value="<%= listing.country %>" class="form-control" required>
-        <div class="invalid-feedback">
-            Please provide a valid country.
-        </div>
-                </div>
-                </div>
-
-            <div class="mb-3">
-        <label for="location" class="form-label">Location:</label>
-        <input type="text" id="location" name="listing[location]" value="<%= listing.location %>" class="form-control" required>
-        <div class="invalid-feedback">
-            Please provide a valid location.
-        </div>
-                </div>
-
-                <br><br>
-        <button type="submit" class="btn btn-dark edit-btn mt-3">Edit</button>
-        
-    </form>
 </div>
-</div>
-<!-- <script src="/js/script.js"></script> -->
 
+<hr>
+
+<form
+action="/listings/<%= listing._id %>?_method=PUT"
+method="POST"
+enctype="multipart/form-data"
+class="needs-validation"
+novalidate>
+
+<div class="mb-4">
+
+<label for="title" class="form-label">
+<i class="fa-solid fa-pen"></i>
+Title
+</label>
+
+<input
+type="text"
+id="title"
+name="listing[title]"
+value="<%= listing.title %>"
+class="form-control custom-input"
+required>
+
+<div class="invalid-feedback">
+Please enter a title.
+</div>
+
+</div>
+
+<div class="mb-4">
+
+<label class="form-label">
+<i class="fa-solid fa-image"></i>
+Current Image
+</label>
+
+<div class="current-image-box">
+
+<img
+src="<%= listing.image.url %>"
+alt="Current Image"
+class="current-image">
+
+</div>
+
+</div>
+
+<div class="mb-4">
+
+<label for="image" class="form-label">
+<i class="fa-solid fa-cloud-arrow-up"></i>
+Upload New Image
+</label>
+
+<input
+type="file"
+id="image"
+name="listing[image]"
+class="form-control custom-input">
+
+<small class="text-muted">
+Leave empty if you don't want to change the image.
+</small>
+
+</div>
+
+<div class="mb-4">
+
+<label for="description" class="form-label">
+<i class="fa-solid fa-align-left"></i>
+Description
+</label>
+
+<textarea
+id="description"
+name="listing[description]"
+rows="5"
+class="form-control custom-input"
+required><%= listing.description %></textarea>
+
+<div class="invalid-feedback">
+Please enter a description.
+</div>
+
+</div>
+
+<div class="row">
+
+<div class="col-md-6 mb-4">
+
+<label for="price" class="form-label">
+<i class="fa-solid fa-indian-rupee-sign"></i>
+Price per Night
+</label>
+
+<input
+type="number"
+id="price"
+name="listing[price]"
+value="<%= listing.price %>"
+class="form-control custom-input"
+required>
+
+</div>
+
+<div class="col-md-6 mb-4">
+
+<label for="category" class="form-label">
+<i class="fa-solid fa-tags"></i>
+Category
+</label>
+
+<select
+name="listing[category]"
+id="category"
+class="form-select custom-input"
+required>
+
+<option value="Trending" <%= listing.category==="Trending"?"selected":"" %>>🔥 Trending</option>
+
+<option value="Rooms" <%= listing.category==="Rooms"?"selected":"" %>>🛏️ Rooms</option>
+
+<option value="Cities" <%= listing.category==="Cities"?"selected":"" %>>🏙️ Cities</option>
+
+<option value="Beach" <%= listing.category==="Beach"?"selected":"" %>>🏖️ Beach</option>
+
+<option value="Mountains" <%= listing.category==="Mountains"?"selected":"" %>>⛰️ Mountains</option>
+
+<option value="Pools" <%= listing.category==="Pools"?"selected":"" %>>🏊 Pools</option>
+
+<option value="Cabins" <%= listing.category==="Cabins"?"selected":"" %>>🏡 Cabins</option>
+
+<option value="Luxury" <%= listing.category==="Luxury"?"selected":"" %>>💎 Luxury</option>
+
+<option value="Pets" <%= listing.category==="Pets"?"selected":"" %>>🐾 Pets</option>
+
+<option value="Camping" <%= listing.category==="Camping"?"selected":"" %>>🏕️ Camping</option>
+
+<option value="Lakefront" <%= listing.category==="Lakefront"?"selected":"" %>>🌊 Lakefront</option>
+
+<option value="Historic" <%= listing.category==="Historic"?"selected":"" %>>🏛️ Historic</option>
+
+</select>
+
+</div>
+
+</div>
+
+<div class="row">
+
+<div class="col-md-6 mb-4">
+
+<label for="location" class="form-label">
+<i class="fa-solid fa-location-dot"></i>
+Location
+</label>
+
+<input
+type="text"
+id="location"
+name="listing[location]"
+value="<%= listing.location %>"
+class="form-control custom-input"
+required>
+
+</div>
+
+<div class="col-md-6 mb-4">
+
+<label for="country" class="form-label">
+<i class="fa-solid fa-earth-asia"></i>
+Country
+</label>
+
+<input
+type="text"
+id="country"
+name="listing[country]"
+value="<%= listing.country %>"
+class="form-control custom-input"
+required>
+
+</div>
+
+</div>
+
+<div class="d-flex justify-content-between mt-4">
+
+<a
+href="/listings/<%= listing._id %>"
+class="btn cancel-btn">
+
+<i class="fa-solid fa-arrow-left"></i>
+
+Cancel
+
+</a>
+
+<button
+type="submit"
+class="btn create-btn">
+
+<i class="fa-solid fa-floppy-disk"></i>
+
+Update Listing
+
+</button>
+
+</div>
+
+</form>
+
+</div>
+
+</div>

@@ -96,79 +96,81 @@
 </div>
 
 <div class="row">
-
 <% for(let listing of allListings){ %>
 
 <div class="col-xl-3 col-lg-4 col-md-6 col-sm-6 mb-4">
 
-    <a href="/listings/<%= listing._id %>" class="listing-link">
+<a href="/listings/<%= listing._id %>" class="listing-link">
 
-        <div class="listing-card h-100">
+<div class="listing-card">
 
-            <!-- Wishlist Icon -->
-            <div class="wishlist-btn">
-                <i class="fa-regular fa-heart"></i>
-            </div>
+<div class="wishlist-btn">
+<i class="fa-regular fa-heart"></i>
+</div>
 
-            <!-- Badge -->
-            <div class="category-badge">
-                Guest Favourite
-            </div>
+<div class="rating-badge">
+<i class="fa-solid fa-star"></i>
+4.8
+</div>
 
-            <img
-                src="<%= listing.image.url %>"
-                class="card-img-top"
-                alt="<%= listing.title %>"
-            >
+<img
+src="<%= listing.image.url %>"
+class="card-img-top"
+alt="<%= listing.title %>">
 
-            <div class="card-body">
+<div class="card-body">
 
-                <!-- Title -->
-                <div class="listing-header">
+<h5 class="listing-title">
+<%= listing.title %>
+</h5>
 
-                    <h5 class="listing-title">
-                        <%= listing.title %>
-                    </h5>
+<div class="listing-location">
+<i class="fa-solid fa-location-dot"></i>
+<%= listing.location %>, <%= listing.country %>
+</div>
 
-                </div>
 
-                <!-- Price -->
+<div class="price-row">
 
-                <div>
+<div>
 
-                    <span
-                        class="listing-price price"
-                        data-price="<%= listing.price %>">
+<span
+class="listing-price price"
+data-price="<%= listing.price %>">
 
-                        ₹ <%= listing.price.toLocaleString("en-IN") %>
+₹ <%= listing.price.toLocaleString("en-IN") %>
 
-                    </span>
+</span>
 
-                    <span class="night">
-                        / night
-                    </span>
+<span class="night">
+/ night
+</span>
 
-                </div>
+</div>
 
-                <!-- Location -->
+<div>
 
-                <div class="location">
+<span class="text-muted-custom">
 
-                    <i class="fa-solid fa-location-dot"></i>
+Guest Favourite
 
-                    <%= listing.location %>
+</span>
 
-                </div>
+</div>
 
-            </div>
+</div>
 
-        </div>
+</div>
 
-    </a>
+</div>
+
+</a>
 
 </div>
 
 <% } %>
+
+
 
 </div>
 
@@ -196,5 +198,26 @@ if(taxSwitch){
     });
 
 }
+
+</script>
+<script>
+
+document.querySelectorAll(".wishlist-btn").forEach(btn=>{
+
+btn.addEventListener("click",function(e){
+
+e.preventDefault();
+
+const icon=this.querySelector("i");
+
+icon.classList.toggle("fa-regular");
+
+icon.classList.toggle("fa-solid");
+
+icon.style.color="#ff385c";
+
+});
+
+});
 
 </script>

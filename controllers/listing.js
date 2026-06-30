@@ -125,8 +125,19 @@ module.exports.updateListing = async (req, res) => {
         };
     }
 
-    await Listing.findByIdAndUpdate(id, listingData);
-
+   await Listing.findByIdAndUpdate(id, listingData, {
+    runValidators: true,
+    new: true
+});
     req.flash("success", "Listing updated!");
     res.redirect(`/listings/${id}`);
+};
+module.exports.deleteListing = async (req, res) => {
+    const { id } = req.params;
+
+    await Listing.findByIdAndDelete(id);
+
+    req.flash("success", "Listing deleted successfully!");
+
+    res.redirect("/listings");
 };

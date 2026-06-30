@@ -1,97 +1,229 @@
 <% layout('layouts/boilerplate') %>
 
-<div class="row mt-4">
-    <div class="col-md-8 offset-md-2">
-        <h3>Create a New Listing</h3>
+<div class="container new-listing-container">
 
-        <form action="/listings" method="POST" enctype="multipart/form-data"
-            class="needs-validation" novalidate>
+<div class="new-card">
 
-            <!-- Title -->
-            <div class="mb-3">
-                <label for="title" class="form-label">Title</label>
-                <input type="text" class="form-control"
-                    id="title" name="listing[title]" required>
-                <div class="valid-feedback">
-                    Looks good!
-                </div>
-            </div>
+<div class="page-header">
 
-            <!-- Description -->
-            <div class="mb-3">
-                <label for="description" class="form-label">Description</label>
-                <textarea class="form-control"
-                    id="description"
-                    name="listing[description]"
-                    rows="4"
-                    required></textarea>
+<div class="header-icon">
+<i class="fa-solid fa-house-circle-plus"></i>
+</div>
 
-                <div class="invalid-feedback">
-                    Please provide a description.
-                </div>
-            </div>
+<div>
 
-            <!-- Image Upload -->
-            <div class="mb-3">
-                <label for="image" class="form-label">Image</label>
-                <input type="file"
-                    class="form-control"
-                    id="image"
-                    name="listing[image]"
-                    required>
+<h1>Create a New Listing</h1>
 
-                <div class="invalid-feedback">
-                    Please upload an image.
-                </div>
-            </div>
+<p>
+Share your beautiful place with travelers around the world.
+</p>
 
-            <!-- Price & Country -->
-            <div class="row">
-                <div class="mb-3 col-md-4">
-                    <label for="price" class="form-label">Price</label>
-                    <input type="number"
-                        class="form-control"
-                        id="price"
-                        name="listing[price]"
-                        required>
+</div>
 
-                    <div class="invalid-feedback">
-                        Please provide a valid price.
-                    </div>
-                </div>
+</div>
 
-                <div class="mb-3 col-md-8">
-                    <label for="country" class="form-label">Country</label>
-                    <input type="text"
-                        class="form-control"
-                        id="country"
-                        name="listing[country]"
-                        required>
+<hr>
 
-                    <div class="invalid-feedback">
-                        Please provide a valid country.
-                    </div>
-                </div>
-            </div>
+<form
+action="/listings"
+method="POST"
+enctype="multipart/form-data"
+class="needs-validation"
+novalidate>
 
-            <!-- Location -->
-            <div class="mb-3">
-                <label for="location" class="form-label">Location</label>
-                <input type="text"
-                    class="form-control"
-                    id="location"
-                    name="listing[location]"
-                    required>
+<!-- Title -->
 
-                <div class="invalid-feedback">
-                    Please provide a valid location.
-                </div>
-            </div>
+<div class="mb-4">
 
-            <button class="btn btn-dark add-btn">
-                Add
-            </button>
+<label for="title" class="form-label">
+<i class="fa-solid fa-pen-to-square"></i>
+Title
+</label>
 
-        </form>
-    </div>
+<input
+type="text"
+class="form-control custom-input"
+id="title"
+name="listing[title]"
+placeholder="e.g. Cozy Beachfront Cottage"
+required>
+
+<div class="valid-feedback">
+Looks good!
+</div>
+
+</div>
+
+<!-- Description -->
+
+<div class="mb-4">
+
+<label for="description" class="form-label">
+<i class="fa-solid fa-align-left"></i>
+Description
+</label>
+
+<textarea
+class="form-control custom-input"
+id="description"
+name="listing[description]"
+rows="5"
+placeholder="Describe your property, nearby attractions and what makes it special..."
+required></textarea>
+
+<div class="invalid-feedback">
+Please enter a description.
+</div>
+
+</div>
+<!-- Image Upload -->
+
+<div class="mb-4">
+
+<label for="image" class="form-label">
+<i class="fa-solid fa-image"></i>
+Upload Image
+</label>
+
+<input
+type="file"
+class="form-control custom-input"
+id="image"
+name="listing[image]"
+required>
+
+<div class="invalid-feedback">
+Please upload an image.
+</div>
+
+</div>
+
+<div class="row">
+
+<!-- Price -->
+
+<div class="col-md-6 mb-4">
+
+<label for="price" class="form-label">
+<i class="fa-solid fa-indian-rupee-sign"></i>
+Price per Night
+</label>
+
+<input
+type="number"
+class="form-control custom-input"
+id="price"
+name="listing[price]"
+placeholder="e.g. 2500"
+required>
+
+<div class="invalid-feedback">
+Please enter a valid price.
+</div>
+
+</div>
+
+<!-- Category -->
+
+<div class="col-md-6 mb-4">
+
+<label for="category" class="form-label">
+<i class="fa-solid fa-tags"></i>
+Category
+</label>
+
+<select
+id="category"
+name="listing[category]"
+class="form-select custom-input"
+required>
+
+<option value="">Select Category</option>
+
+<option value="Trending">🔥 Trending</option>
+<option value="Rooms">🛏️ Rooms</option>
+<option value="Cities">🏙️ Cities</option>
+<option value="Beach">🏖️ Beach</option>
+<option value="Mountains">⛰️ Mountains</option>
+<option value="Pools">🏊 Pools</option>
+<option value="Cabins">🏡 Cabins</option>
+<option value="Luxury">💎 Luxury</option>
+<option value="Pets">🐾 Pets</option>
+<option value="Camping">🏕️ Camping</option>
+<option value="Lakefront">🌊 Lakefront</option>
+<option value="Historic">🏛️ Historic</option>
+
+</select>
+
+<div class="invalid-feedback">
+Please select a category.
+</div>
+
+</div>
+
+</div>
+<div class="row">
+
+<div class="col-md-6 mb-4">
+
+<label for="location" class="form-label">
+<i class="fa-solid fa-location-dot"></i>
+Location
+</label>
+
+<input
+type="text"
+class="form-control custom-input"
+id="location"
+name="listing[location]"
+placeholder="e.g. Goa"
+required>
+
+<div class="invalid-feedback">
+Please enter location.
+</div>
+
+</div>
+
+<div class="col-md-6 mb-4">
+
+<label for="country" class="form-label">
+<i class="fa-solid fa-earth-asia"></i>
+Country
+</label>
+
+<input
+type="text"
+class="form-control custom-input"
+id="country"
+name="listing[country]"
+placeholder="e.g. India"
+required>
+
+<div class="invalid-feedback">
+Please enter country.
+</div>
+
+</div>
+
+</div>
+
+<div class="d-flex justify-content-between align-items-center mt-4">
+
+<a href="/listings" class="btn cancel-btn">
+<i class="fa-solid fa-arrow-left"></i>
+Back
+</a>
+
+<button type="submit" class="btn create-btn">
+<i class="fa-solid fa-house-circle-check"></i>
+Create Listing
+</button>
+
+</div>
+
+</form>
+
+</div>
+
 </div>

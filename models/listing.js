@@ -44,18 +44,31 @@ const listingSchema = new Schema({
         type: {
             type: String,
             enum: ['Point'],
-            required: true
+           required: true
         },
         coordinates: {
             type: [Number],
-            required: true
+           required: true
         }
     },
     category: {
-        type: String,
-        enum: ['Beach', 'Island', 'Mountain', 'City', 'Countryside'],
-        required: true
-    }
+type: String,
+required: true,
+enum: [
+"Trending",
+"Rooms",
+"Cities",
+"Beach",
+"Mountains",
+"Pools",
+"Cabins",
+"Luxury",
+"Pets",
+"Camping",
+"Lakefront",
+"Historic"
+]
+},
 });
 
 listingSchema.post('findOneAndDelete', async  (listing) => {
