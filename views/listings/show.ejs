@@ -94,11 +94,24 @@ const country="<%= listing.country %>";
 
         <!-- Wishlist -->
 
-        <button class="wishlist-btn">
+       <% if(currUser){ %>
 
-            <i class="fa-regular fa-heart"></i>
+<form
+    action="/wishlist/<%= listing._id %>"
+    method="POST"
+    class="wishlist-form">
 
-        </button>
+    <button
+        type="submit"
+        class="wishlist-btn">
+
+        <i class="fa-<%= wishlist && wishlist.includes(listing._id.toString()) ? 'solid' : 'regular' %> fa-heart"></i>
+
+    </button>
+
+</form>
+
+<% } %>
 
     </div>
 

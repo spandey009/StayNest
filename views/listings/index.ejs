@@ -10,69 +10,69 @@
         <i class="fa-solid fa-chevron-left"></i>
     </button>
 
-    <div id="filters">
+   <div id="filters">
 
-        <div class="filter active">
-            <i class="fa-solid fa-fire"></i>
-            <p>Trending</p>
-        </div>
+<div class="filter <%= !category ? 'active' : '' %>" data-category="">
+    <i class="fa-solid fa-border-all"></i>
+    <p>All</p>
+</div>
 
-        <div class="filter">
-            <i class="fa-solid fa-bed"></i>
-            <p>Rooms</p>
-        </div>
+<div class="filter <%= category === 'Trending' ? 'active' : '' %>" data-category="Trending">
+    <i class="fa-solid fa-fire"></i>
+    <p>Trending</p>
+</div>
 
-        <div class="filter">
-            <i class="fa-solid fa-mountain-city"></i>
-            <p>Cities</p>
-        </div>
+<div class="filter <%= category === 'Rooms' ? 'active' : '' %>" data-category="Rooms">
+    <i class="fa-solid fa-bed"></i>
+    <p>Rooms</p>
+</div>
 
-        <div class="filter">
-            <i class="fa-solid fa-umbrella-beach"></i>
-            <p>Beach</p>
-        </div>
+<div class="filter <%= category === 'Cities' ? 'active' : '' %>" data-category="Cities">
+    <i class="fa-solid fa-mountain-city"></i>
+    <p>Cities</p>
+</div>
 
-        <div class="filter">
-            <i class="fa-solid fa-mountain"></i>
-            <p>Mountains</p>
-        </div>
+<div class="filter <%= category === 'Beach' ? 'active' : '' %>" data-category="Beach">
+    <i class="fa-solid fa-umbrella-beach"></i>
+    <p>Beach</p>
+</div>
 
-        <div class="filter">
-            <i class="fa-solid fa-person-swimming"></i>
-            <p>Pools</p>
-        </div>
+<div class="filter <%= category === 'Mountains' ? 'active' : '' %>" data-category="Mountains">
+    <i class="fa-solid fa-mountain"></i>
+    <p>Mountains</p>
+</div>
 
-        <div class="filter">
-            <i class="fa-solid fa-house"></i>
-            <p>Cabins</p>
-        </div>
+<div class="filter <%= category === 'Pools' ? 'active' : '' %>" data-category="Pools">
+    <i class="fa-solid fa-person-swimming"></i>
+    <p>Pools</p>
+</div>
 
-        <div class="filter">
-            <i class="fa-solid fa-gem"></i>
-            <p>Luxury</p>
-        </div>
+<div class="filter <%= category === 'Cabins' ? 'active' : '' %>" data-category="Cabins">
+    <i class="fa-solid fa-house"></i>
+    <p>Cabins</p>
+</div>
 
-        <div class="filter">
-            <i class="fa-solid fa-paw"></i>
-            <p>Pets</p>
-        </div>
+<div class="filter <%= category === 'Luxury' ? 'active' : '' %>" data-category="Luxury">
+    <i class="fa-solid fa-gem"></i>
+    <p>Luxury</p>
+</div>
 
-        <div class="filter">
-            <i class="fa-solid fa-campground"></i>
-            <p>Camping</p>
-        </div>
+<div class="filter <%= category === 'Camping' ? 'active' : '' %>" data-category="Camping">
+    <i class="fa-solid fa-campground"></i>
+    <p>Camping</p>
+</div>
 
-        <div class="filter">
-            <i class="fa-solid fa-water"></i>
-            <p>Lakefront</p>
-        </div>
+<div class="filter <%= category === 'Lakefront' ? 'active' : '' %>" data-category="Lakefront">
+    <i class="fa-solid fa-water"></i>
+    <p>Lakefront</p>
+</div>
 
-        <div class="filter">
-            <i class="fa-solid fa-building-columns"></i>
-            <p>Historic</p>
-        </div>
+<div class="filter <%= category === 'Historic' ? 'active' : '' %>" data-category="Historic">
+    <i class="fa-solid fa-building-columns"></i>
+    <p>Historic</p>
+</div>
 
-    </div>
+</div>
 
     <div class="tax-toggle">
         <div class="form-check form-switch">
@@ -95,6 +95,19 @@
 
 </div>
 
+
+<% if(allListings.length===0){ %>
+
+<div class="alert alert-warning text-center my-4">
+
+<h5>No listings found.</h5>
+
+<p>Try searching with another destination.</p>
+
+</div>
+
+<% } %>
+
 <div class="row">
 <% for(let listing of allListings){ %>
 
@@ -104,9 +117,24 @@
 
 <div class="listing-card">
 
-<div class="wishlist-btn">
-<i class="fa-regular fa-heart"></i>
-</div>
+<% if(currUser){ %>
+
+<form
+action="/wishlist/<%= listing._id %>"
+method="POST"
+class="wishlist-form">
+
+<button
+type="submit"
+class="wishlist-btn">
+
+<i class="fa-<%= wishlist.includes(listing._id.toString()) ? 'solid' : 'regular' %> fa-heart"></i>
+
+</button>
+
+</form>
+
+<% } %>
 
 <div class="rating-badge">
 <i class="fa-solid fa-star"></i>
@@ -200,6 +228,25 @@ if(taxSwitch){
 }
 
 </script>
+
+<script>
+document.querySelectorAll(".filter").forEach(filter => {
+
+    filter.addEventListener("click", function () {
+
+        const category = this.dataset.category;
+
+        if (category === "") {
+            window.location.href = "/listings";
+        } else {
+            window.location.href = `/listings?category=${category}`;
+        }
+
+    });
+
+});
+</script>
+
 <script>
 
 document.querySelectorAll(".wishlist-btn").forEach(btn=>{

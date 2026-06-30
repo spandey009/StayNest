@@ -12,6 +12,13 @@ const UserSchema = new Schema({
         required: true,
         unique: true,
     },
+
+    wishlist: [
+        {
+            type: Schema.Types.ObjectId,
+            ref: "Listing",
+        },
+    ],
 });
 
 console.log("passportLocalMongoose type:", typeof passportLocalMongoose);

@@ -63,7 +63,6 @@ enum: [
 "Pools",
 "Cabins",
 "Luxury",
-"Pets",
 "Camping",
 "Lakefront",
 "Historic"

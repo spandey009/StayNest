@@ -1,14 +1,48 @@
 const Listing = require("../models/listing.js");
 const NodeGeocoder = require("node-geocoder");
+const User = require("../models/user");
 
 const geocoder = NodeGeocoder({
     provider: "openstreetmap",
 });
 
 module.exports.index = async (req, res) => {
-   const allListings = await Listing.find({});
-        res.render("listings/index.ejs", { allListings });
-    };
+
+    const { category, search } = req.query;
+
+    let query = {};
+
+    if (category && category !== "Trending") {
+        query.category = category;
+    }
+
+    if (search) {
+
+        query.$or = [
+            { title: { $regex: search, $options: "i" } },
+            { location: { $regex: search, $options: "i" } },
+            { country: { $regex: search, $options: "i" } }
+        ];
+
+    }
+
+    const allListings = await Listing.find(query);
+
+    let wishlist = [];
+
+if (req.user) {
+    const user = await User.findById(req.user._id);
+    wishlist = user.wishlist.map(id => id.toString());
+}
+
+res.render("listings/index.ejs", {
+    allListings,
+    category,
+    search,
+    wishlist,
+});
+
+};
 
 module.exports.renderNewForm = (async (req, res) => {
 res.render("listings/new.ejs")});
@@ -16,24 +50,33 @@ res.render("listings/new.ejs")});
 module.exports.showListing = async (req, res) => {
     let { id } = req.params;
 
-   let listing = await Listing.findById(id)
-.populate("owner")
-.populate({
-    path: "reviews",
-    populate: {
-        path: "author",
-    },
-});
-
-// console.log("Requested ID:", id);
-// console.log("Loaded Title:", listing.title);
+    let listing = await Listing.findById(id)
+        .populate("owner")
+        .populate({
+            path: "reviews",
+            populate: {
+                path: "author",
+            },
+        });
 
     if (!listing) {
-       req.flash("error", "Listing not found!");
-     return res.redirect("/listings");
+        req.flash("error", "Listing not found!");
+        return res.redirect("/listings");
     }
-    // console.log(listing);
-    res.render("listings/show.ejs", { listing })};
+
+    let wishlist = [];
+
+    if (req.user) {
+        const user = await User.findById(req.user._id);
+        wishlist = user.wishlist.map(id => id.toString());
+    }
+
+    res.render("listings/show.ejs", {
+        listing,
+        wishlist,
+    });
+};
+
 
 module.exports.createListing = async (req, res) => {
 

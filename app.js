@@ -26,6 +26,7 @@ const passport = require('passport');
 const LocalStrategy = require('passport-local');
 const User = require('./models/user.js');
 const userRouter = require('./routes/user.js');
+const wishlistRoutes = require("./routes/wishlist");
 
 main().then(() => console.log('Connected to MongoDB'))
 .catch(err => console.error('Error connecting to MongoDB:', err));
@@ -86,7 +87,7 @@ res.send(registeredUser);
 app.use("/listings", listingRouter);
 app.use("/listings/:id/reviews", reviewRouter);
 app.use("/", userRouter);
-
+app.use("/wishlist", wishlistRoutes);
 app.all('/*splat', wrapAsync(async (req, res, next) => {
     throw new ExpressError(404, "Page Not Found");
 }));

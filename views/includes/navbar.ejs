@@ -18,11 +18,16 @@
         <div class="collapse navbar-collapse" id="navbarNav">
 
             <!-- Search -->
-           <form class="search-form mx-lg-auto my-3 my-lg-0">
+    <form
+    class="search-form mx-lg-auto my-3 my-lg-0"
+    action="/listings"
+    method="GET">
 
     <input
         class="search-inp"
         type="search"
+        name="search"
+        value="<%= typeof search !== 'undefined' ? search : '' %>"
         placeholder="Search destinations">
 
     <button class="btn-search" type="submit">
@@ -50,6 +55,10 @@
                         <i class="fa-solid fa-right-to-bracket"></i>
                         Login
                     </a>
+                    <a class="nav-link" href="/wishlist">
+    <i class="fa-solid fa-heart"></i>
+    Wishlist
+</a>
 
                 <% } else { %>
 
