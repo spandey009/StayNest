@@ -114,7 +114,6 @@ app.get("/env-test", (req, res) => {
     });
 });
 
-
 app.use("/listings", listingRouter);
 app.use("/listings/:id/reviews", reviewRouter);
 app.use("/", userRouter);
