@@ -1,5 +1,5 @@
 {
-  "engines":{
+  "engines": {
     "node": "22.x"
   },
   "name": "StayNest",
@@ -16,7 +16,7 @@
   "license": "ISC",
   "type": "commonjs",
   "dependencies": {
-    "cloudinary": "^1.41.3",
+    "cloudinary": "^2.10.0",
     "connect-flash": "^0.1.1",
     "connect-mongo": "^6.0.0",
     "dotenv": "^17.4.2",
