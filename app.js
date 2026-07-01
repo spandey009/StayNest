@@ -17,10 +17,13 @@ const ExpressError = require('./utils/ExpressError.js');
 const wrapAsync = require('./utils/wrapAsync.js');
 const { listingSchema,reviewSchema } = require('./schema.js');
 const Review = require('./models/review.js');
-const MONGO_URL = "mongodb://127.0.0.1:27017/StayNest";
+//const MONGO_URL = "mongodb://127.0.0.1:27017/StayNest";
+const dbUrl = process.env.ATLASDB_URL;
+
 const listingRouter = require('./routes/listing.js'); 
 const reviewRouter = require('./routes/review.js');
 const session = require('express-session');
+const MongoStore = require('connect-mongo').default;
 const flash = require('connect-flash');
 const passport = require('passport');
 const LocalStrategy = require('passport-local');
@@ -34,7 +37,7 @@ main().then(() => console.log('Connected to MongoDB'))
 .catch(err => console.error('Error connecting to MongoDB:', err));
 
 async function main() {
-    await mongoose.connect(MONGO_URL);
+    await mongoose.connect(dbUrl);
 }
 
 app.engine('ejs', ejsMate);
@@ -44,8 +47,21 @@ app.use(express.urlencoded({ extended: true }));
 app.use(express.static(path.join(__dirname, 'public')));
 
 
+const store = MongoStore.create({
+    mongoUrl: dbUrl,
+  crypto: {
+    secret: process.env.SECRET,
+  },
+    touchAfter: 24 * 60 * 60
+});
+
+store.on("error", function(e){
+    console.log("Session Store Error", e);
+});
+
 const sessionOptions = {
-    secret:"mysecret",
+    store: store,
+    secret: process.env.SECRET,
     resave:false,
     saveUninitialized:true,
     cookie:{
@@ -54,6 +70,10 @@ const sessionOptions = {
         httpOnly:true
     }
 };
+
+
+
+
 
 app.get('/', (req, res) => {
     res.redirect('/listings');
