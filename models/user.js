@@ -19,6 +19,11 @@ const UserSchema = new Schema({
             ref: "Listing",
         },
     ],
+    bookings: [{
+    type: Schema.Types.ObjectId,
+    ref: "Booking"
+}],
+
 });
 
 console.log("passportLocalMongoose type:", typeof passportLocalMongoose);

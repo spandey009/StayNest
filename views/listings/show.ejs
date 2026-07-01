@@ -209,60 +209,159 @@ const country="<%= listing.country %>";
     <% } %>
 </p>
 
-<div class="booking-box">
+<% if(!currUser){ %>
 
-<div class="booking-row">
-<div>
-<label>CHECK-IN</label>
-<p>Anytime</p>
-</div>
+<div class="owner-booking-warning">
 
-<div>
-<label>CHECK-OUT</label>
-<p>Flexible</p>
-</div>
-</div>
+    <i class="fa-solid fa-user-lock"></i>
 
-<div class="booking-guests">
-<label>GUESTS</label>
-<p>1 Guest</p>
-</div>
+    <h5>Login Required</h5>
+
+    <p>Please login to reserve this stay.</p>
+
+    <a href="/login" class="host-btn mt-3 d-inline-block">
+        Login
+    </a>
 
 </div>
 
-<button class="btn reserve-btn">
-Reserve
-</button>
+<% } else if(listing.owner._id.equals(currUser._id)){ %>
 
-<p class="booking-note">
-You won't be charged yet
-</p>
+<div class="owner-booking-warning">
 
-<hr>
+    <i class="fa-solid fa-circle-info"></i>
 
-<div class="price-details">
+    <h5>Your Listing</h5>
 
-<div class="price-item">
-<span>
-₹ <%= listing.price.toLocaleString("en-IN") %> × 1 night =
-</span>
-<span>
-₹ <%= listing.price.toLocaleString("en-IN") %>
-</span>
-</div>
-
-
-<div class="price-item total">
-<span>Total</span>
-<span>
-₹ <%= (listing.price).toLocaleString("en-IN") %>
-</span>
-</div>
+    <p>You cannot book your own property.</p>
 
 </div>
 
-<hr>
+<% } else { %>
 
+
+<form
+    action="/bookings/<%= listing._id %>"
+    method="POST"
+    id="bookingForm"
+    class="booking-form">
+
+    <div class="booking-box">
+
+        <div class="booking-row">
+
+            <div class="booking-field">
+
+                <label>CHECK-IN</label>
+
+                <input
+                    type="date"
+                    id="checkIn"
+                    name="checkIn"
+                    required>
+
+            </div>
+
+            <div class="booking-field">
+
+                <label>CHECK-OUT</label>
+
+                <input
+                    type="date"
+                    id="checkOut"
+                    name="checkOut"
+                    required>
+
+            </div>
+
+        </div>
+
+        <div class="booking-guests booking-field">
+
+            <label>Guests</label>
+
+            <select
+                name="guests"
+                id="guests">
+
+                <% for(let i=1;i<=10;i++){ %>
+
+                    <option value="<%= i %>">
+                        <%= i %> Guest<%= i > 1 ? "s" : "" %>
+                    </option>
+
+                <% } %>
+
+            </select>
+
+        </div>
+
+    </div>
+
+    <div class="price-details">
+
+        <div class="price-item">
+
+            <span>
+                ₹<%= listing.price.toLocaleString("en-IN") %> ×
+                <span id="nights">0</span> nights
+            </span>
+
+            <span id="subtotal">
+                ₹0
+            </span>
+
+        </div>
+
+        <div class="price-item">
+
+            <span>Cleaning Fee</span>
+
+            <span>₹200</span>
+
+        </div>
+
+        <div class="price-item">
+
+            <span>Service Fee</span>
+
+            <span>₹300</span>
+
+        </div>
+
+        <div class="price-item total">
+
+            <span>Total</span>
+
+            <span id="totalPrice">
+                ₹0
+            </span>
+
+        </div>
+
+    </div>
+
+    <input
+        type="hidden"
+        name="nights"
+        id="hiddenNights">
+
+    <input
+        type="hidden"
+        name="totalPrice"
+        id="hiddenTotal">
+
+    <button
+        type="submit"
+        class="reserve-btn">
+
+        Reserve
+
+    </button>
+
+</form>
+
+<% } %>
 <p class="location-text">
 <i class="fa-solid fa-location-dot"></i>
 <%= listing.location %>, <%= listing.country %>
@@ -504,5 +603,85 @@ wishlist.classList.toggle("active");
 });
 
 }
+
+</script>
+
+<script>
+
+const price = <%= listing.price %>;
+
+const cleaningFee = 200;
+const serviceFee = 300;
+
+const checkIn = document.getElementById("checkIn");
+const checkOut = document.getElementById("checkOut");
+
+const nightsText = document.getElementById("nights");
+const subtotal = document.getElementById("subtotal");
+const totalPrice = document.getElementById("totalPrice");
+
+const hiddenNights = document.getElementById("hiddenNights");
+const hiddenTotal = document.getElementById("hiddenTotal");
+
+const today = new Date().toISOString().split("T")[0];
+
+checkIn.min = today;
+checkOut.min = today;
+
+// Default values
+subtotal.innerText = "₹0";
+totalPrice.innerText = "₹0";
+
+function calculatePrice(){
+
+    if(!checkIn.value || !checkOut.value){
+        nightsText.innerText = 0;
+        subtotal.innerText = "₹0";
+        totalPrice.innerText = "₹0";
+        return;
+    }
+
+    const inDate = new Date(checkIn.value);
+    const outDate = new Date(checkOut.value);
+
+    const nights = Math.ceil(
+        (outDate - inDate) / (1000 * 60 * 60 * 24)
+    );
+
+    if(nights <= 0){
+
+        alert("Check-out must be after Check-in.");
+
+        checkOut.value = "";
+
+        nightsText.innerText = 0;
+        subtotal.innerText = "₹0";
+        totalPrice.innerText = "₹0";
+
+        return;
+
+    }
+
+    checkOut.min = checkIn.value;
+
+    const room = nights * price;
+
+    const total = room + cleaningFee + serviceFee;
+
+    nightsText.innerText = nights;
+
+    subtotal.innerText =
+        "₹" + room.toLocaleString("en-IN");
+
+    totalPrice.innerText =
+        "₹" + total.toLocaleString("en-IN");
+
+    hiddenNights.value = nights;
+    hiddenTotal.value = total;
+
+}
+
+checkIn.addEventListener("change", calculatePrice);
+checkOut.addEventListener("change", calculatePrice);
 
 </script>

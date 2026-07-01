@@ -35,6 +35,10 @@ const listingSchema = new Schema({
         type: [Schema.Types.ObjectId],
         ref: 'Review',
     },
+    bookings: [{
+    type: Schema.Types.ObjectId,
+    ref: "Booking"
+}],
     owner: {
         type: Schema.Types.ObjectId,
         ref: 'User',
