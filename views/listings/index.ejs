@@ -135,10 +135,14 @@ class="wishlist-btn">
 </form>
 
 <% } %>
-
 <div class="rating-badge">
-<i class="fa-solid fa-star"></i>
-4.8
+    <i class="fa-solid fa-star"></i>
+
+    <% if(listing.reviewCount > 0){ %>
+        <%= listing.avgRating %>
+    <% } else { %>
+        New
+    <% } %>
 </div>
 
 <img

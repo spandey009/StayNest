@@ -67,7 +67,32 @@ enum: [
 "Lakefront",
 "Historic"
 ]
+    }
 },
+{
+    toJSON: { virtuals: true },
+    toObject: { virtuals: true }
+
+});
+
+listingSchema.virtual("avgRating").get(function () {
+
+    if (!this.reviews || this.reviews.length === 0) {
+        return 0;
+    }
+
+    const total = this.reviews.reduce((sum, review) => {
+        return sum + review.rating;
+    }, 0);
+
+    return (total / this.reviews.length).toFixed(1);
+
+});
+
+listingSchema.virtual("reviewCount").get(function () {
+
+    return this.reviews.length;
+
 });
 
 listingSchema.post('findOneAndDelete', async  (listing) => {

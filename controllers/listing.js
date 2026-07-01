@@ -26,7 +26,7 @@ module.exports.index = async (req, res) => {
 
     }
 
-    const allListings = await Listing.find(query);
+    const allListings = await Listing.find(query).populate("owner").populate("reviews");
 
     let wishlist = [];
 

@@ -28,7 +28,7 @@ module.exports.toggleWishlist = async (req, res) => {
 
     await user.save();
 
-    res.redirect("back");
+    res.redirect(`/listings/${id}`);
 };
 // Show Wishlist
 module.exports.showWishlist = async (req, res) => {

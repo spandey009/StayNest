@@ -1,17 +1,63 @@
-<% layout("/layouts/boilerplate") %>
-<div class="row mt-3">
-    <h2 class="col-6 offset-3">Sign In</h2>
-<div class="col-6 offset-3">
-    <form action="/login" method="POST" class="needs-validation" novalidate>
-        <div class="mb-3">
-            <label for="username" class="form-label">Username</label>
-            <input type="text" class="form-control" id="username" name="username" required>
+<% layout("layouts/boilerplate") %>
+
+<div class="login-container">
+
+    <div class="login-card">
+
+        <div class="login-icon">
+            <i class="fa-solid fa-compass"></i>
         </div>
-        <div class="mb-3">
-            <label for="password" class="form-label">Password</label>
-            <input type="password" class="form-control" id="password" name="password" required>
-        </div>
-        <button type="submit" class="btn btn-primary">SignIn</button>
-    </form>
-</div>
+
+        <h2>Welcome Back</h2>
+
+        <p class="login-subtitle">
+            Sign in to continue exploring StayNest
+        </p>
+
+        <form action="/login" method="POST" novalidate>
+
+            <div class="mb-3">
+
+                <label class="form-label">Username</label>
+
+                <input
+                    type="text"
+                    name="username"
+                    class="form-control"
+                    placeholder="Enter your username"
+                    required>
+
+            </div>
+
+            <div class="mb-4">
+
+                <label class="form-label">Password</label>
+
+                <input
+                    type="password"
+                    name="password"
+                    class="form-control"
+                    placeholder="Enter your password"
+                    required>
+
+            </div>
+
+            <button class="login-btn">
+                Sign In
+            </button>
+
+        </form>
+
+        <p class="signup-link mt-4">
+
+            Don't have an account?
+
+            <a href="/signup">
+                Sign Up
+            </a>
+
+        </p>
+
+    </div>
+
 </div>

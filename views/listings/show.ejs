@@ -20,12 +20,16 @@ const country="<%= listing.country %>";
         </h1>
 
         <div class="listing-meta">
-
             <span>
-                <i class="fa-solid fa-star"></i>
-                4.8
-            </span>
+    <i class="fa-solid fa-star"></i>
 
+    <% if(listing.reviewCount > 0){ %>
+        <%= listing.avgRating %>
+    <% } else { %>
+        New
+    <% } %>
+</span>
+           
             <span>•</span>
 
             <span>Guest Favourite</span>
@@ -196,8 +200,13 @@ const country="<%= listing.country %>";
 </h2>
 
 <p class="booking-rating">
-<i class="fa-solid fa-star"></i>
-4.8 · Guest Favourite
+    <i class="fa-solid fa-star"></i>
+
+    <% if(listing.reviewCount > 0){ %>
+        <%= listing.avgRating %> · <%= listing.reviewCount %> Reviews
+    <% } else { %>
+        New
+    <% } %>
 </p>
 
 <div class="booking-box">
