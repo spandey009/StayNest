@@ -105,6 +105,15 @@ app.get("/demouser", async (req, res) => {
  let registeredUser =  await User.register(fakeuser, "demopassword");
 res.send(registeredUser);
 });
+app.get("/env-test", (req, res) => {
+    res.json({
+        node: process.version,
+        cloud_name: process.env.CLOUD_NAME,
+        api_key: process.env.CLOUD_API_KEY,
+        secret_exists: !!process.env.CLOUD_API_SECRET
+    });
+});
+
 
 app.use("/listings", listingRouter);
 app.use("/listings/:id/reviews", reviewRouter);
