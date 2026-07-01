@@ -125,7 +125,7 @@ StayNest
 
 GitHub: https://github.com/spandey009
 
-LinkedIn: *Add your LinkedIn profile here*
+LinkedIn: https://www.linkedin.com/in/saurabhpandeyabesgzb/
 
 ---
 
