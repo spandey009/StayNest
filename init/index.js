@@ -3,8 +3,10 @@ const NodeGeocoder = require("node-geocoder");
 const initData = require("./data.js");
 const Listing = require("../models/listing.js");
 
-const MONGO_URL = "mongodb://127.0.0.1:27017/StayNest";
+//const MONGO_URL = "mongodb://127.0.0.1:27017/StayNest";
+require("dotenv").config();
 
+const dbUrl = process.env.ATLASDB_URL;
 const geocoder = NodeGeocoder({
     provider: "openstreetmap",
 });
@@ -17,7 +19,7 @@ main()
 .catch((err) => console.log(err));
 
 async function main() {
-    await mongoose.connect(MONGO_URL);
+    await mongoose.connect(dbUrl);
 }
 
 const delay = (ms) => new Promise(resolve => setTimeout(resolve, ms));
@@ -46,7 +48,7 @@ const initDB = async () => {
                 };
             }
 
-            obj.owner = "6a3fb1a8c796f9a5a0a18c90";
+            obj.owner = "6a44c0250a00a91daa316a57";
 
             listings.push(obj);
 
