@@ -1,0 +1,231 @@
+<% layout("layouts/boilerplate") %>
+
+<div class="container mt-5">
+
+    <h2 class="mb-4">Host Dashboard</h2>
+
+    <div class="row g-4">
+
+        <div class="col-md-3">
+            <div class="card text-center shadow p-3">
+                <h2><%= totalListings %></h2>
+                <p>Total Listings</p>
+            </div>
+        </div>
+
+        <div class="col-md-3">
+            <div class="card text-center shadow p-3">
+                <h2><%= totalBookings %></h2>
+                <p>Total Bookings</p>
+            </div>
+        </div>
+
+        <div class="col-md-3">
+            <div class="card text-center shadow p-3">
+                <h2><%= totalReviews %></h2>
+                <p>Total Reviews</p>
+            </div>
+        </div>
+
+        <div class="col-md-3">
+            <div class="card text-center shadow p-3">
+                <h2>₹<%= totalRevenue %></h2>
+                <p>Total Revenue</p>
+            </div>
+        </div>
+
+    </div>
+
+    <!-- ADD EVERYTHING BELOW HERE -->
+
+    <hr class="my-5">
+
+    <h3 class="mb-4">Quick Actions</h3>
+
+    <div class="d-flex flex-wrap gap-3 mb-5">
+
+        <a href="/listings/new" class="btn btn-danger">
+            <i class="fa-solid fa-plus"></i> Add Listing
+        </a>
+
+        <a href="/listings" class="btn btn-outline-dark">
+            <i class="fa-solid fa-house"></i> View Listings
+        </a>
+
+        <a href="/trips" class="btn btn-outline-primary">
+            <i class="fa-solid fa-suitcase"></i> My Trips
+        </a>
+
+        <a href="/wishlist" class="btn btn-outline-danger">
+            <i class="fa-solid fa-heart"></i> Wishlist
+        </a>
+
+    </div>
+
+    <hr class="my-5">
+
+    <h3 class="mb-4">My Listings</h3>
+
+    <div class="row">
+
+        <% listings.forEach(listing => { %>
+
+        <div class="col-md-4 mb-4">
+
+            <div class="card shadow-sm">
+
+                <img src="<%= listing.image.url %>"
+                     class="card-img-top"
+                     style="height:220px; object-fit:cover;">
+
+                <div class="card-body">
+
+                    <h5><%= listing.title %></h5>
+
+                    <p><%= listing.location %></p>
+
+                    <a href="/listings/<%= listing._id %>"
+                       class="btn btn-dark">
+                        View
+                    </a>
+
+                </div>
+
+            </div>
+
+        </div>
+
+        <% }) %>
+
+    </div>
+<hr class="my-5">
+
+<h3 class="mb-4">Recent Bookings</h3>
+
+<% if(bookings.length === 0){ %>
+
+<div class="alert alert-info">
+    No bookings yet.
+</div>
+
+<% } else { %>
+
+<div class="table-responsive">
+
+<table class="table table-bordered table-hover align-middle">
+
+    <thead class="table-dark">
+
+        <tr>
+            <th>Guest</th>
+            <th>Listing</th>
+            <th>Check-In</th>
+            <th>Check-Out</th>
+            <th>Status</th>
+            <th>Total</th>
+        </tr>
+
+    </thead>
+
+    <tbody>
+
+    <% bookings.slice(0,5).forEach(booking => { %>
+
+        <tr>
+
+            <td><%= booking.user.username %></td>
+
+            <td><%= booking.listing.title %></td>
+
+            <td>
+                <%= booking.checkIn.toLocaleDateString("en-IN") %>
+            </td>
+
+            <td>
+                <%= booking.checkOut.toLocaleDateString("en-IN") %>
+            </td>
+
+            <td>
+
+                <% if(booking.status==="Confirmed"){ %>
+
+                    <span class="badge bg-success">
+                        Confirmed
+                    </span>
+
+                <% } else { %>
+
+                    <span class="badge bg-danger">
+                        Cancelled
+                    </span>
+
+                <% } %>
+
+            </td>
+
+            <td>₹<%= booking.totalPrice %></td>
+
+        </tr>
+
+    <% }) %>
+
+    </tbody>
+
+</table>
+
+</div>
+
+<% } %>
+
+<hr class="my-5">
+
+<h3 class="mb-4">Recent Reviews</h3>
+
+<% if(recentReviews.length === 0){ %>
+
+<div class="alert alert-info">
+    No reviews yet.
+</div>
+
+<% } else { %>
+
+<div class="row">
+
+<% recentReviews.forEach(review => { %>
+
+<div class="col-md-6 mb-4">
+
+    <div class="card shadow-sm">
+
+        <div class="card-body">
+
+            <h5>
+                <i class="fa-solid fa-user"></i>
+                <%= review.author.username %>
+            </h5>
+
+            <p class="text-warning mb-2">
+                <% for(let i = 0; i < review.rating; i++){ %>
+                    <i class="fa-solid fa-star"></i>
+                <% } %>
+            </p>
+
+            <p><%= review.comment %></p>
+
+            <small class="text-muted">
+                <%= review.createdAt.toDateString() %>
+            </small>
+
+        </div>
+
+    </div>
+
+</div>
+
+<% }) %>
+
+</div>
+
+<% } %>
+
+</div>

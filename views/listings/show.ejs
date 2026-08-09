@@ -9,141 +9,185 @@ const country="<%= listing.country %>";
 
 <div class="container listing-container">
 
-    <!--==========================
-            LISTING HEADER
-    ===========================-->
+<!-- ================= HEADER ================= -->
 
-    <div class="listing-header">
+<div class="listing-header">
 
-        <h1 class="listing-page-title">
-            <%= listing.title %>
-        </h1>
+<h1 class="listing-page-title">
+<%= listing.title %>
+</h1>
 
-        <div class="listing-meta">
-            <span>
-    <i class="fa-solid fa-star"></i>
+<div class="listing-meta">
 
-    <% if(listing.reviewCount > 0){ %>
-        <%= listing.avgRating %>
-    <% } else { %>
-        New
-    <% } %>
+<span>
+<i class="fa-solid fa-star"></i>
+
+<% if(listing.reviewCount>0){ %>
+<%= listing.avgRating %>
+<% } else { %>
+New
+<% } %>
+
 </span>
-           
-            <span>•</span>
 
-            <span>Guest Favourite</span>
+<span>•</span>
 
-            <span>•</span>
+<span>Guest Favourite</span>
 
-            <span>
-                <i class="fa-solid fa-location-dot"></i>
-                <%= listing.location %>, <%= listing.country %>
-            </span>
+<span>•</span>
 
-        </div>
+<span>
+<i class="fa-solid fa-location-dot"></i>
+<%= listing.location %>,
+<%= listing.country %>
+</span>
 
-    </div>
-        <!--==========================
-            IMAGE GALLERY
-    ===========================-->
+</div>
 
-    <div class="gallery">
+</div>
 
-        <!-- Main Image -->
+<!-- ================= GALLERY ================= -->
 
-        <div class="gallery-main">
+<div class="gallery">
 
-            <img
-                src="<%= listing.image.url %>"
-                alt="<%= listing.title %>">
+<div class="gallery-main">
 
-            <button class="view-photo-btn">
+<img
+src="<%= listing.image.url %>"
+alt="<%= listing.title %>">
 
-                <i class="fa-solid fa-camera"></i>
+<button class="view-photo-btn">
+<i class="fa-solid fa-camera"></i>
+View all photos
+</button>
 
-                View all photos
+</div>
 
-            </button>
+<div class="gallery-side">
 
-        </div>
+<img
+src="<%= listing.image.url %>"
+alt="Listing">
 
-        <!-- Side Images -->
+<img
+src="<%= listing.image.url %>"
+alt="Listing">
 
-        <div class="gallery-side">
+<img
+src="<%= listing.image.url %>"
+alt="Listing">
 
-            <img src="<%= listing.image.url %>" alt="Listing Image">
+<div class="gallery-last">
 
-            <img src="<%= listing.image.url %>" alt="Listing Image">
+<img
+src="<%= listing.image.url %>"
+alt="Listing">
 
-            <img src="<%= listing.image.url %>" alt="Listing Image">
+<div class="gallery-overlay">
 
-            <div class="gallery-last">
+<i class="fa-solid fa-images"></i>
 
-                <img
-                    src="<%= listing.image.url %>"
-                    alt="Listing Image">
+<span>+12 Photos</span>
 
-                <div class="gallery-overlay">
+</div>
 
-                    <i class="fa-solid fa-images"></i>
+</div>
 
-                    <span>+12 Photos</span>
+</div>
 
-                </div>
-
-            </div>
-
-        </div>
-
-        <!-- Wishlist -->
-
-       <% if(currUser){ %>
+<% if(currUser){ %>
 
 <form
-    action="/wishlist/<%= listing._id %>"
-    method="POST"
-    class="wishlist-form">
+action="/wishlist/<%= listing._id %>"
+method="POST"
+class="wishlist-form">
 
-    <button
-        type="submit"
-        class="wishlist-btn">
+<button
+type="submit"
+class="wishlist-btn">
 
-        <i class="fa-<%= wishlist && wishlist.includes(listing._id.toString()) ? 'solid' : 'regular' %> fa-heart"></i>
+<i class="fa-<%= wishlist && wishlist.includes(listing._id.toString()) ? 'solid' : 'regular' %> fa-heart"></i>
 
-    </button>
+</button>
 
 </form>
 
 <% } %>
 
-    </div>
+</div>
 
-    <!--==========================
-        CONTENT STARTS
-    ===========================-->
+<!-- ================= MAIN LAYOUT ================= -->
 
-    <div class="listing-layout">
-      <!-- Left -->
+<div class="listing-layout">
+
+<!-- LEFT COLUMN -->
+
 <div class="listing-left">
+    <!-- HOST -->
 
 <div class="info-card">
+
 <div class="host-info">
-<i class="fa-solid fa-circle-user host-icon"></i>
+
+<img
+src="<%= listing.owner.profileImage.url %>"
+alt="Host"
+class="rounded-circle border"
+width="70"
+height="70"
+style="object-fit:cover;">
+
 <div>
-<h3>Hosted by <%= listing.owner?.username || "Unknown Host" %></h3>
-<p>Superhost • 2 Guests • 1 Bedroom • 1 Bath</p>
-</div>
-</div>
+
+<h3>Hosted by <%= listing.owner.username %></h3>
+
+<p class="mb-1">
+Superhost • 2 Guests • 1 Bedroom • 1 Bath
+</p>
+
+<% if(currUser){ %>
+
+<a
+href="/users/<%= listing.owner._id %>"
+class="text-primary text-decoration-none">
+View Host Profile →
+</a>
+
+<% } else { %>
+
+<small class="text-muted">
+Login to view host profile
+</small>
+
+<% } %>
+
 </div>
 
+</div>
+
+</div>
+
+<!-- ABOUT -->
+
 <div class="info-card">
-<h3><i class="fa-solid fa-house"></i> About this stay</h3>
+
+<h3>
+<i class="fa-solid fa-house"></i>
+About this stay
+</h3>
+
 <p><%= listing.description %></p>
+
 </div>
 
+<!-- AMENITIES -->
+
 <div class="info-card">
-<h3><i class="fa-solid fa-star"></i> What this place offers</h3>
+
+<h3>
+<i class="fa-solid fa-star"></i>
+What this place offers
+</h3>
 
 <div class="amenities-grid">
 
@@ -188,216 +232,153 @@ const country="<%= listing.country %>";
 </div>
 
 </div>
+
 </div>
-  <!-- Right -->
+
+</div>
+
+<!-- RIGHT COLUMN -->
+
 <div class="listing-right">
 
 <div class="booking-card">
-
-<h2>
-₹ <%= listing.price.toLocaleString("en-IN") %>
-<small>/ night</small>
-</h2>
+    <h2>₹ <%= listing.price.toLocaleString("en-IN") %><small>/ night</small></h2>
 
 <p class="booking-rating">
-    <i class="fa-solid fa-star"></i>
-
-    <% if(listing.reviewCount > 0){ %>
-        <%= listing.avgRating %> · <%= listing.reviewCount %> Reviews
-    <% } else { %>
-        New
-    <% } %>
+<i class="fa-solid fa-star"></i>
+<% if(listing.reviewCount>0){ %>
+<%= listing.avgRating %> · <%= listing.reviewCount %> Reviews
+<% } else { %>
+New
+<% } %>
 </p>
 
 <% if(!currUser){ %>
 
 <div class="owner-booking-warning">
-
-    <i class="fa-solid fa-user-lock"></i>
-
-    <h5>Login Required</h5>
-
-    <p>Please login to reserve this stay.</p>
-
-    <a href="/login" class="host-btn mt-3 d-inline-block">
-        Login
-    </a>
-
+<i class="fa-solid fa-user-lock"></i>
+<h5>Login Required</h5>
+<p>Please login to reserve this stay.</p>
+<a href="/login" class="host-btn mt-3 d-inline-block">Login</a>
 </div>
 
 <% } else if(listing.owner._id.equals(currUser._id)){ %>
 
 <div class="owner-booking-warning">
-
-    <i class="fa-solid fa-circle-info"></i>
-
-    <h5>Your Listing</h5>
-
-    <p>You cannot book your own property.</p>
-
+<i class="fa-solid fa-circle-info"></i>
+<h5>Your Listing</h5>
+<p>You cannot book your own property.</p>
 </div>
 
 <% } else { %>
-
 
 <form
     action="/bookings/<%= listing._id %>"
     method="POST"
     id="bookingForm"
-    class="booking-form">
+    class="booking-form"
+    data-listing-id="<%= listing._id %>">
 
-    <div class="booking-box">
+<div class="booking-box">
 
-        <div class="booking-row">
+<div class="booking-row">
 
-            <div class="booking-field">
+<div class="booking-field">
+<label>CHECK-IN</label>
+<input type="date" id="checkIn" name="checkIn" required>
+</div>
 
-                <label>CHECK-IN</label>
+<div class="booking-field">
+<label>CHECK-OUT</label>
+<input type="date" id="checkOut" name="checkOut" required>
+</div>
 
-                <input
-                    type="date"
-                    id="checkIn"
-                    name="checkIn"
-                    required>
+</div>
 
-            </div>
+<div class="booking-guests booking-field">
 
-            <div class="booking-field">
+<label>Guests</label>
 
-                <label>CHECK-OUT</label>
+<select name="guests" id="guests">
 
-                <input
-                    type="date"
-                    id="checkOut"
-                    name="checkOut"
-                    required>
+<% for(let i=1;i<=10;i++){ %>
 
-            </div>
+<option value="<%= i %>">
+<%= i %> Guest<%= i>1?"s":"" %>
+</option>
 
-        </div>
+<% } %>
 
-        <div class="booking-guests booking-field">
+</select>
 
-            <label>Guests</label>
+</div>
 
-            <select
-                name="guests"
-                id="guests">
+</div>
 
-                <% for(let i=1;i<=10;i++){ %>
+<div class="price-details">
 
-                    <option value="<%= i %>">
-                        <%= i %> Guest<%= i > 1 ? "s" : "" %>
-                    </option>
+<div class="price-item">
+<span>₹<%= listing.price.toLocaleString("en-IN") %> × <span id="nights">0</span> nights</span>
+<span id="subtotal">₹0</span>
+</div>
 
-                <% } %>
+<div class="price-item">
+<span>Cleaning Fee</span>
+<span>₹200</span>
+</div>
 
-            </select>
+<div class="price-item">
+<span>Service Fee</span>
+<span>₹300</span>
+</div>
 
-        </div>
+<div class="price-item total">
+<span>Total</span>
+<span id="totalPrice">₹0</span>
+</div>
 
-    </div>
+</div>
 
-    <div class="price-details">
+<input type="hidden" name="nights" id="hiddenNights">
+<input type="hidden" name="totalPrice" id="hiddenTotal">
 
-        <div class="price-item">
-
-            <span>
-                ₹<%= listing.price.toLocaleString("en-IN") %> ×
-                <span id="nights">0</span> nights
-            </span>
-
-            <span id="subtotal">
-                ₹0
-            </span>
-
-        </div>
-
-        <div class="price-item">
-
-            <span>Cleaning Fee</span>
-
-            <span>₹200</span>
-
-        </div>
-
-        <div class="price-item">
-
-            <span>Service Fee</span>
-
-            <span>₹300</span>
-
-        </div>
-
-        <div class="price-item total">
-
-            <span>Total</span>
-
-            <span id="totalPrice">
-                ₹0
-            </span>
-
-        </div>
-
-    </div>
-
-    <input
-        type="hidden"
-        name="nights"
-        id="hiddenNights">
-
-    <input
-        type="hidden"
-        name="totalPrice"
-        id="hiddenTotal">
-
-    <button
-        type="submit"
-        class="reserve-btn">
-
-        Reserve
-
-    </button>
+<button type="submit" class="reserve-btn">
+Reserve
+</button>
 
 </form>
 
 <% } %>
+
+<hr>
+
 <p class="location-text">
 <i class="fa-solid fa-location-dot"></i>
 <%= listing.location %>, <%= listing.country %>
 </p>
 
 <div class="listing-category">
-
 <i class="fa-solid fa-tags"></i>
-
 <span><%= listing.category %></span>
-
 </div>
 
 <% if(currUser && listing.owner?._id.equals(currUser._id)){ %>
 
-<div class="owner-actions">
+<div class="owner-actions mt-4">
 
-<a
-href="/listings/<%= listing._id %>/edit"
-class="btn btn-dark w-100 mb-2">
-
+<a href="/listings/<%= listing._id %>/edit" class="btn btn-dark w-100 mb-2">
 Edit Listing
-
 </a>
 
-<form
-action="/listings/<%= listing._id %>?_method=DELETE"
-method="POST">
+<a href="/listings/<%= listing._id %>/calendar" class="btn btn-primary w-100 mb-2">
+<i class="fa-solid fa-calendar-days"></i>
+Manage Availability
+</a>
 
-<button
-class="btn btn-danger w-100">
-
+<form action="/listings/<%= listing._id %>?_method=DELETE" method="POST">
+<button class="btn btn-danger w-100">
 Delete Listing
-
 </button>
-
 </form>
 
 </div>
@@ -409,13 +390,13 @@ Delete Listing
 </div>
 
 </div>
-<!--==========================
-REVIEWS
-===========================-->
 
-<div class="review-section">
+<!-- REVIEW + MAP -->
 
-<% if(currUser){ %>
+<div class="bottom-layout">
+
+<div class="review-column">
+    <% if(currUser){ %>
 
 <div class="review-form">
 
@@ -424,11 +405,7 @@ REVIEWS
 Leave a Review
 </h3>
 
-<form
-action="/listings/<%= listing._id %>/reviews"
-method="POST"
-class="needs-validation"
-novalidate>
+<form action="/listings/<%= listing._id %>/reviews" method="POST" class="needs-validation" novalidate>
 
 <fieldset class="starability-heart mb-4">
 
@@ -453,9 +430,7 @@ novalidate>
 
 <div class="mb-4">
 
-<label class="form-label">
-Your Experience
-</label>
+<label class="form-label">Your Experience</label>
 
 <textarea
 class="form-control"
@@ -479,19 +454,52 @@ Submit Review
 
 </div>
 
+<% } else { %>
+
+<div class="review-form">
+
+<h3>
+<i class="fa-solid fa-star-half-stroke"></i>
+Leave a Review
+</h3>
+
+<p class="text-muted">
+Please <a href="/login">login</a> to leave a review.
+</p>
+
+</div>
+
 <% } %>
+
+</div>
+
+<div class="map-column">
+
+<h2 class="section-title">
+<i class="fa-solid fa-location-dot"></i>
+Where you'll be
+</h2>
+
+<div class="map-card">
+<div id="map"></div>
+</div>
+
+</div>
+
+</div>
+
+<!-- GUEST REVIEWS -->
 
 <% if(listing.reviews.length>0){ %>
 
 <h2 class="section-title mt-5">
 <i class="fa-solid fa-comments"></i>
 Guest Reviews
-<span class="review-count">
-(<%= listing.reviews.length %>)
-</span>
+<span class="review-count">(<%= listing.reviews.length %>)</span>
 </h2>
 
 <div class="review-grid">
+
 <% for(let review of listing.reviews){ %>
 
 <div class="review-card">
@@ -506,9 +514,7 @@ Guest Reviews
 
 <div>
 
-<h5>
-<%= review.author?.username || "Anonymous" %>
-</h5>
+<h5><%= review.author?.username || "Anonymous" %></h5>
 
 <p class="review-date">
 Guest Review
@@ -519,12 +525,12 @@ Guest Review
 </div>
 
 <div class="review-stars">
-<div
-class="starability-result"
-data-rating="<%= review.rating %>">
+
+<div class="starability-result" data-rating="<%= review.rating %>">
 Rated:
 <%= review.rating %>
 </div>
+
 </div>
 
 </div>
@@ -535,18 +541,11 @@ Rated:
 
 <% if(currUser && review.author && review.author._id.equals(currUser._id)){ %>
 
-<form
-action="/listings/<%= listing._id %>/reviews/<%= review._id %>?_method=DELETE"
-method="POST"
-class="review-delete">
+<form action="/listings/<%= listing._id %>/reviews/<%= review._id %>?_method=DELETE" method="POST" class="review-delete">
 
-<button
-class="btn btn-outline-danger btn-sm">
-
+<button class="btn btn-outline-danger btn-sm">
 <i class="fa-solid fa-trash"></i>
-
 Delete Review
-
 </button>
 
 </form>
@@ -560,26 +559,6 @@ Delete Review
 </div>
 
 <% } %>
-<!--==========================
-MAP SECTION
-===========================-->
-
-<div class="map-section">
-
-<h2 class="section-title">
-
-<i class="fa-solid fa-location-dot"></i>
-
-Where you'll be
-
-</h2>
-
-<div class="map-card">
-
-<div id="map"></div>
-
-</div>
-
 </div>
 
 </div>
@@ -595,7 +574,6 @@ wishlist.addEventListener("click",()=>{
 const icon=wishlist.querySelector("i");
 
 icon.classList.toggle("fa-regular");
-
 icon.classList.toggle("fa-solid");
 
 wishlist.classList.toggle("active");
@@ -608,80 +586,88 @@ wishlist.classList.toggle("active");
 
 <script>
 
-const price = <%= listing.price %>;
+const price=<%= listing.price %>;
 
-const cleaningFee = 200;
-const serviceFee = 300;
+const cleaningFee=200;
+const serviceFee=300;
 
-const checkIn = document.getElementById("checkIn");
-const checkOut = document.getElementById("checkOut");
+const checkIn=document.getElementById("checkIn");
+const checkOut=document.getElementById("checkOut");
 
-const nightsText = document.getElementById("nights");
-const subtotal = document.getElementById("subtotal");
-const totalPrice = document.getElementById("totalPrice");
+if(checkIn && checkOut){
 
-const hiddenNights = document.getElementById("hiddenNights");
-const hiddenTotal = document.getElementById("hiddenTotal");
+const nightsText=document.getElementById("nights");
+const subtotal=document.getElementById("subtotal");
+const totalPrice=document.getElementById("totalPrice");
 
-const today = new Date().toISOString().split("T")[0];
+const hiddenNights=document.getElementById("hiddenNights");
+const hiddenTotal=document.getElementById("hiddenTotal");
 
-checkIn.min = today;
-checkOut.min = today;
+const today=new Date().toISOString().split("T")[0];
 
-// Default values
-subtotal.innerText = "₹0";
-totalPrice.innerText = "₹0";
+checkIn.min=today;
+checkOut.min=today;
+
+subtotal.innerText="₹0";
+totalPrice.innerText="₹0";
 
 function calculatePrice(){
 
-    if(!checkIn.value || !checkOut.value){
-        nightsText.innerText = 0;
-        subtotal.innerText = "₹0";
-        totalPrice.innerText = "₹0";
-        return;
-    }
+if(!checkIn.value || !checkOut.value){
 
-    const inDate = new Date(checkIn.value);
-    const outDate = new Date(checkOut.value);
+nightsText.innerText=0;
+subtotal.innerText="₹0";
+totalPrice.innerText="₹0";
 
-    const nights = Math.ceil(
-        (outDate - inDate) / (1000 * 60 * 60 * 24)
-    );
+hiddenNights.value=0;
+hiddenTotal.value=0;
 
-    if(nights <= 0){
-
-        alert("Check-out must be after Check-in.");
-
-        checkOut.value = "";
-
-        nightsText.innerText = 0;
-        subtotal.innerText = "₹0";
-        totalPrice.innerText = "₹0";
-
-        return;
-
-    }
-
-    checkOut.min = checkIn.value;
-
-    const room = nights * price;
-
-    const total = room + cleaningFee + serviceFee;
-
-    nightsText.innerText = nights;
-
-    subtotal.innerText =
-        "₹" + room.toLocaleString("en-IN");
-
-    totalPrice.innerText =
-        "₹" + total.toLocaleString("en-IN");
-
-    hiddenNights.value = nights;
-    hiddenTotal.value = total;
+return;
 
 }
 
-checkIn.addEventListener("change", calculatePrice);
-checkOut.addEventListener("change", calculatePrice);
+const inDate=new Date(checkIn.value);
+const outDate=new Date(checkOut.value);
+
+const nights=Math.ceil((outDate-inDate)/(1000*60*60*24));
+
+if(nights<=0){
+
+alert("Check-out must be after Check-in.");
+
+checkOut.value="";
+
+nightsText.innerText=0;
+subtotal.innerText="₹0";
+totalPrice.innerText="₹0";
+
+hiddenNights.value=0;
+hiddenTotal.value=0;
+
+return;
+
+}
+
+checkOut.min=checkIn.value;
+
+const room=nights*price;
+const total=room+cleaningFee+serviceFee;
+
+nightsText.innerText=nights;
+subtotal.innerText="₹"+room.toLocaleString("en-IN");
+totalPrice.innerText="₹"+total.toLocaleString("en-IN");
+
+hiddenNights.value=nights;
+hiddenTotal.value=total;
+
+}
+
+checkIn.addEventListener("change",calculatePrice);
+checkOut.addEventListener("change",calculatePrice);
+
+}
 
 </script>
+<script src="https://checkout.razorpay.com/v1/checkout.js"></script>
+<script src="/js/payment.js"></script>
+<script src="/js/map.js"></script>

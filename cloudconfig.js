@@ -11,7 +11,7 @@ const storage = new CloudinaryStorage({
     cloudinary: cloudinary,
     params: {
         folder: 'StayNest_DEV',
-        allowed_Formats: ["png", "jpg", "jpeg", "webp"],
+        allowed_formats: ["png", "jpg", "jpeg", "webp"],
     }
 });
 module.exports = {

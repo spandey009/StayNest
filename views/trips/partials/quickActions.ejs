@@ -1,0 +1,81 @@
+<!-- ================= Quick Actions ================= -->
+
+<div class="card border-0 shadow-sm rounded-4 mt-5">
+
+    <div class="card-body">
+
+        <h4 class="fw-bold mb-4 text-center">
+            Quick Actions
+        </h4>
+
+        <div class="row g-3">
+
+            <!-- Download Invoice -->
+
+            <div class="col-md-6 col-lg-3">
+
+                <a
+                    href="/invoice/<%= booking._id %>"
+                    class="btn btn-danger w-100 rounded-pill py-2">
+
+                    <i class="fa-solid fa-file-arrow-down me-2"></i>
+
+                    Invoice
+
+                </a>
+
+            </div>
+
+            <!-- View Property -->
+
+            <div class="col-md-6 col-lg-3">
+
+                <a
+                    href="/listings/<%= booking.listing._id %>"
+                    class="btn btn-dark w-100 rounded-pill py-2">
+
+                    <i class="fa-solid fa-house me-2"></i>
+
+                    Property
+
+                </a>
+
+            </div>
+
+            <!-- Wishlist -->
+
+            <div class="col-md-6 col-lg-3">
+
+                <a
+                    href="/wishlist"
+                    class="btn btn-outline-danger w-100 rounded-pill py-2">
+
+                    <i class="fa-solid fa-heart me-2"></i>
+
+                    Wishlist
+
+                </a>
+
+            </div>
+
+            <!-- Host Profile -->
+
+            <div class="col-md-6 col-lg-3">
+
+                <a
+                    href="/users/<%= booking.listing.owner._id %>"
+                    class="btn btn-outline-dark w-100 rounded-pill py-2">
+
+                    <i class="fa-solid fa-user me-2"></i>
+
+                    Host Profile
+
+                </a>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</div>

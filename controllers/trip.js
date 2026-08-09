@@ -15,3 +15,41 @@ module.exports.showTrips = async (req, res) => {
     });
 
 };
+const Booking = require("../models/booking");
+
+module.exports.showBookingDetails = async (req, res) => {
+
+    const { bookingId } = req.params;
+
+    const booking = await Booking.findById(bookingId)
+        .populate({
+            path: "listing",
+            populate: {
+                path: "owner"
+            }
+        })
+        .populate("user");
+
+    if (!booking) {
+
+        req.flash("error", "Booking not found.");
+
+        return res.redirect("/trips");
+
+    }
+
+    if (!booking.user._id.equals(req.user._id)) {
+
+        req.flash("error", "Unauthorized.");
+
+        return res.redirect("/trips");
+
+    }
+
+    res.render("trips/bookingDetails", {
+
+        booking
+
+    });
+
+};

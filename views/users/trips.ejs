@@ -13,104 +13,112 @@
 
 <% } %>
 
-<div class="row">
+<div class="row g-4">
 
 <% bookings.forEach(booking => { %>
 
 <div class="col-lg-4 col-md-6 mb-4">
 
-<div class="card shadow-sm h-100 <%= booking.status === 'Cancelled' ? 'cancelled' : '' %>">
+    <a
+        href="/trips/<%= booking._id %>"
+        class="text-decoration-none text-dark">
 
-<img
-src="<%= booking.listing.image.url %>"
-class="card-img-top"
-style="height:220px;object-fit:cover;">
+        <div class="card shadow-sm h-100 <%= booking.status === 'Cancelled' ? 'cancelled' : '' %>">
 
-<div class="card-body">
+            <img
+                src="<%= booking.listing.image.url %>"
+                class="card-img-top"
+                style="height:220px;object-fit:cover;">
 
-<h5>
-<%= booking.listing.title %>
-</h5>
+            <div class="card-body">
 
-<p>
+                <h5>
 
-<i class="fa-solid fa-location-dot"></i>
+                    <%= booking.listing.title %>
 
-<%= booking.listing.location %>,
-<%= booking.listing.country %>
+                </h5>
 
-</p>
+                <p>
 
-<p>
+                    <i class="fa-solid fa-location-dot"></i>
 
-📅
+                    <%= booking.listing.location %>,
+                    <%= booking.listing.country %>
 
-<%= booking.checkIn.toDateString() %>
+                </p>
 
-<br>
+                <p>
 
-<%= booking.checkOut.toDateString() %>
+                    📅
 
-</p>
+                    <%= booking.checkIn.toDateString() %>
 
-<p>
+                    <br>
 
-👤 <%= booking.guests %> Guest(s)
+                    <%= booking.checkOut.toDateString() %>
 
-</p>
+                </p>
 
-<p>
+                <p>
 
-🌙 <%= booking.nights %> Night(s)
+                    👤 <%= booking.guests %> Guest(s)
 
-</p>
+                </p>
 
-<h5>
+                <p>
 
-₹ <%= booking.totalPrice.toLocaleString("en-IN") %>
+                    🌙 <%= booking.nights %> Night(s)
 
-</h5>
+                </p>
 
-<% if(booking.status === "Confirmed"){ %>
+                <h5>
 
-<span class="badge bg-success">
+                    ₹ <%= booking.totalPrice.toLocaleString("en-IN") %>
 
-    Confirmed
+                </h5>
 
-</span>
+                <% if(booking.status === "Confirmed"){ %>
 
-<form
-    action="/bookings/<%= booking._id %>/cancel?_method=PUT"
-    method="POST"
-    class="mt-3">
+                    <span class="badge bg-success">
 
-    <button
-        class="btn btn-outline-danger w-100">
+                        Confirmed
 
-        <i class="fa-solid fa-ban"></i>
+                    </span>
 
-        Cancel Booking
+                    <form
+                        action="/bookings/<%= booking._id %>/cancel?_method=PUT"
+                        method="POST"
+                        class="mt-3">
 
-    </button>
+                        <button
+                            class="btn btn-outline-danger w-100">
 
-</form>
+                            <i class="fa-solid fa-ban"></i>
 
-<% } else { %>
+                            Cancel Booking
 
-<span class="badge bg-danger">
+                        </button>
 
-    Cancelled
+                    </form>
 
-</span>
+                <% } else { %>
 
-<% } %>
+                    <span class="badge bg-danger">
 
-</div>
+                        Cancelled
 
-</div>
+                    </span>
+
+                <% } %>
+
+            </div>
+
+        </div>
+
+    </a>
 
 </div>
 
 <% }) %>
-
+</div>
 </div>

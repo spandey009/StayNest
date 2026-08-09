@@ -1,0 +1,117 @@
+<!-- ================= Payment Details ================= -->
+
+<div class="card border-0 shadow-sm rounded-4 mb-4">
+
+    <div class="card-body">
+
+        <h4 class="fw-bold mb-4">
+            💳 Payment Details
+        </h4>
+
+        <!-- Payment Status -->
+
+        <div class="d-flex justify-content-between align-items-center mb-3">
+
+            <span>
+                <i class="fa-solid fa-circle-check me-2"></i>
+                Payment Status
+            </span>
+
+            <% if (booking.paymentStatus === "Paid") { %>
+
+                <span class="badge bg-success">
+                    Paid
+                </span>
+
+            <% } else if (booking.paymentStatus === "Failed") { %>
+
+                <span class="badge bg-danger">
+                    Failed
+                </span>
+
+            <% } else { %>
+
+                <span class="badge bg-warning text-dark">
+                    Pending
+                </span>
+
+            <% } %>
+
+        </div>
+
+        <!-- Payment ID -->
+
+        <div class="d-flex justify-content-between align-items-start mb-3">
+
+            <span>
+                Payment ID
+            </span>
+
+            <strong
+                class="text-end text-break ms-3"
+                style="max-width: 60%;">
+
+                <%= booking.paymentId || "N/A" %>
+
+            </strong>
+
+        </div>
+
+        <!-- Order ID -->
+
+        <div class="d-flex justify-content-between align-items-start mb-3">
+
+            <span>
+                Order ID
+            </span>
+
+            <strong
+                class="text-end text-break ms-3"
+                style="max-width: 60%;">
+
+                <%= booking.orderId || "N/A" %>
+
+            </strong>
+
+        </div>
+
+        <!-- Paid On -->
+
+        <div class="d-flex justify-content-between">
+
+            <span>
+                <i class="fa-regular fa-clock me-2"></i>
+                Paid On
+            </span>
+
+            <strong>
+
+                <%= booking.paidAt
+                    ? booking.paidAt.toDateString()
+                    : "N/A" %>
+
+            </strong>
+
+        </div>
+
+        <hr>
+
+        <!-- Amount -->
+
+        <div class="d-flex justify-content-between align-items-center">
+
+            <span class="fw-semibold">
+                Amount Paid
+            </span>
+
+            <strong class="text-success fs-5">
+
+                ₹ <%= booking.totalPrice.toLocaleString("en-IN") %>
+
+            </strong>
+
+        </div>
+
+    </div>
+
+</div>

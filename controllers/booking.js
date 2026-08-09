@@ -2,20 +2,40 @@ const Booking = require("../models/booking");
 const Listing = require("../models/listing");
 const User = require("../models/user");
 
+module.exports.createBookingRecord = async (bookingData) => {
+
+    const booking = new Booking(bookingData);
+
+    await booking.save();
+
+    const listing = await Listing.findById(booking.listing);
+
+    listing.bookings.push(booking._id);
+
+    await listing.save();
+
+    const user = await User.findById(booking.user);
+
+    user.bookings.push(booking._id);
+
+    await user.save();
+
+    return booking;
+
+};
+
+
+// =======================================
+// Old Route (temporary)
+// =======================================
+
 module.exports.createBooking = async (req, res) => {
 
     const { id } = req.params;
 
-    const listing = await Listing.findById(id);
+    const booking = await module.exports.createBookingRecord({
 
-    if (!listing) {
-        req.flash("error", "Listing not found.");
-        return res.redirect("/listings");
-    }
-
-    const booking = new Booking({
-
-        listing: listing._id,
+        listing: id,
 
         user: req.user._id,
 
@@ -31,19 +51,12 @@ module.exports.createBooking = async (req, res) => {
 
     });
 
-    await booking.save();
-
-    listing.bookings.push(booking._id);
-    await listing.save();
-
-    const user = await User.findById(req.user._id);
-    user.bookings.push(booking._id);
-    await user.save();
-
     req.flash("success", "Booking Confirmed 🎉");
 
     res.redirect("/trips");
+
 };
+
 module.exports.cancelBooking = async (req, res) => {
 
     const { bookingId } = req.params;

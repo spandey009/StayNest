@@ -39,4 +39,16 @@ router.route("/:id")
 //edit route
 router.get("/:id/edit", isLoggedIn, wrapAsync(listingController.editListing));
        
+router.get(
+    "/:id/calendar",
+    isLoggedIn,
+    wrapAsync(listingController.renderCalendar)
+);
+
+router.post(
+    "/:id/calendar",
+    isLoggedIn,
+    wrapAsync(listingController.updateCalendar)
+);
+
 module.exports = router;

@@ -4,11 +4,13 @@ if(process.env.NODE_ENV !== "production"){
 }
 require("dotenv").config();
 
+
 const express = require('express');
 const app = express();
 const mongoose = require('mongoose');
 const Listing = require('./models/listing.js');
 const path = require('path');
+const paymentRoutes = require("./routes/payment");
 const methodOverride = require('method-override');
 app.use(methodOverride('_method'));
 const ejsMate = require('ejs-mate');
@@ -19,7 +21,9 @@ const { listingSchema,reviewSchema } = require('./schema.js');
 const Review = require('./models/review.js');
 //const MONGO_URL = "mongodb://127.0.0.1:27017/StayNest";
 const dbUrl = process.env.ATLASDB_URL;
-
+const moment = require("moment");
+const invoiceRoutes = require("./routes/invoice");
+const notificationRoutes = require("./routes/notification");
 const listingRouter = require('./routes/listing.js'); 
 const reviewRouter = require('./routes/review.js');
 const session = require('express-session');
@@ -32,9 +36,11 @@ const userRouter = require('./routes/user.js');
 const wishlistRoutes = require("./routes/wishlist");
 const bookingRoutes = require("./routes/booking");
 const tripRoutes = require("./routes/trip");
+//console.log("ATLASDB_URL:", process.env.ATLASDB_URL);
 
-main().then(() => console.log('Connected to MongoDB'))
-.catch(err => console.error('Error connecting to MongoDB:', err));
+main()
+  .then(() => console.log("Connected to MongoDB"))
+  .catch(err => console.error(err));
 
 async function main() {
     await mongoose.connect(dbUrl);
@@ -44,8 +50,8 @@ app.engine('ejs', ejsMate);
 app.set("view engine", "ejs");
 app.set("views", path.join(__dirname, "views"));
 app.use(express.urlencoded({ extended: true }));
+app.use(express.json());
 app.use(express.static(path.join(__dirname, 'public')));
-
 
 const store = MongoStore.create({
     mongoUrl: dbUrl,
@@ -71,10 +77,6 @@ const sessionOptions = {
     }
 };
 
-
-
-
-
 app.get('/', (req, res) => {
     res.redirect('/listings');
 });
@@ -89,12 +91,44 @@ passport.use(new LocalStrategy(User.authenticate()));
 passport.serializeUser(User.serializeUser());
 passport.deserializeUser(User.deserializeUser());
 
-app.use((req, res, next) => {
+const Notification = require("./models/notification");
+
+app.use(async (req, res, next) => {
+
     res.locals.success = req.flash("success");
     res.locals.error = req.flash("error");
-   // console.log(res.locals.success);
-   res.locals.currUser = req.user;
+    res.locals.currUser = req.user;
+    res.locals.moment = moment;
+    if (req.user) {
+
+        res.locals.unreadNotifications =
+            await Notification.countDocuments({
+
+                user: req.user._id,
+
+                isRead: false
+
+            });
+
+        res.locals.latestNotifications =
+            await Notification.find({
+
+                user: req.user._id
+
+            })
+            .sort({ createdAt: -1 })
+            .limit(5);
+
+    } else {
+
+        res.locals.unreadNotifications = 0;
+
+        res.locals.latestNotifications = [];
+
+    }
+
     next();
+
 });
 
 app.get("/demouser", async (req, res) => {
@@ -120,6 +154,9 @@ app.use("/", userRouter);
 app.use("/wishlist", wishlistRoutes);
 app.use("/bookings", bookingRoutes);
 app.use("/trips", tripRoutes);
+app.use("/payments", paymentRoutes);
+app.use("/invoice", invoiceRoutes);
+app.use("/notifications", notificationRoutes);
 
 app.all('/*splat', wrapAsync(async (req, res, next) => {
     throw new ExpressError(404, "Page Not Found");
@@ -134,6 +171,3 @@ app.use((err, req, res, next) => {
 app.listen(3000, () => {
     console.log('Server is running on port 3000');
 });
-
-
-

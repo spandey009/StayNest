@@ -29,8 +29,8 @@ body{
 /* Container */
 
 .container{
-    flex:1;
-    max-width:1280px;
+    /* flex:1; */
+    max-width:1200px;
     margin:auto;
     padding:0 18px;
 }
@@ -83,7 +83,7 @@ ul{
 
 /* Row */
 
-.row{
+.custom-row{
     margin-top:1.5rem;
     row-gap:1.5rem;
 }
@@ -99,7 +99,7 @@ ul{
 
 /* Card */
 
-.card{
+.cusstom-card{
     border:none;
     border-radius:18px;
 }
@@ -194,43 +194,48 @@ html{
 PART 2 - NAVBAR
 =====================================================*/
 
+
 .navbar{
     background:#fff;
-    padding:14px 30px;
+    height:82px;
+    padding:0px 24px;
     border-bottom:1px solid #ececec;
     box-shadow:0 2px 12px rgba(0,0,0,.05);
     position:sticky;
     top:0;
     z-index:1000;
 }
+.navbar .container-fluid{
+    height:100%;
+    display:flex;
+    align-items:center;
+}
+
+/* =========================
+   StayNest Logo
+========================= */
 
 .brand-logo{
     display:flex;
     align-items:center;
-    gap:10px;
-    font-size:2rem;
-    font-weight:800;
-    letter-spacing:-1px;
+    text-decoration:none;
+    flex-shrink:0;
+    transition:.25s ease;
 }
 
-.brand-logo i{
-    color:#ff5a5f;
-    font-size:2rem;
-}
-
-.brand-logo span{
-    background:linear-gradient(90deg,#ff5a5f,#ff914d);
-    -webkit-background-clip:text;
-    -webkit-text-fill-color:transparent;
+.staynest-logo{
+    width:220px;
+    height:auto;
+    display:block;
+    object-fit:contain;
 }
 
 .brand-logo:hover{
     transform:scale(1.02);
 }
-
 .nav-link{
     color:#333!important;
-    font-size:1rem;
+    font-size:.95rem;
     font-weight:600;
     transition:.3s;
 }
@@ -242,14 +247,16 @@ PART 2 - NAVBAR
 .search-form{
     display:flex;
     align-items:center;
-    width:420px;
-    height:56px;
+    width:460px;
+    height:48px;
+    margin-left:20px;
     background:#fff;
     border:1px solid #ddd;
     border-radius:999px;
-    padding:6px;
+    padding:5px;
     box-shadow:0 3px 12px rgba(0,0,0,.08);
     transition:.3s;
+    flex-shrink:1;
 }
 
 .search-form:hover{
@@ -260,7 +267,7 @@ PART 2 - NAVBAR
     flex:1;
     border:none;
     background:transparent;
-    padding:0 18px;
+    padding:0 14px;
     font-size:.95rem;
 }
 
@@ -269,8 +276,8 @@ PART 2 - NAVBAR
 }
 
 .btn-search{
-    width:42px;
-    height:42px;
+    width:38px;
+    height:38px;
     border-radius:50%;
     background:#ff5a5f;
     color:#fff;
@@ -288,19 +295,39 @@ PART 2 - NAVBAR
 .nav-right{
     display:flex;
     align-items:center;
-    gap:12px;
+    gap:18px;
+    white-space:nowrap;
+    flex-shrink:0;
+    height:100%;
+}
+
+.notification-wrapper,
+.profile-wrapper{
+    flex-shrink:0;
+}
+
+.profile-menu{
+    padding:8px 4px!important;
+}
+
+.bell-icon{
+    padding:8px!important;
+    font-size:1.2rem;
 }
 
 .host-btn{
     display:flex;
     align-items:center;
-    gap:8px;
+    justify-content:center;
+    gap:7px;
     padding:10px 18px;
     background:#ff5a5f;
     color:#fff!important;
     border-radius:999px;
     font-weight:600;
+    font-size:.95rem;
     transition:.3s;
+    white-space:nowrap;
 }
 
 .host-btn:hover{
@@ -314,14 +341,17 @@ PART 2 - NAVBAR
 }
 
 @media(max-width:992px){
+
     .search-form{
         width:100%;
         margin:15px 0;
     }
+
     .nav-right{
         margin-top:15px;
         flex-wrap:wrap;
     }
+
 }
 /*=====================================================
 PART 3 - FILTER BAR
@@ -489,7 +519,7 @@ PART 4 - LISTING CARDS
 
 .card-img-top{
     width:100%;
-    height:260px;
+    height:235px;
     object-fit:cover;
     transition:.45s;
 }
@@ -499,7 +529,7 @@ PART 4 - LISTING CARDS
 }
 
 .card-body{
-    padding:16px!important;
+    padding:14px!important;
 }
 
 .listing-title{
@@ -873,9 +903,126 @@ PART 5 - SHOW PAGE
 /*=====================================================
 PART 6 - REVIEWS | MAP | FOOTER
 =====================================================*/
+/* ===========================
+   REVIEW SECTION
+=========================== */
+
+.review-section{
+    margin:50px auto;
+    width:100%;
+}
+
+.review-form{
+    background:#fff;
+    border-radius:20px;
+    padding:24px;
+    box-shadow:0 8px 24px rgba(0,0,0,.08);
+    margin-bottom:40px;
+}
+
+.review-form h3{
+    font-size:1.5rem;
+    font-weight:700;
+    margin-bottom:20px;
+}
+
+.review-form .form-label{
+    display:block;
+    margin-bottom:10px;
+    font-weight:600;
+}
+
+.review-form textarea{
+    width:100%;
+    min-height:120px;
+    height:120px;
+    resize:vertical;
+    padding:14px;
+    border:1px solid #ddd;
+    border-radius:12px;
+    font-size:1rem;
+}
+
+.review-form .btn{
+    margin-top:18px;
+    padding:12px 24px;
+    border-radius:12px;
+    background:#ff5a5f;
+    color:#fff;
+    border:none;
+}
+
+.review-grid{
+    display:grid;
+    grid-template-columns:repeat(auto-fit,minmax(330px,1fr));
+    gap:20px;
+    margin-top:25px;
+}
+
+.review-card{
+    background:#fff;
+    border-radius:18px;
+    padding:22px;
+    box-shadow:0 8px 20px rgba(0,0,0,.08);
+}
+
+.review-header{
+    display:flex;
+    justify-content:space-between;
+    align-items:flex-start;
+    margin-bottom:15px;
+}
+
+.review-user{
+    display:flex;
+    align-items:center;
+    gap:14px;
+}
+
+.review-avatar{
+    width:50px;
+    height:50px;
+    border-radius:50%;
+    background:#ff5a5f;
+    color:#fff;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    font-size:20px;
+}
+
+.review-comment{
+    margin-top:15px;
+    line-height:1.7;
+    color:#555;
+}
+
+.review-delete{
+    margin-top:15px;
+}
+
+/* ===========================
+   MAP
+=========================== */
+
+.map-section{
+    margin-top:50px;
+}
+
+.map-card{
+    overflow:hidden;
+    border-radius:20px;
+    box-shadow:0 8px 20px rgba(0,0,0,.08);
+}
+
+#map{
+    width:100%;
+    height:350px;
+    border-radius:20px;
+}
 
 /*========== REVIEW FORM ==========*/
-
+/* 
 .review-form{
     background:#fff;
     padding:30px;
@@ -1013,7 +1160,7 @@ PART 6 - REVIEWS | MAP | FOOTER
 
 .map-note i{
     color:#ff5a5f;
-}
+} */
 
 /* Leaflet Popup */
 
@@ -1112,176 +1259,7 @@ button:active{
     box-shadow:0 0 0 .15rem rgba(255,90,95,.15);
 }
 
-/*========== MOBILE ==========*/
 
-@media(max-width:992px){
-
-.navbar{
-    padding:12px 18px;
-}
-
-.brand-logo{
-    font-size:1.7rem;
-}
-
-.search-form{
-    width:100%;
-    margin:15px 0;
-}
-
-.nav-right{
-    width:100%;
-    justify-content:center;
-    flex-wrap:wrap;
-    gap:10px;
-}
-
-.host-btn{
-    width:100%;
-    justify-content:center;
-}
-
-.filter-container{
-    gap:8px;
-}
-
-#filters{
-    gap:18px;
-}
-
-.card-img-top{
-    height:220px;
-}
-
-.gallery{
-    grid-template-columns:1fr;
-}
-
-.gallery-side{
-    display:none;
-}
-
-.gallery-main{
-    height:340px;
-}
-
-.listing-layout{
-    grid-template-columns:1fr;
-}
-
-
-.review-grid{
-    grid-template-columns:1fr;
-}
-
-#map{
-    height:320px;
-}
-
-
-}
-
-/*========== SMALL MOBILE ==========*/
-
-@media(max-width:576px){
-
-.container{
-    padding:0 12px;
-}
-
-.listing-page-title{
-    font-size:1.8rem;
-}
-
-.section-title{
-    font-size:1.5rem;
-}
-
-.card-img-top{
-    height:200px;
-}
-
-.gallery-main{
-    height:260px;
-}
-
-.info-card,
-
-.review-card{
-    padding:20px;
-}
-
-.host-info{
-    flex-direction:column;
-    text-align:center;
-}
-
-.host-icon{
-    margin:0;
-}
-
-.amenities-grid{
-    grid-template-columns:1fr;
-}
-
-.btn-search{
-    width:40px;
-    height:40px;
-}
-
-}
-
-/*========== LARGE DESKTOP ==========*/
-
-@media(min-width:1400px){
-
-.container{
-    max-width:1320px;
-}
-
-.gallery-main{
-    height:560px;
-}
-
-.card-img-top{
-    height:280px;
-}
-
-}
-
-/*========== UTILITIES ==========*/
-
-.fade-up{
-    animation:fadeUp .6s ease;
-}
-
-@keyframes fadeUp{
-    from{
-        opacity:0;
-        transform:translateY(25px);
-    }
-    to{
-        opacity:1;
-        transform:translateY(0);
-    }
-}
-
-.shadow-hover:hover{
-    box-shadow:0 18px 40px rgba(0,0,0,.15);
-}
-
-.rounded-20{
-    border-radius:20px;
-}
-
-.text-primary-custom{
-    color:#ff5a5f;
-}
-
-.bg-primary-custom{
-    background:#ff5a5f;
-    color:#fff;
-}
 
 /* new listing styles */
 /*=====================================================
@@ -1801,4 +1779,749 @@ font-size:.9rem;
 .owner-booking-warning p{
     color:#666;
     margin:0;
+}
+
+/* Profile Page */
+
+.profile-card{
+    border-radius:20px;
+}
+
+.profile-stat{
+    transition:0.3s;
+}
+
+.profile-stat:hover{
+    transform:translateY(-6px);
+    box-shadow:0 10px 25px rgba(0,0,0,0.12);
+}
+
+.profile-listing{
+    transition:0.3s;
+}
+
+.profile-listing:hover{
+    transform:translateY(-8px);
+    box-shadow:0 15px 30px rgba(0,0,0,0.15);
+}
+
+.profile-listing img{
+    border-radius:16px 16px 0 0;
+}
+.host-info{
+    display:flex;
+    align-items:center;
+    gap:18px;
+}
+
+.host-info img{
+    width:70px;
+    height:70px;
+    border-radius:50%;
+    object-fit:cover;
+}
+
+.host-info a{
+    text-decoration:none;
+}
+
+/* ==========================================
+   REVIEW + MAP LAYOUT
+========================================== */
+
+.bottom-layout{
+    display:grid;
+    grid-template-columns:1fr 1fr;
+    gap:30px;
+    margin:50px 0;
+    align-items:start;
+}
+
+.review-column,
+.map-column{
+    width:100%;
+}
+
+.review-form,
+.map-card{
+    background:#fff;
+    border-radius:20px;
+    padding:25px;
+    box-shadow:0 8px 24px rgba(0,0,0,0.08);
+}
+
+.review-form h3,
+.map-column .section-title{
+    margin-bottom:20px;
+    font-size:1.4rem;
+    font-weight:600;
+}
+
+.review-form .form-control{
+    border-radius:12px;
+    padding:12px;
+}
+
+.review-btn{
+    width:100%;
+    padding:12px;
+    border:none;
+    border-radius:12px;
+    background:#ff385c;
+    color:#fff;
+    font-weight:600;
+    transition:.3s;
+}
+
+.review-btn:hover{
+    background:#e31c5f;
+}
+
+.map-card{
+    padding:0;
+    overflow:hidden;
+}
+
+#map{
+    width:100%;
+    height:500px;
+    border-radius:20px;
+}
+
+.review-grid{
+    margin-top:30px;
+    display:grid;
+    grid-template-columns:repeat(auto-fit,minmax(320px,1fr));
+    gap:20px;
+}
+
+.review-card{
+    background:#fff;
+    border-radius:18px;
+    padding:20px;
+    box-shadow:0 8px 24px rgba(0,0,0,.08);
+}
+
+.review-header{
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    margin-bottom:15px;
+}
+
+.review-user{
+    display:flex;
+    align-items:center;
+    gap:12px;
+}
+
+.review-avatar{
+    width:50px;
+    height:50px;
+    border-radius:50%;
+    background:#f1f1f1;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    font-size:20px;
+    color:#555;
+}
+
+.review-user h5{
+    margin:0;
+    font-size:1rem;
+    font-weight:600;
+}
+
+.review-date{
+    margin:0;
+    color:#777;
+    font-size:.85rem;
+}
+
+.review-comment{
+    line-height:1.7;
+    color:#444;
+    margin:15px 0;
+}
+
+.review-delete{
+    margin-top:15px;
+}
+
+.section-title{
+    font-size:1.7rem;
+    font-weight:700;
+    margin-bottom:25px;
+}
+
+.review-count{
+    color:#777;
+    font-size:1rem;
+    font-weight:500;
+}
+
+@media(max-width:992px){
+
+.bottom-layout{
+    grid-template-columns:1fr;
+}
+
+#map{
+    height:400px;
+}
+
+}
+
+@media(max-width:576px){
+
+.review-grid{
+    grid-template-columns:1fr;
+}
+
+.review-form,
+.map-card,
+.review-card{
+    border-radius:15px;
+}
+
+#map{
+    height:320px;
+}
+
+}
+.map-column{
+    position:sticky;
+    top:100px;
+    align-self:start;
+}
+
+/* Notification Bell */
+
+#notificationDropdown{
+
+    width:45px;
+
+    height:45px;
+
+    border-radius:50%;
+
+    transition:0.3s;
+
+}
+
+#notificationDropdown:hover{
+
+    background:#f7f7f7;
+
+}
+
+.notification-badge{
+
+    position:absolute;
+
+    top:5px;
+
+    right:2px;
+
+    min-width:18px;
+
+    height:18px;
+
+    border-radius:50%;
+
+    background:#ff385c;
+
+    color:white;
+
+    font-size:11px;
+
+    font-weight:600;
+
+    display:flex;
+
+    align-items:center;
+
+    justify-content:center;
+
+    border:2px solid white;
+
+    padding:2px;
+
+}
+
+.notification-dropdown{
+
+    width:340px;
+
+    border-radius:15px;
+
+    overflow:hidden;
+
+    box-shadow:0 10px 30px rgba(0,0,0,.12);
+
+}
+
+.notification-dropdown .dropdown-header{
+
+    font-size:18px;
+
+    font-weight:700;
+
+    padding:15px;
+
+}
+
+.notification-dropdown .dropdown-item{
+
+    padding:12px 18px;
+
+}
+.bell-icon{
+
+    width:42px;
+    height:42px;
+
+    display:flex;
+    justify-content:center;
+    align-items:center;
+
+    border-radius:50%;
+
+    transition:.25s;
+
+}
+
+.bell-icon:hover{
+
+    background:#f4f4f4;
+
+}
+
+.bell-icon i{
+
+    font-size:22px;
+
+}
+
+.notification-count{
+
+    position:absolute;
+
+    top:3px;
+
+    right:2px;
+
+    width:18px;
+    height:18px;
+
+    border-radius:50%;
+
+    background:#ff385c;
+
+    color:#fff;
+
+    font-size:10px;
+
+    font-weight:700;
+
+    display:flex;
+    justify-content:center;
+    align-items:center;
+
+    border:2px solid white;
+
+}
+.notification-item{
+
+    transition:.25s;
+
+}
+
+.notification-item:hover{
+
+    background:#f8f9fa;
+
+}
+
+.notification-item strong{
+
+    font-size:15px;
+
+}
+
+.notification-item small{
+
+    font-size:12px;
+
+}
+
+.notification-dropdown{
+
+    width:370px;
+
+    max-height:420px;
+
+    overflow-y:auto;
+
+}
+/*========== LARGE DESKTOP ==========*/
+
+@media(min-width:1400px){
+
+.container{
+    max-width:1200px;
+}
+
+.gallery-main{
+    height:520px;
+}
+
+.card-img-top{
+    height:240px;
+}
+
+}
+
+/*========== UTILITIES ==========*/
+
+.fade-up{
+    animation:fadeUp .6s ease;
+}
+
+@keyframes fadeUp{
+    from{
+        opacity:0;
+        transform:translateY(25px);
+    }
+    to{
+        opacity:1;
+        transform:translateY(0);
+    }
+}
+
+.shadow-hover:hover{
+    box-shadow:0 18px 40px rgba(0,0,0,.15);
+}
+
+.rounded-20{
+    border-radius:20px;
+}
+
+.text-primary-custom{
+    color:#ff5a5f;
+}
+
+.bg-primary-custom{
+    background:#ff5a5f;
+    color:#fff;
+}
+/* ===========================
+   MOBILE / RESPONSIVE
+=========================== */
+
+/* ===========================
+   TABLET + MOBILE
+=========================== */
+
+@media (max-width: 992px){
+
+    /* ---------- Navbar ---------- */
+
+   /* ---------- Mobile Navbar ---------- */
+
+.navbar{
+    min-height:82px;
+    height:auto;
+    padding:0 18px;
+}
+
+.navbar .container-fluid{
+  
+    display:flex;
+    align-items:center;
+    flex-wrap:wrap;
+}
+
+.brand-logo{
+    display:flex;
+    align-items:center;
+    margin:0;
+    padding:0;
+    flex-shrink:0;
+}
+
+.staynest-logo{
+    width:170px;
+    height:auto;
+    display:block;
+}
+
+.navbar-toggler{
+    margin-left:auto;
+    flex-shrink:0;
+}
+.navbar-collapse{
+    background:#fff;
+    width:100%;
+}
+    .search-form{
+        width:100%;
+        margin:15px 0;
+    }
+
+    .host-btn{
+        width:100%;
+        justify-content:center;
+    }
+
+
+    /* ---------- Filters ---------- */
+
+    .filter-container{
+        gap:8px;
+    }
+
+    #filters{
+        gap:18px;
+    }
+
+
+    /* ---------- Listing Cards ---------- */
+
+    .card-img-top{
+        height:220px;
+    }
+
+
+    /* ---------- Gallery ---------- */
+
+    .gallery{
+        grid-template-columns:1fr;
+    }
+
+    .gallery-side{
+        display:none;
+    }
+
+    .gallery-main{
+        height:340px;
+    }
+
+
+    /* ---------- Listing Layout ---------- */
+
+    .listing-layout{
+        grid-template-columns:1fr;
+    }
+
+
+    /* ---------- Reviews ---------- */
+
+    .review-grid{
+        grid-template-columns:1fr;
+    }
+
+
+    /* ---------- Map ---------- */
+
+    #map{
+        height:320px;
+    }
+
+}
+
+
+/* ===========================
+   MOBILE
+=========================== */
+
+@media (max-width: 768px){
+
+    /* ---------- Reviews ---------- */
+
+    .review-form{
+        padding:18px;
+    }
+
+
+    /* ---------- Map ---------- */
+
+    #map{
+        height:280px;
+    }
+
+
+    /* ---------- Category Bar ---------- */
+
+    .filter-container{
+        position:relative;
+        width:100%;
+        padding:0 48px;
+        overflow:hidden;
+    }
+
+    #filters{
+        display:flex;
+        align-items:center;
+        gap:28px;
+        width:100%;
+        overflow-x:auto;
+        overflow-y:hidden;
+        scroll-behavior:smooth;
+        scrollbar-width:none;
+        -ms-overflow-style:none;
+        padding:5px 8px 12px;
+    }
+
+    #filters::-webkit-scrollbar{
+        display:none;
+    }
+
+    .filter{
+        flex:0 0 auto;
+        min-width:70px;
+        text-align:center;
+    }
+
+    .filter i{
+        font-size:1.6rem;
+    }
+
+    .filter p{
+        margin:7px 0 0;
+        white-space:nowrap;
+        font-size:.9rem;
+    }
+
+    .scroll-btn{
+        position:absolute;
+        top:50%;
+        transform:translateY(-50%);
+        z-index:10;
+        width:42px;
+        height:42px;
+        border-radius:50%;
+        border:1px solid #eee;
+        background:#fff;
+        box-shadow:0 3px 12px rgba(0,0,0,.12);
+        display:flex;
+        align-items:center;
+        justify-content:center;
+    }
+
+    .scroll-btn.left{
+        left:5px;
+    }
+
+    .scroll-btn.right{
+        right:5px;
+    }
+
+    .tax-toggle{
+        display:none;
+    }
+
+}
+
+ .navbar{
+        margin-bottom:8px;
+    }
+
+    .review-form{
+        padding:18px;
+    }
+
+    #map{
+        height:280px;
+    }
+
+
+/* ===========================
+   VERY SMALL MOBILE
+=========================== */
+
+@media (max-width: 576px){
+
+    /* ---------- Container ---------- */
+
+    .container{
+        padding:0 12px;
+    }
+
+
+    /* ---------- Navbar ---------- */
+
+    .staynest-logo{
+        width:160px;
+    }
+
+
+    /* ---------- Search ---------- */
+
+    .search-form{
+        width:100%;
+        margin:15px 0;
+    }
+
+
+    /* ---------- Listing Page ---------- */
+
+    .listing-page-title{
+        font-size:1.8rem;
+    }
+
+    .section-title{
+        font-size:1.5rem;
+    }
+
+
+    /* ---------- Listing Cards ---------- */
+
+    .card-img-top{
+        height:200px;
+    }
+
+
+    /* ---------- Gallery ---------- */
+
+    .gallery-main{
+        height:260px;
+    }
+
+
+    /* ---------- Cards ---------- */
+
+    .info-card,
+    .review-card{
+        padding:20px;
+    }
+
+
+    /* ---------- Host ---------- */
+
+    .host-info{
+        flex-direction:column;
+        text-align:center;
+    }
+
+    .host-icon{
+        margin:0;
+    }
+
+
+    /* ---------- Amenities ---------- */
+
+    .amenities-grid{
+        grid-template-columns:1fr;
+    }
+
+
+    /* ---------- Search Button ---------- */
+
+    .btn-search{
+        width:40px;
+        height:40px;
+    }
+
 }

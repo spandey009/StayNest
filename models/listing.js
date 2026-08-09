@@ -31,6 +31,11 @@ const listingSchema = new Schema({
         type: String,
         required: true
     },
+    unavailableDates: [
+    {
+        type: Date
+    }
+],
     reviews: {
         type: [Schema.Types.ObjectId],
         ref: 'Review',

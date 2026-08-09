@@ -184,3 +184,49 @@ module.exports.deleteListing = async (req, res) => {
 
     res.redirect("/listings");
 };
+
+module.exports.renderCalendar = async (req, res) => {
+
+    const { id } = req.params;
+
+    const listing = await Listing.findById(id);
+
+    if (!listing) {
+        req.flash("error", "Listing not found.");
+        return res.redirect("/listings");
+    }
+
+    res.render("listings/calendar", { listing });
+
+};
+
+module.exports.updateCalendar = async (req, res) => {
+
+    const { id } = req.params;
+
+    let { unavailableDates } = req.body;
+
+    const listing = await Listing.findById(id);
+
+    if (!listing) {
+        req.flash("error", "Listing not found.");
+        return res.redirect("/listings");
+    }
+
+    if (!unavailableDates) {
+        listing.unavailableDates = [];
+    } else {
+        console.log("req.body =", req.body);
+console.log("unavailableDates =", unavailableDates);
+        listing.unavailableDates = unavailableDates
+        
+            .split(",")
+            .map(date => new Date(date.trim()));
+    }
+
+    await listing.save();
+
+    req.flash("success", "Availability updated successfully!");
+
+    res.redirect(`/listings/${id}/calendar`);
+};

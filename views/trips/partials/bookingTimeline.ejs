@@ -1,0 +1,175 @@
+<!-- ================= Booking Timeline ================= -->
+
+<div class="card border-0 shadow-sm rounded-4 mt-4">
+
+    <div class="card-body">
+
+        <h4 class="fw-bold mb-4">
+            🗓️ Booking Timeline
+        </h4>
+
+        <!-- Booking Created -->
+
+        <div class="d-flex mb-4">
+
+            <div class="me-3 text-success">
+
+                <i class="fa-solid fa-circle-check fa-lg"></i>
+
+            </div>
+
+            <div>
+
+                <h6 class="fw-bold mb-1">
+                    Booking Created
+                </h6>
+
+                <p class="text-muted mb-0">
+                    <%= booking.createdAt
+                        ? booking.createdAt.toDateString()
+                        : "N/A" %>
+                </p>
+
+            </div>
+
+        </div>
+
+        <!-- Payment -->
+
+        <div class="d-flex mb-4">
+
+            <div class="me-3 text-success">
+
+                <% if (booking.paymentStatus === "Paid") { %>
+
+                    <i class="fa-solid fa-circle-check fa-lg"></i>
+
+                <% } else { %>
+
+                    <i class="fa-solid fa-clock fa-lg"></i>
+
+                <% } %>
+
+            </div>
+
+            <div>
+
+                <h6 class="fw-bold mb-1">
+                    Payment
+                </h6>
+
+                <p class="text-muted mb-0">
+
+                    <% if (booking.paymentStatus === "Paid") { %>
+
+                        Payment completed successfully
+
+                    <% } else if (booking.paymentStatus === "Failed") { %>
+
+                        Payment failed
+
+                    <% } else { %>
+
+                        Payment pending
+
+                    <% } %>
+
+                </p>
+
+            </div>
+
+        </div>
+
+        <!-- Booking Status -->
+
+        <div class="d-flex mb-4">
+
+            <div class="me-3">
+
+                <% if (booking.status === "Confirmed") { %>
+
+                    <i class="fa-solid fa-circle-check fa-lg text-success"></i>
+
+                <% } else { %>
+
+                    <i class="fa-solid fa-circle-xmark fa-lg text-danger"></i>
+
+                <% } %>
+
+            </div>
+
+            <div>
+
+                <h6 class="fw-bold mb-1">
+
+                    Booking
+                    <%= booking.status %>
+
+                </h6>
+
+                <p class="text-muted mb-0">
+
+                    Your reservation is
+                    <%= booking.status.toLowerCase() %>.
+
+                </p>
+
+            </div>
+
+        </div>
+
+        <!-- Check In -->
+
+        <div class="d-flex mb-4">
+
+            <div class="me-3 text-primary">
+
+                <i class="fa-solid fa-calendar-check fa-lg"></i>
+
+            </div>
+
+            <div>
+
+                <h6 class="fw-bold mb-1">
+                    Check In
+                </h6>
+
+                <p class="text-muted mb-0">
+
+                    <%= booking.checkIn.toDateString() %>
+
+                </p>
+
+            </div>
+
+        </div>
+
+        <!-- Check Out -->
+
+        <div class="d-flex">
+
+            <div class="me-3 text-secondary">
+
+                <i class="fa-solid fa-calendar-xmark fa-lg"></i>
+
+            </div>
+
+            <div>
+
+                <h6 class="fw-bold mb-1">
+                    Check Out
+                </h6>
+
+                <p class="text-muted mb-0">
+
+                    <%= booking.checkOut.toDateString() %>
+
+                </p>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</div>

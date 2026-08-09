@@ -1,0 +1,120 @@
+<% layout("layouts/boilerplate") %>
+
+<div class="container py-5">
+
+    <div class="card shadow-lg border-0 rounded-4">
+
+        <div class="card-body text-center p-5">
+
+            <div class="mb-4">
+
+                <i class="fa-solid fa-circle-check text-success"
+                   style="font-size:90px;"></i>
+
+            </div>
+
+            <h1 class="fw-bold text-success">
+
+                Payment Successful!
+
+            </h1>
+
+            <p class="lead">
+
+                Your StayNest booking has been confirmed.
+
+            </p>
+
+            <hr>
+
+            <div class="row text-start mt-4">
+
+                <div class="col-md-6">
+
+                    <p>
+
+                        <strong>Booking ID</strong><br>
+
+                        <%= booking._id %>
+
+                    </p>
+
+                    <p>
+
+                        <strong>Payment Status</strong><br>
+
+                        <span class="badge bg-success">
+
+                            <%= booking.paymentStatus %>
+
+                        </span>
+
+                    </p>
+
+                    <p>
+
+                        <strong>Payment ID</strong><br>
+
+                        <%= booking.paymentId %>
+
+                    </p>
+
+                </div>
+
+                <div class="col-md-6">
+
+                    <p>
+
+                        <strong>Property</strong><br>
+
+                        <%= booking.listing.title %>
+
+                    </p>
+
+                    <p>
+
+                        <strong>Total Paid</strong><br>
+
+                        ₹ <%= booking.totalPrice %>
+
+                    </p>
+
+                    <p>
+
+                        <strong>Guests</strong><br>
+
+                        <%= booking.guests %>
+
+                    </p>
+
+                </div>
+
+            </div>
+
+            <div class="mt-5">
+
+                <div class="mt-5">
+
+    <a href="/invoice/<%= booking._id %>"
+       class="btn btn-success btn-lg me-3">
+
+        Download Invoice
+
+    </a>
+
+    <a href="/trips"
+       class="btn btn-danger btn-lg">
+
+        View My Trips
+
+    </a>
+
+</div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</div>

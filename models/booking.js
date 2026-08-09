@@ -41,6 +41,26 @@ const bookingSchema = new Schema({
         required: true
     },
 
+   
+
+    paymentId: {
+        type: String
+    },
+
+    orderId: {
+        type: String
+    },
+
+    paymentStatus: {
+        type: String,
+        enum: ["Pending", "Paid", "Failed"],
+        default: "Pending"
+    },
+
+    paidAt: {
+        type: Date
+    },
+
     status: {
         type: String,
         default: "Confirmed",

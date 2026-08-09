@@ -1,81 +1,462 @@
 <nav class="navbar navbar-expand-lg sticky-top border-bottom bg-white">
-    <div class="container-fluid">
 
-        <!-- Logo -->
-        <a class="navbar-brand brand-logo" href="/">
-            <i class="fa-solid fa-compass"></i>
-            <span>StayNest</span>
-        </a>
+    <div class="container-fluid px-4">
+
+        <!-- ================= Logo ================= -->
+
+
+<a class="navbar-brand brand-logo" href="/" aria-label="StayNest">
+
+    <img
+        src="/images/staynest-logo.png"
+        alt="StayNest"
+        class="staynest-logo">
+
+</a>
+
+
+        <!-- ================= Mobile Toggle ================= -->
 
         <button
             class="navbar-toggler"
             type="button"
             data-bs-toggle="collapse"
-            data-bs-target="#navbarNav">
+            data-bs-target="#navbarNav"
+            aria-controls="navbarNav"
+            aria-expanded="false"
+            aria-label="Toggle navigation">
+
             <span class="navbar-toggler-icon"></span>
+
         </button>
+
 
         <div class="collapse navbar-collapse" id="navbarNav">
 
-            <!-- Search -->
-    <form
-    class="search-form mx-lg-auto my-3 my-lg-0"
-    action="/listings"
-    method="GET">
 
-    <input
-        class="search-inp"
-        type="search"
-        name="search"
-        value="<%= typeof search !== 'undefined' ? search : '' %>"
-        placeholder="Search destinations">
+            <!-- ================= Search ================= -->
 
-    <button class="btn-search" type="submit">
-        <i class="fa-solid fa-magnifying-glass"></i>
-    </button>
+            <form
+                class="search-form mx-lg-auto my-3 my-lg-0"
+                action="/listings"
+                method="GET">
 
-</form>
+                <input
+                    class="search-inp"
+                    type="search"
+                    name="search"
+                    value="<%= typeof search !== 'undefined' ? search : '' %>"
+                    placeholder="Search destinations"
+                    aria-label="Search destinations">
 
-            <!-- Right -->
-            <div class="d-flex align-items-center ms-lg-auto nav-right">
+                <button
+                    class="btn-search"
+                    type="submit"
+                    aria-label="Search">
 
-                <a href="/listings/new" class="host-btn me-3">
+                    <i class="fa-solid fa-magnifying-glass"></i>
+
+                </button>
+
+            </form>
+
+
+            <!-- ================= Right Side ================= -->
+
+
+            <div class="d-flex align-items-center nav-right"></div>
+
+                <!-- ================= Host ================= -->
+
+                <a
+                    href="/listings/new"
+                    class="host-btn me-lg-3">
+
                     <i class="fa-solid fa-house-circle-check"></i>
-                    Host Your Stay
+
+                    <span>Host Your Stay</span>
+
                 </a>
 
-                <% if(!currUser){ %>
 
-<a class="nav-link" href="/signup">
-    <i class="fa-solid fa-user-plus"></i>
-    Signup
-</a>
+                <% if(typeof currUser === "undefined" || !currUser){ %>
 
-<a class="nav-link" href="/login">
-    <i class="fa-solid fa-right-to-bracket"></i>
-    Login
-</a>
 
-<% } else { %>
+                    <!-- ================= Logged Out ================= -->
 
-<a class="nav-link" href="/wishlist">
-    <i class="fa-solid fa-heart"></i>
-    Wishlist
-</a>
-<a class="nav-link" href="/trips">
-    <i class="fa-solid fa-suitcase"></i>
-    My Trips
-</a>
-<a class="nav-link" href="/logout">
-    <i class="fa-solid fa-right-from-bracket"></i>
-    Logout
-</a>
+                    <a
+                        class="nav-link"
+                        href="/signup">
 
-<% } %>
+                        <i class="fa-solid fa-user-plus me-1"></i>
+
+                        Signup
+
+                    </a>
+
+
+                    <a
+                        class="nav-link"
+                        href="/login">
+
+                        <i class="fa-solid fa-right-to-bracket me-1"></i>
+
+                        Login
+
+                    </a>
+
+
+                <% } else { %>
+
+
+                    <!-- ================= Notifications ================= -->
+
+                    <div class="dropdown notification-wrapper">
+
+
+                        <a
+                            class="nav-link bell-icon position-relative"
+                            href="#"
+                            role="button"
+                            data-bs-toggle="dropdown"
+                            aria-expanded="false"
+                            aria-label="Notifications">
+
+                            <i class="fa-solid fa-bell"></i>
+
+
+                            <% if(unreadNotifications > 0){ %>
+
+                                <span class="notification-count">
+
+                                    <%= unreadNotifications %>
+
+                                </span>
+
+                            <% } %>
+
+                        </a>
+
+
+                        <!-- Notification Dropdown -->
+
+                        <ul class="dropdown-menu dropdown-menu-end notification-dropdown">
+
+
+                            <!-- Header -->
+
+                            <li>
+
+                                <div
+                                    class="dropdown-header d-flex justify-content-between align-items-center">
+
+                                    <span>
+                                        🔔 Notifications
+                                    </span>
+
+
+                                    <% if(unreadNotifications > 0){ %>
+
+                                        <form
+                                            action="/notifications/mark-all-read?_method=PUT"
+                                            method="POST"
+                                            class="m-0">
+
+                                            <button
+                                                type="submit"
+                                                class="btn btn-link btn-sm p-0 text-decoration-none">
+
+                                                Mark All
+
+                                            </button>
+
+                                        </form>
+
+                                    <% } %>
+
+                                </div>
+
+                            </li>
+
+
+                            <!-- Notifications -->
+
+                            <% if(latestNotifications.length === 0){ %>
+
+
+                                <li>
+
+                                    <span class="dropdown-item text-muted">
+
+                                        No notifications yet
+
+                                    </span>
+
+                                </li>
+
+
+                            <% } else { %>
+
+
+                                <% latestNotifications.forEach(notification => { %>
+
+
+                                    <li>
+
+                                        <a
+                                            class="dropdown-item notification-item <%= !notification.isRead ? 'bg-light' : '' %>"
+                                            href="/notifications/<%= notification._id %>/open">
+
+
+                                            <div class="d-flex">
+
+
+                                                <!-- Icon -->
+
+                                                <div class="me-3">
+
+                                                    <% if(notification.type === "booking"){ %>
+
+                                                        <i class="fa-solid fa-calendar-check text-primary fs-4"></i>
+
+
+                                                    <% } else if(notification.type === "payment"){ %>
+
+                                                        <i class="fa-solid fa-credit-card text-success fs-4"></i>
+
+
+                                                    <% } else if(notification.type === "review"){ %>
+
+                                                        <i class="fa-solid fa-star text-warning fs-4"></i>
+
+
+                                                    <% } else { %>
+
+                                                        <i class="fa-solid fa-bell text-secondary fs-4"></i>
+
+                                                    <% } %>
+
+                                                </div>
+
+
+                                                <!-- Content -->
+
+                                                <div>
+
+                                                    <strong>
+
+                                                        <%= notification.title %>
+
+                                                    </strong>
+
+                                                    <br>
+
+
+                                                    <small class="text-muted">
+
+                                                        <%= notification.message %>
+
+                                                    </small>
+
+                                                    <br>
+
+
+                                                    <small class="text-secondary">
+
+                                                        <%= moment(notification.createdAt).fromNow() %>
+
+                                                    </small>
+
+                                                </div>
+
+
+                                            </div>
+
+
+                                        </a>
+
+                                    </li>
+
+
+                                <% }) %>
+
+
+                            <% } %>
+
+
+                            <!-- Footer -->
+
+                            <li>
+
+                                <hr class="dropdown-divider">
+
+                            </li>
+
+
+                            <li>
+
+                                <a
+                                    class="dropdown-item text-center text-primary fw-semibold"
+                                    href="/notifications">
+
+                                    View All Notifications →
+
+                                </a>
+
+                            </li>
+
+
+                        </ul>
+
+                    </div>
+
+
+                    <!-- ================= Profile ================= -->
+
+                    <div class="dropdown profile-wrapper">
+
+
+                        <a
+                            class="nav-link d-flex align-items-center profile-menu"
+                            href="#"
+                            role="button"
+                            data-bs-toggle="dropdown"
+                            aria-expanded="false">
+
+
+                            <!-- Profile Icon -->
+
+                            <i class="fa-solid fa-circle-user fs-4"></i>
+
+
+                            <!-- Username -->
+
+                            <span class="fw-semibold ms-2">
+
+                                <%= currUser.username %>
+
+                            </span>
+
+
+                            <!-- Arrow -->
+
+                            <i class="fa-solid fa-chevron-down ms-2 small"></i>
+
+
+                        </a>
+
+
+                        <!-- Profile Dropdown -->
+
+                        <ul class="dropdown-menu dropdown-menu-end shadow-sm">
+
+
+                            <!-- Profile -->
+
+                            <li>
+
+                                <a
+                                    class="dropdown-item"
+                                    href="/users/<%= currUser._id %>">
+
+                                    <i class="fa-solid fa-user me-2"></i>
+
+                                    My Profile
+
+                                </a>
+
+                            </li>
+
+
+                            <!-- Dashboard -->
+
+                            <li>
+
+                                <a
+                                    class="dropdown-item"
+                                    href="/dashboard">
+
+                                    <i class="fa-solid fa-chart-line me-2"></i>
+
+                                    Dashboard
+
+                                </a>
+
+                            </li>
+
+
+                            <!-- Wishlist -->
+
+                            <li>
+
+                                <a
+                                    class="dropdown-item"
+                                    href="/wishlist">
+
+                                    <i class="fa-solid fa-heart me-2"></i>
+
+                                    Wishlist
+
+                                </a>
+
+                            </li>
+
+
+                            <!-- Trips -->
+
+                            <li>
+
+                                <a
+                                    class="dropdown-item"
+                                    href="/trips">
+
+                                    <i class="fa-solid fa-suitcase me-2"></i>
+
+                                    My Trips
+
+                                </a>
+
+                            </li>
+
+
+                            <!-- Divider -->
+
+                            <li>
+
+                                <hr class="dropdown-divider">
+
+                            </li>
+
+
+                            <!-- Logout -->
+
+                            <li>
+
+                                <a
+                                    class="dropdown-item text-danger"
+                                    href="/logout">
+
+                                    <i class="fa-solid fa-right-from-bracket me-2"></i>
+
+                                    Logout
+
+                                </a>
+
+                            </li>
+
+
+                        </ul>
+
+                    </div>
+
+
+                <% } %>
+
 
             </div>
 
         </div>
 
     </div>
+
 </nav>

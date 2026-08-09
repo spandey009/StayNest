@@ -1,0 +1,102 @@
+<!-- Property Image -->
+
+<div class="card border-0 shadow rounded-4 overflow-hidden">
+
+    <img
+        src="<%= booking.listing.image.url %>"
+        alt="<%= booking.listing.title %>"
+        class="img-fluid"
+        style="height:450px; width:100%; object-fit:cover;">
+
+    <div class="card-body">
+
+        <div class="d-flex justify-content-between align-items-start">
+
+            <div>
+
+                <h2 class="fw-bold mb-2">
+
+                    <%= booking.listing.title %>
+
+                </h2>
+
+                <p class="text-muted mb-2">
+
+                    <i class="fa-solid fa-location-dot text-danger"></i>
+
+                    <%= booking.listing.location %>,
+                    <%= booking.listing.country %>
+
+                </p>
+
+            </div>
+
+            <span class="badge bg-warning text-dark fs-6">
+
+                ⭐ Guest Favourite
+
+            </span>
+
+        </div>
+
+        <hr>
+
+        <div class="row text-center">
+
+            <div class="col">
+
+                <i class="fa-solid fa-users fa-lg text-primary"></i>
+
+                <p class="mt-2 mb-0">
+
+                    <%= booking.guests %> Guests
+
+                </p>
+
+            </div>
+
+            <div class="col">
+
+                <i class="fa-solid fa-bed fa-lg text-success"></i>
+
+                <p class="mt-2 mb-0">
+
+                    <%= booking.nights %> Night(s)
+
+                </p>
+
+            </div>
+
+            <div class="col">
+
+                <i class="fa-solid fa-indian-rupee-sign fa-lg text-danger"></i>
+
+                <p class="mt-2 mb-0">
+
+                    ₹ <%= booking.totalPrice.toLocaleString("en-IN") %>
+
+                </p>
+
+            </div>
+
+        </div>
+
+        <hr>
+
+        <div class="d-grid">
+
+            <a
+                href="/listings/<%= booking.listing._id %>"
+                class="btn btn-dark rounded-pill">
+
+                <i class="fa-solid fa-house me-2"></i>
+
+                View Property
+
+            </a>
+
+        </div>
+
+    </div>
+
+</div>

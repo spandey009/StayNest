@@ -48,7 +48,7 @@ const initDB = async () => {
                 };
             }
 
-            obj.owner = "6a44c0250a00a91daa316a57";
+            obj.owner = "6a44fe421d926ecef21d2576";
 
             listings.push(obj);
 

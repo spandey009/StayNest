@@ -1,0 +1,113 @@
+<% layout("layouts/boilerplate") %>
+
+<div class="container mt-5">
+
+    <div class="row justify-content-center">
+
+        <div class="col-md-8">
+
+            <div class="card shadow">
+
+                <div class="card-body">
+
+                    <h2 class="mb-4">Edit Profile</h2>
+
+                    <form
+                        method="POST"
+                        action="/users/<%= user._id %>/edit?_method=PUT"
+                        enctype="multipart/form-data">
+
+                        <!-- Current Profile Image -->
+
+                        <div class="text-center mb-4">
+
+                            <img
+                                src="<%= user.profileImage.url %>"
+                                class="rounded-circle border"
+                                width="150"
+                                height="150"
+                                style="object-fit:cover;"
+                            >
+
+                        </div>
+
+                        <!-- Upload New Image -->
+
+                        <div class="mb-3">
+
+                            <label class="form-label">
+                                Profile Photo
+                            </label>
+
+                            <input
+                                type="file"
+                                name="profileImage"
+                                class="form-control"
+                                accept="image/*">
+
+                        </div>
+
+                        <!-- Bio -->
+
+                        <div class="mb-3">
+
+                            <label class="form-label">
+                                Bio
+                            </label>
+
+                            <textarea
+                                name="bio"
+                                class="form-control"
+                                rows="4"><%= user.bio %></textarea>
+
+                        </div>
+
+                        <!-- Location -->
+
+                        <div class="mb-3">
+
+                            <label class="form-label">
+                                Location
+                            </label>
+
+                            <input
+                                type="text"
+                                name="location"
+                                class="form-control"
+                                value="<%= user.location %>">
+
+                        </div>
+
+                        <!-- Phone -->
+
+                        <div class="mb-3">
+
+                            <label class="form-label">
+                                Phone
+                            </label>
+
+                            <input
+                                type="text"
+                                name="phone"
+                                class="form-control"
+                                value="<%= user.phone %>">
+
+                        </div>
+
+                        <button class="btn btn-dark">
+
+                            Save Changes
+
+                        </button>
+
+                    </form>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</div>

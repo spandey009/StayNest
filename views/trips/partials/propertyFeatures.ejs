@@ -1,0 +1,159 @@
+<!-- ================= Property Information ================= -->
+
+<div class="card border-0 shadow-sm rounded-4 mt-4">
+
+    <div class="card-body">
+
+        <h4 class="fw-bold mb-4">
+            🏡 Property Information
+        </h4>
+
+        <div class="row g-4">
+
+            <!-- Location -->
+
+            <div class="col-md-6">
+
+                <div class="d-flex align-items-center">
+
+                    <div class="me-3">
+
+                        <i class="fa-solid fa-location-dot fa-lg text-danger"></i>
+
+                    </div>
+
+                    <div>
+
+                        <small class="text-muted">
+                            Location
+                        </small>
+
+                        <p class="mb-0 fw-semibold">
+
+                            <%= booking.listing.location %>
+
+                        </p>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+            <!-- Country -->
+
+            <div class="col-md-6">
+
+                <div class="d-flex align-items-center">
+
+                    <div class="me-3">
+
+                        <i class="fa-solid fa-globe fa-lg text-primary"></i>
+
+                    </div>
+
+                    <div>
+
+                        <small class="text-muted">
+                            Country
+                        </small>
+
+                        <p class="mb-0 fw-semibold">
+
+                            <%= booking.listing.country %>
+
+                        </p>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+            <!-- Price -->
+
+            <div class="col-md-6">
+
+                <div class="d-flex align-items-center">
+
+                    <div class="me-3">
+
+                        <i class="fa-solid fa-indian-rupee-sign fa-lg text-success"></i>
+
+                    </div>
+
+                    <div>
+
+                        <small class="text-muted">
+                            Price per night
+                        </small>
+
+                        <p class="mb-0 fw-semibold">
+
+                            ₹ <%= booking.listing.price.toLocaleString("en-IN") %>
+
+                        </p>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+            <!-- Stay Duration -->
+
+            <div class="col-md-6">
+
+                <div class="d-flex align-items-center">
+
+                    <div class="me-3">
+
+                        <i class="fa-solid fa-moon fa-lg text-warning"></i>
+
+                    </div>
+
+                    <div>
+
+                        <small class="text-muted">
+                            Stay Duration
+                        </small>
+
+                        <p class="mb-0 fw-semibold">
+
+                            <%= booking.nights %> Night(s)
+
+                        </p>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+
+        <hr class="my-4">
+
+        <!-- Description -->
+
+        <% if (booking.listing.description) { %>
+
+            <div>
+
+                <h6 class="fw-bold">
+                    About this property
+                </h6>
+
+                <p class="text-muted mb-0">
+
+                    <%= booking.listing.description %>
+
+                </p>
+
+            </div>
+
+        <% } %>
+
+    </div>
+
+</div>

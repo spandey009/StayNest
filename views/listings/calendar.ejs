@@ -1,0 +1,72 @@
+<% layout("layouts/boilerplate") %>
+
+<div class="container calendar-container">
+
+    <div class="calendar-header">
+        <h2 class="calendar-title">
+            <i class="fa-solid fa-calendar-days"></i>
+            Manage Availability
+        </h2>
+
+        <p class="calendar-subtitle">
+            Select the dates when this listing will not be available for booking.
+        </p>
+    </div>
+
+    <div class="card calendar-card shadow">
+
+        <h4 class="listing-title">
+            <%= listing.title %>
+        </h4>
+
+        <form action="/listings/<%= listing._id %>/calendar" method="POST">
+
+            <div class="mb-4">
+
+                <label for="calendar" class="form-label fw-semibold">
+                    Unavailable Dates
+                </label>
+
+                <input
+                    type="text"
+                    id="calendar"
+                    name="unavailableDates"
+                    class="form-control calendar-input"
+                    placeholder="Click to select dates"
+                    readonly
+                    autocomplete="off">
+
+                <small class="text-muted">
+                    You can select multiple dates.
+                </small>
+
+            </div>
+
+            <button type="submit" class="btn btn-dark calendar-btn">
+                <i class="fa-solid fa-floppy-disk"></i>
+                Save Availability
+            </button>
+
+        </form>
+
+    </div>
+
+</div>
+
+<script>
+document.addEventListener("DOMContentLoaded", function () {
+
+    flatpickr("#calendar", {
+        mode: "multiple",
+        dateFormat: "Y-m-d",
+        conjunction: ",",
+        allowInput: false,
+        defaultDate: [
+            <% listing.unavailableDates.forEach(function(date, index){ %>
+                "<%= new Date(date).toISOString().split('T')[0] %>"<%= index < listing.unavailableDates.length - 1 ? "," : "" %>
+            <% }) %>
+        ]
+    });
+
+});
+</script>

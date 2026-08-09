@@ -272,3 +272,33 @@ icon.style.color="#ff385c";
 });
 
 </script>
+<script>
+
+const filters = document.getElementById("filters");
+
+const leftButton = document.querySelector(".scroll-btn.left");
+const rightButton = document.querySelector(".scroll-btn.right");
+
+if (filters && leftButton && rightButton) {
+
+    rightButton.addEventListener("click", function () {
+
+        filters.scrollBy({
+            left: 250,
+            behavior: "smooth"
+        });
+
+    });
+
+    leftButton.addEventListener("click", function () {
+
+        filters.scrollBy({
+            left: -250,
+            behavior: "smooth"
+        });
+
+    });
+
+}
+
+</script>
