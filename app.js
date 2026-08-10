@@ -21,6 +21,9 @@ const { listingSchema,reviewSchema } = require('./schema.js');
 const Review = require('./models/review.js');
 //const MONGO_URL = "mongodb://127.0.0.1:27017/StayNest";
 const dbUrl = process.env.ATLASDB_URL;
+console.log("MongoDB Host:", new URL(dbUrl).hostname);
+console.log("MongoDB Database:", new URL(dbUrl).pathname);
+
 const moment = require("moment");
 const invoiceRoutes = require("./routes/invoice");
 const notificationRoutes = require("./routes/notification");
