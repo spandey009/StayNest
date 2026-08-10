@@ -7,7 +7,7 @@ const { saveRedirectUrl } = require('../middleware.js');
 const userController = require('../controllers/user.js');
 
 const multer = require("multer");
-const { storage } = require("../cloudConfig");
+const { storage } = require("../cloudconfig");
 const upload = multer({ storage });
 
 
