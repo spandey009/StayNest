@@ -4,39 +4,68 @@
 
     <h2 class="mb-4">Host Dashboard</h2>
 
+    <!-- ================= Dashboard Stats ================= -->
+
     <div class="row g-4">
 
-        <div class="col-md-3">
-            <div class="card text-center shadow p-3">
-                <h2><%= totalListings %></h2>
-                <p>Total Listings</p>
+        <div class="col-md-6 col-lg-3">
+            <div class="card text-center shadow-sm border-0 p-3 h-100">
+                <h2 class="fw-bold">
+                    <%= totalListings %>
+                </h2>
+                <p class="text-muted mb-0">
+                    Total Listings
+                </p>
             </div>
         </div>
 
-        <div class="col-md-3">
-            <div class="card text-center shadow p-3">
-                <h2><%= totalBookings %></h2>
-                <p>Total Bookings</p>
+        <div class="col-md-6 col-lg-3">
+            <div class="card text-center shadow-sm border-0 p-3 h-100">
+                <h2 class="fw-bold">
+                    <%= totalBookings %>
+                </h2>
+                <p class="text-muted mb-0">
+                    Total Bookings
+                </p>
             </div>
         </div>
 
-        <div class="col-md-3">
-            <div class="card text-center shadow p-3">
-                <h2><%= totalReviews %></h2>
-                <p>Total Reviews</p>
+        <div class="col-md-6 col-lg-2">
+            <div class="card text-center shadow-sm border-0 p-3 h-100">
+                <h2 class="fw-bold">
+                    <%= totalReviews %>
+                </h2>
+                <p class="text-muted mb-0">
+                    Total Reviews
+                </p>
             </div>
         </div>
 
-        <div class="col-md-3">
-            <div class="card text-center shadow p-3">
-                <h2>₹<%= totalRevenue %></h2>
-                <p>Total Revenue</p>
+        <div class="col-md-6 col-lg-2">
+            <div class="card text-center shadow-sm border-0 p-3 h-100">
+                <h2 class="fw-bold">
+                    ₹<%= totalRefunded %>
+                </h2>
+                <p class="text-muted mb-0">
+                    Total Refunded
+                </p>
+            </div>
+        </div>
+
+        <div class="col-md-12 col-lg-2">
+            <div class="card text-center shadow-sm border-0 p-3 h-100">
+                <h2 class="fw-bold text-success">
+                    ₹<%= netRevenue %>
+                </h2>
+                <p class="text-muted mb-0">
+                    Net Revenue
+                </p>
             </div>
         </div>
 
     </div>
 
-    <!-- ADD EVERYTHING BELOW HERE -->
+    <!-- ================= Quick Actions ================= -->
 
     <hr class="my-5">
 
@@ -45,187 +74,350 @@
     <div class="d-flex flex-wrap gap-3 mb-5">
 
         <a href="/listings/new" class="btn btn-danger">
-            <i class="fa-solid fa-plus"></i> Add Listing
+            <i class="fa-solid fa-plus"></i>
+            Add Listing
         </a>
 
         <a href="/listings" class="btn btn-outline-dark">
-            <i class="fa-solid fa-house"></i> View Listings
+            <i class="fa-solid fa-house"></i>
+            View Listings
         </a>
 
         <a href="/trips" class="btn btn-outline-primary">
-            <i class="fa-solid fa-suitcase"></i> My Trips
+            <i class="fa-solid fa-suitcase"></i>
+            My Trips
         </a>
 
         <a href="/wishlist" class="btn btn-outline-danger">
-            <i class="fa-solid fa-heart"></i> Wishlist
+            <i class="fa-solid fa-heart"></i>
+            Wishlist
         </a>
 
     </div>
+
+    <!-- ================= My Listings ================= -->
 
     <hr class="my-5">
 
     <h3 class="mb-4">My Listings</h3>
 
-    <div class="row">
+    <% if (listings.length === 0) { %>
 
-        <% listings.forEach(listing => { %>
+        <div class="alert alert-info">
+            You have not created any listings yet.
+        </div>
 
-        <div class="col-md-4 mb-4">
+    <% } else { %>
 
-            <div class="card shadow-sm">
+        <div class="row">
 
-                <img src="<%= listing.image.url %>"
-                     class="card-img-top"
-                     style="height:220px; object-fit:cover;">
+            <% listings.forEach(listing => { %>
 
-                <div class="card-body">
+                <div class="col-md-6 col-lg-4 mb-4">
 
-                    <h5><%= listing.title %></h5>
+                    <div class="card shadow-sm border-0 h-100">
 
-                    <p><%= listing.location %></p>
+                        <img
+                            src="<%= listing.image && listing.image.url ? listing.image.url : '/images/default-listing.jpg' %>"
+                            class="card-img-top"
+                            style="height:220px; object-fit:cover;"
+                            alt="<%= listing.title %>"
+                        >
 
-                    <a href="/listings/<%= listing._id %>"
-                       class="btn btn-dark">
-                        View
-                    </a>
+                        <div class="card-body">
+
+                            <h5 class="fw-bold">
+                                <%= listing.title %>
+                            </h5>
+
+                            <p class="text-muted">
+                                <i class="fa-solid fa-location-dot me-1"></i>
+                                <%= listing.location %>
+                            </p>
+
+                            <a
+                                href="/listings/<%= listing._id %>"
+                                class="btn btn-dark"
+                            >
+                                View Property
+                            </a>
+
+                        </div>
+
+                    </div>
 
                 </div>
 
-            </div>
+            <% }) %>
 
         </div>
 
-        <% }) %>
+    <% } %>
 
-    </div>
-<hr class="my-5">
+    <!-- ================= Recent Bookings ================= -->
 
-<h3 class="mb-4">Recent Bookings</h3>
+    <hr class="my-5">
 
-<% if(bookings.length === 0){ %>
+    <h3 class="mb-4">Recent Bookings</h3>
 
-<div class="alert alert-info">
-    No bookings yet.
-</div>
+    <% if (bookings.length === 0) { %>
 
-<% } else { %>
+        <div class="alert alert-info">
+            No bookings yet.
+        </div>
 
-<div class="table-responsive">
+    <% } else { %>
 
-<table class="table table-bordered table-hover align-middle">
+        <div class="table-responsive">
 
-    <thead class="table-dark">
+            <table class="table table-bordered table-hover align-middle">
 
-        <tr>
-            <th>Guest</th>
-            <th>Listing</th>
-            <th>Check-In</th>
-            <th>Check-Out</th>
-            <th>Status</th>
-            <th>Total</th>
-        </tr>
+                <thead class="table-dark">
 
-    </thead>
+                    <tr>
+                        <th>Guest</th>
+                        <th>Listing</th>
+                        <th>Check-In</th>
+                        <th>Check-Out</th>
+                        <th>Booking</th>
+                        <th>Payment</th>
+                        <th>Refund</th>
+                        <th>Total</th>
+                    </tr>
 
-    <tbody>
+                </thead>
 
-    <% bookings.slice(0,5).forEach(booking => { %>
+                <tbody>
 
-        <tr>
+                    <% bookings.slice(0, 5).forEach(booking => { %>
 
-            <td><%= booking.user.username %></td>
+                        <tr>
 
-            <td><%= booking.listing.title %></td>
+                            <!-- Guest -->
 
-            <td>
-                <%= booking.checkIn.toLocaleDateString("en-IN") %>
-            </td>
+                            <td>
+                                <% if (booking.user) { %>
+                                    <%= booking.user.username %>
+                                <% } else { %>
+                                    <span class="text-muted">
+                                        Guest unavailable
+                                    </span>
+                                <% } %>
+                            </td>
 
-            <td>
-                <%= booking.checkOut.toLocaleDateString("en-IN") %>
-            </td>
+                            <!-- Listing -->
 
-            <td>
+                            <td>
+                                <% if (booking.listing) { %>
 
-                <% if(booking.status==="Confirmed"){ %>
+                                    <a
+                                        href="/listings/<%= booking.listing._id %>"
+                                        class="text-decoration-none fw-semibold"
+                                    >
+                                        <%= booking.listing.title %>
+                                    </a>
 
-                    <span class="badge bg-success">
-                        Confirmed
-                    </span>
+                                <% } else { %>
 
-                <% } else { %>
+                                    <span class="text-muted">
+                                        Property unavailable
+                                    </span>
 
-                    <span class="badge bg-danger">
-                        Cancelled
-                    </span>
+                                <% } %>
+                            </td>
 
-                <% } %>
+                            <!-- Check In -->
 
-            </td>
+                            <td>
+                                <%= booking.checkIn.toLocaleDateString("en-IN") %>
+                            </td>
 
-            <td>₹<%= booking.totalPrice %></td>
+                            <!-- Check Out -->
 
-        </tr>
+                            <td>
+                                <%= booking.checkOut.toLocaleDateString("en-IN") %>
+                            </td>
 
-    <% }) %>
+                            <!-- Booking Status -->
 
-    </tbody>
+                            <td>
 
-</table>
+                                <% if (booking.status === "Confirmed") { %>
 
-</div>
+                                    <span class="badge bg-success">
+                                        <i class="fa-solid fa-circle-check me-1"></i>
+                                        Confirmed
+                                    </span>
 
-<% } %>
+                                <% } else if (booking.status === "Cancelled") { %>
 
-<hr class="my-5">
+                                    <span class="badge bg-danger">
+                                        <i class="fa-solid fa-circle-xmark me-1"></i>
+                                        Cancelled
+                                    </span>
 
-<h3 class="mb-4">Recent Reviews</h3>
+                                <% } else { %>
 
-<% if(recentReviews.length === 0){ %>
+                                    <span class="badge bg-secondary">
+                                        <%= booking.status || "Unknown" %>
+                                    </span>
 
-<div class="alert alert-info">
-    No reviews yet.
-</div>
+                                <% } %>
 
-<% } else { %>
+                            </td>
 
-<div class="row">
+                            <!-- Payment Status -->
 
-<% recentReviews.forEach(review => { %>
+                            <td>
 
-<div class="col-md-6 mb-4">
+                                <% if (booking.paymentStatus === "Paid") { %>
 
-    <div class="card shadow-sm">
+                                    <span class="badge bg-success">
+                                        Paid
+                                    </span>
 
-        <div class="card-body">
+                                <% } else if (booking.paymentStatus === "Refunded") { %>
 
-            <h5>
-                <i class="fa-solid fa-user"></i>
-                <%= review.author.username %>
-            </h5>
+                                    <span class="badge bg-info text-dark">
+                                        Refunded
+                                    </span>
 
-            <p class="text-warning mb-2">
-                <% for(let i = 0; i < review.rating; i++){ %>
-                    <i class="fa-solid fa-star"></i>
-                <% } %>
-            </p>
+                                <% } else if (booking.paymentStatus === "Failed") { %>
 
-            <p><%= review.comment %></p>
+                                    <span class="badge bg-danger">
+                                        Failed
+                                    </span>
 
-            <small class="text-muted">
-                <%= review.createdAt.toDateString() %>
-            </small>
+                                <% } else { %>
+
+                                    <span class="badge bg-secondary">
+                                        <%= booking.paymentStatus || "Pending" %>
+                                    </span>
+
+                                <% } %>
+
+                            </td>
+
+                            <!-- Refund Status -->
+
+                            <td>
+
+                                <% if (booking.refundStatus === "Processed") { %>
+
+                                    <span class="badge bg-success">
+                                        ₹<%= booking.refundedAmount || 0 %>
+                                    </span>
+
+                                <% } else if (booking.refundStatus === "Pending") { %>
+
+                                    <span class="badge bg-warning text-dark">
+                                        <i class="fa-solid fa-clock me-1"></i>
+                                        Processing
+                                    </span>
+
+                                <% } else if (booking.refundStatus === "Failed") { %>
+
+                                    <span class="badge bg-danger">
+                                        <i class="fa-solid fa-circle-xmark me-1"></i>
+                                        Failed
+                                    </span>
+
+                                <% } else { %>
+
+                                    <span class="text-muted">
+                                        —
+                                    </span>
+
+                                <% } %>
+
+                            </td>
+
+                            <!-- Total -->
+
+                            <td>
+                                <strong>
+                                    ₹<%= booking.totalPrice %>
+                                </strong>
+                            </td>
+
+                        </tr>
+
+                    <% }) %>
+
+                </tbody>
+
+            </table>
 
         </div>
 
-    </div>
+    <% } %>
 
-</div>
+    <!-- ================= Recent Reviews ================= -->
 
-<% }) %>
+    <hr class="my-5">
 
-</div>
+    <h3 class="mb-4">Recent Reviews</h3>
 
-<% } %>
+    <% if (recentReviews.length === 0) { %>
+
+        <div class="alert alert-info">
+            No reviews yet.
+        </div>
+
+    <% } else { %>
+
+        <div class="row">
+
+            <% recentReviews.forEach(review => { %>
+
+                <div class="col-md-6 mb-4">
+
+                    <div class="card shadow-sm border-0 h-100">
+
+                        <div class="card-body">
+
+                            <h5 class="fw-bold">
+
+                                <i class="fa-solid fa-user me-2"></i>
+
+                                <% if (review.author) { %>
+                                    <%= review.author.username %>
+                                <% } else { %>
+                                    Guest
+                                <% } %>
+
+                            </h5>
+
+                            <p class="text-warning mb-2">
+
+                                <% for (let i = 0; i < review.rating; i++) { %>
+
+                                    <i class="fa-solid fa-star"></i>
+
+                                <% } %>
+
+                            </p>
+
+                            <p>
+                                <%= review.comment %>
+                            </p>
+
+                            <small class="text-muted">
+
+                                <%= review.createdAt.toDateString() %>
+
+                            </small>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+            <% }) %>
+
+        </div>
+
+    <% } %>
 
 </div>

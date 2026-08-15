@@ -1,175 +1,132 @@
 <!-- ================= Booking Timeline ================= -->
-
 <div class="card border-0 shadow-sm rounded-4 mt-4">
-
     <div class="card-body">
-
         <h4 class="fw-bold mb-4">
             🗓️ Booking Timeline
         </h4>
 
         <!-- Booking Created -->
-
         <div class="d-flex mb-4">
-
             <div class="me-3 text-success">
-
                 <i class="fa-solid fa-circle-check fa-lg"></i>
-
             </div>
-
             <div>
-
-                <h6 class="fw-bold mb-1">
-                    Booking Created
-                </h6>
-
+                <h6 class="fw-bold mb-1">Booking Created</h6>
                 <p class="text-muted mb-0">
-                    <%= booking.createdAt
-                        ? booking.createdAt.toDateString()
-                        : "N/A" %>
+                    <%= booking.createdAt ? booking.createdAt.toDateString() : "N/A" %>
                 </p>
-
             </div>
-
         </div>
 
         <!-- Payment -->
-
         <div class="d-flex mb-4">
-
-            <div class="me-3 text-success">
-
-                <% if (booking.paymentStatus === "Paid") { %>
-
-                    <i class="fa-solid fa-circle-check fa-lg"></i>
-
+            <div class="me-3">
+                <% if (booking.paymentStatus === "Paid" || booking.paymentStatus === "Refunded") { %>
+                    <i class="fa-solid fa-circle-check fa-lg text-success"></i>
+                <% else if (booking.paymentStatus === "Failed") { %>
+                    <i class="fa-solid fa-circle-xmark fa-lg text-danger"></i>
                 <% } else { %>
-
-                    <i class="fa-solid fa-clock fa-lg"></i>
-
+                    <i class="fa-solid fa-clock fa-lg text-warning"></i>
                 <% } %>
-
             </div>
-
             <div>
-
-                <h6 class="fw-bold mb-1">
-                    Payment
-                </h6>
-
+                <h6 class="fw-bold mb-1">Payment</h6>
                 <p class="text-muted mb-0">
-
                     <% if (booking.paymentStatus === "Paid") { %>
-
-                        Payment completed successfully
-
+                        Payment completed successfully.
+                    <% } else if (booking.paymentStatus === "Refunded") { %>
+                        Payment was completed and has been refunded.
                     <% } else if (booking.paymentStatus === "Failed") { %>
-
-                        Payment failed
-
+                        Payment failed.
                     <% } else { %>
-
-                        Payment pending
-
+                        Payment pending.
                     <% } %>
-
                 </p>
-
+                <% if (booking.paidAt) { %>
+                    <small class="text-muted">
+                        Paid on <%= booking.paidAt.toDateString() %>
+                    </small>
+                <% } %>
             </div>
-
         </div>
 
         <!-- Booking Status -->
-
         <div class="d-flex mb-4">
-
             <div class="me-3">
-
                 <% if (booking.status === "Confirmed") { %>
-
                     <i class="fa-solid fa-circle-check fa-lg text-success"></i>
-
                 <% } else { %>
-
                     <i class="fa-solid fa-circle-xmark fa-lg text-danger"></i>
-
                 <% } %>
-
             </div>
-
             <div>
-
                 <h6 class="fw-bold mb-1">
-
-                    Booking
-                    <%= booking.status %>
-
+                    Booking <%= booking.status %>
                 </h6>
-
                 <p class="text-muted mb-0">
-
-                    Your reservation is
-                    <%= booking.status.toLowerCase() %>.
-
+                    Your reservation is <%= booking.status.toLowerCase() %>.
                 </p>
-
             </div>
-
         </div>
 
+        <% if (booking.refundStatus) { %>
+            <!-- Refund -->
+            <div class="d-flex mb-4">
+                <div class="me-3">
+                    <% if (booking.refundStatus === "Processed") { %>
+                        <i class="fa-solid fa-circle-check fa-lg text-success"></i>
+                    <% } else if (booking.refundStatus === "Failed") { %>
+                        <i class="fa-solid fa-circle-xmark fa-lg text-danger"></i>
+                    <% } else { %>
+                        <i class="fa-solid fa-clock fa-lg text-warning"></i>
+                    <% } %>
+                </div>
+                <div>
+                    <h6 class="fw-bold mb-1">
+                        Refund <%= booking.refundStatus %>
+                    </h6>
+                    <p class="text-muted mb-0">
+                        <% if (booking.refundStatus === "Processed") { %>
+                            Refund of ₹<%= (booking.refundedAmount || 0).toLocaleString("en-IN") %> has been processed.
+                        <% } else if (booking.refundStatus === "Failed") { %>
+                            Your refund could not be processed.
+                        <% } else { %>
+                            Your refund of ₹<%= (booking.refundedAmount || 0).toLocaleString("en-IN") %> is being processed.
+                        <% } %>
+                    </p>
+                    <% if (booking.refundedAt) { %>
+                        <small class="text-muted">
+                            Processed on <%= booking.refundedAt.toDateString() %>
+                        </small>
+                    <% } %>
+                </div>
+            </div>
+        <% } %>
+
         <!-- Check In -->
-
         <div class="d-flex mb-4">
-
             <div class="me-3 text-primary">
-
                 <i class="fa-solid fa-calendar-check fa-lg"></i>
-
             </div>
-
             <div>
-
-                <h6 class="fw-bold mb-1">
-                    Check In
-                </h6>
-
+                <h6 class="fw-bold mb-1">Check In</h6>
                 <p class="text-muted mb-0">
-
                     <%= booking.checkIn.toDateString() %>
-
                 </p>
-
             </div>
-
         </div>
 
         <!-- Check Out -->
-
         <div class="d-flex">
-
             <div class="me-3 text-secondary">
-
                 <i class="fa-solid fa-calendar-xmark fa-lg"></i>
-
             </div>
-
             <div>
-
-                <h6 class="fw-bold mb-1">
-                    Check Out
-                </h6>
-
+                <h6 class="fw-bold mb-1">Check Out</h6>
                 <p class="text-muted mb-0">
-
                     <%= booking.checkOut.toDateString() %>
-
                 </p>
-
             </div>
-
         </div>
-
     </div>
-
 </div>

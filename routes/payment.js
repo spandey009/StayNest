@@ -1,15 +1,35 @@
 const express = require("express");
 const router = express.Router();
-
 const paymentController = require("../controllers/payment");
+const { isLoggedIn } = require("../middleware");
 
-// Create Razorpay Order
-router.post("/create-order", paymentController.createOrder);
+router.post(
+    "/check-availability",
+    isLoggedIn,
+    paymentController.checkAvailability
+);
 
-// Verify Razorpay Payment
-router.post("/verify", paymentController.verifyPayment);
+router.post(
+    "/create-order",
+    isLoggedIn,
+    paymentController.createOrder
+);
+
+router.post(
+    "/verify",
+    isLoggedIn,
+    paymentController.verifyPayment
+);
+
+router.post(
+    "/webhook",
+    paymentController.handleWebhook
+);
+
 router.get(
     "/success/:bookingId",
+    isLoggedIn,
     paymentController.renderSuccessPage
 );
+
 module.exports = router;

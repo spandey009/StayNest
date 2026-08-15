@@ -154,20 +154,30 @@ module.exports.dashboard = async (req, res) => {
     const totalListings = listings.length;
     const totalBookings = bookings.length;
     const totalReviews = reviews.length;
-    const totalRevenue = bookings.reduce((sum, booking) => {
-        return booking.status === "Confirmed"
-            ? sum + booking.totalPrice
-            : sum;
-    }, 0);
+   const totalRevenue = bookings.reduce((sum, booking) => {
+    if (booking.paymentStatus !== "Paid") {
+        return sum;
+    }
+
+    return sum + booking.totalPrice;
+}, 0);
+
+const totalRefunded = bookings.reduce((sum, booking) => {
+    return sum + (booking.refundedAmount || 0);
+}, 0);
+
+const netRevenue = totalRevenue - totalRefunded;
 
     res.render("users/dashboard", {
-        listings,
-        bookings,
-        reviews,
-        recentReviews,
-        totalListings,
-        totalBookings,
-        totalRevenue,
-        totalReviews
-    });
+    listings,
+    bookings,
+    reviews,
+    recentReviews,
+    totalListings,
+    totalBookings,
+    totalRevenue,
+    totalRefunded,
+    netRevenue,
+    totalReviews
+});
 };

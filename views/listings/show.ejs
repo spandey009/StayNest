@@ -342,8 +342,15 @@ New
 <input type="hidden" name="nights" id="hiddenNights">
 <input type="hidden" name="totalPrice" id="hiddenTotal">
 
-<button type="submit" class="reserve-btn">
-Reserve
+<button type="button" id="checkAvailabilityBtn" class="btn btn-outline-dark w-100 mb-2">
+    <i class="fa-solid fa-calendar-check me-2"></i>
+    Check Availability
+</button>
+
+<div id="availabilityMessage" class="text-center mb-2"></div>
+
+<button type="submit" class="reserve-btn" id="reserveBtn" disabled>
+    Reserve
 </button>
 
 </form>

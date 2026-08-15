@@ -1,127 +1,71 @@
 <!-- ================= Booking Summary ================= -->
-
 <div class="card border-0 shadow-sm rounded-4 mb-4">
-
     <div class="card-body">
-
-        <h4 class="fw-bold mb-4">
-            📅 Booking Summary
-        </h4>
-
-        <!-- Status -->
+        <h4 class="fw-bold mb-4">📅 Booking Summary</h4>
 
         <div class="d-flex justify-content-between align-items-center mb-3">
-
             <span>Booking Status</span>
-
             <% if (booking.status === "Confirmed") { %>
-
                 <span class="badge bg-success">
                     <i class="fa-solid fa-circle-check me-1"></i>
                     Confirmed
                 </span>
-
             <% } else { %>
-
                 <span class="badge bg-danger">
                     <i class="fa-solid fa-circle-xmark me-1"></i>
                     Cancelled
                 </span>
-
             <% } %>
-
         </div>
 
-        <!-- Booking ID -->
-
         <div class="d-flex justify-content-between mb-3">
-
             <span>Booking ID</span>
-
-            <strong class="text-end">
+            <strong class="text-end text-break ms-3">
                 <%= booking._id %>
             </strong>
-
         </div>
 
-        <!-- Check In -->
-
         <div class="d-flex justify-content-between mb-3">
-
             <span>
                 <i class="fa-solid fa-calendar-check me-2"></i>
                 Check In
             </span>
-
-            <strong>
-                <%= booking.checkIn.toDateString() %>
-            </strong>
-
+            <strong><%= booking.checkIn.toDateString() %></strong>
         </div>
 
-        <!-- Check Out -->
-
         <div class="d-flex justify-content-between mb-3">
-
             <span>
                 <i class="fa-solid fa-calendar-xmark me-2"></i>
                 Check Out
             </span>
-
-            <strong>
-                <%= booking.checkOut.toDateString() %>
-            </strong>
-
+            <strong><%= booking.checkOut.toDateString() %></strong>
         </div>
 
-        <!-- Guests -->
-
         <div class="d-flex justify-content-between mb-3">
-
             <span>
                 <i class="fa-solid fa-users me-2"></i>
                 Guests
             </span>
-
-            <strong>
-                <%= booking.guests %>
-            </strong>
-
+            <strong><%= booking.guests %></strong>
         </div>
 
-        <!-- Nights -->
-
         <div class="d-flex justify-content-between mb-3">
-
             <span>
                 <i class="fa-solid fa-moon me-2"></i>
                 Nights
             </span>
-
-            <strong>
-                <%= booking.nights %>
-            </strong>
-
+            <strong><%= booking.nights %></strong>
         </div>
 
         <hr>
 
-        <!-- Total -->
-
         <div class="d-flex justify-content-between align-items-center">
-
             <h5 class="mb-0">
-                Total Paid
+                Total
             </h5>
-
             <h4 class="text-success mb-0">
-
                 ₹ <%= booking.totalPrice.toLocaleString("en-IN") %>
-
             </h4>
-
         </div>
-
     </div>
-
 </div>

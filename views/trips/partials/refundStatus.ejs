@@ -1,0 +1,74 @@
+<% if (booking.status === "Cancelled") { %>
+<div class="card border-0 shadow-sm rounded-4 mt-4">
+    <div class="card-body">
+        <h4 class="fw-bold mb-4">
+            💰 Refund Information
+        </h4>
+
+        <div class="d-flex justify-content-between align-items-center mb-3">
+            <span class="text-muted">Booking Status</span>
+            <span class="badge bg-danger rounded-pill px-3 py-2">
+                Cancelled
+            </span>
+        </div>
+
+        <% if (booking.refundedAmount !== undefined) { %>
+        <div class="d-flex justify-content-between align-items-center mb-3">
+            <span class="text-muted">Refund Amount</span>
+            <strong>₹<%= booking.refundedAmount %></strong>
+        </div>
+        <% } %>
+
+        <div class="d-flex justify-content-between align-items-center">
+            <span class="text-muted">Refund Status</span>
+
+            <% if (booking.refundStatus === "Processed") { %>
+                <span class="badge bg-success rounded-pill px-3 py-2">
+                    <i class="fa-solid fa-circle-check me-1"></i>
+                    Refund Processed
+                </span>
+
+            <% } else if (booking.refundStatus === "Pending") { %>
+                <span class="badge bg-warning text-dark rounded-pill px-3 py-2">
+                    <i class="fa-solid fa-clock me-1"></i>
+                    Refund Processing
+                </span>
+
+            <% } else if (booking.refundStatus === "Failed") { %>
+                <span class="badge bg-danger rounded-pill px-3 py-2">
+                    <i class="fa-solid fa-circle-xmark me-1"></i>
+                    Refund Failed
+                </span>
+
+            <% } else { %>
+                <span class="badge bg-secondary rounded-pill px-3 py-2">
+                    No Refund
+                </span>
+            <% } %>
+        </div>
+
+        <% if (booking.refundStatus === "Pending") { %>
+        <div class="alert alert-warning mt-4 mb-0 rounded-3">
+            <i class="fa-solid fa-info-circle me-2"></i>
+            Your refund has been initiated and is being processed.
+            You will be notified once the refund is completed.
+        </div>
+        <% } %>
+
+        <% if (booking.refundStatus === "Failed") { %>
+        <div class="alert alert-danger mt-4 mb-0 rounded-3">
+            <i class="fa-solid fa-triangle-exclamation me-2"></i>
+            We were unable to process your refund.
+            Please contact StayNest support.
+        </div>
+        <% } %>
+
+        <% if (booking.refundStatus === "Processed" && booking.refundedAt) { %>
+        <div class="text-muted small mt-4">
+            Refund processed on
+            <%= moment(booking.refundedAt).format("DD MMM YYYY, hh:mm A") %>
+        </div>
+        <% } %>
+    </div>
+</div>
+<% } %>

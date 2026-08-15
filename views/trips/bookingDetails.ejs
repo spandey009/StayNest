@@ -1,35 +1,27 @@
 <% layout("/layouts/boilerplate") %>
 
 <div class="container py-5">
-
     <div class="row g-5">
-
         <div class="col-lg-7">
-
             <%- include("./partials/propertyImage") %>
-
         </div>
 
         <div class="col-lg-5">
-
             <%- include("./partials/bookingSummary") %>
-
             <%- include("./partials/paymentDetails") %>
-
-            <%- include("./partials/hostCard") %>
-
+            <%- include("./partials/refundStatus") %>
+            <% if (!isHost) { %>
+                <%- include("./partials/hostCard") %>
+            <% } %>
         </div>
-
     </div>
 
-    <%- include("./partials/quickActions") %>
-
+    <%- include("./partials/quickActions", { isHost }) %>
     <%- include("./partials/bookingTimeline") %>
-
     <%- include("./partials/propertyFeatures") %>
 
-    <%- include("./partials/guestInstructions") %>
-
-    <%- include("./partials/cancellationPolicy") %>
-
+    <% if (!isHost) { %>
+        <%- include("./partials/guestInstructions") %>
+        <%- include("./partials/cancellationPolicy") %>
+    <% } %>
 </div>

@@ -1,83 +1,91 @@
 <!-- ================= Cancellation Policy ================= -->
-
 <div class="card border-0 shadow-sm rounded-4 mt-4">
-
     <div class="card-body">
-
         <h4 class="fw-bold mb-4">
             🛡️ Cancellation Policy
         </h4>
 
         <% if (booking.status === "Cancelled") { %>
-
             <div class="alert alert-danger mb-0">
-
                 <i class="fa-solid fa-circle-xmark me-2"></i>
-
                 This booking has been cancelled.
-
             </div>
-
         <% } else { %>
 
             <div class="d-flex align-items-start mb-4">
-
                 <i class="fa-solid fa-calendar-check text-success fs-4 me-3"></i>
-
                 <div>
-
                     <h6 class="fw-bold mb-1">
                         Current Booking
                     </h6>
-
                     <p class="text-muted mb-0">
                         Your booking is currently confirmed.
                     </p>
-
                 </div>
-
             </div>
 
             <div class="d-flex align-items-start mb-4">
-
-                <i class="fa-solid fa-circle-info text-primary fs-4 me-3"></i>
-
+                <i class="fa-solid fa-shield-halved text-primary fs-4 me-3"></i>
                 <div>
+                    <h6 class="fw-bold mb-1">
+                        <%= booking.listing.cancellationPolicy || "Flexible" %> Policy
+                    </h6>
+                    <p class="text-muted mb-0">
+                        <% if (booking.listing.cancellationPolicy === "Flexible") { %>
+                            Cancellation is available according to the property's flexible cancellation terms.
+                        <% } else if (booking.listing.cancellationPolicy === "Moderate") { %>
+                            Cancellation is available according to the property's moderate cancellation terms.
+                        <% } else if (booking.listing.cancellationPolicy === "Strict") { %>
+                            Cancellation is available according to the property's strict cancellation terms.
+                        <% } else { %>
+                            Cancellation availability depends on the policy configured for this property.
+                        <% } %>
+                    </p>
+                </div>
+            </div>
 
+            <div class="d-flex align-items-start mb-4">
+                <i class="fa-solid fa-circle-info text-primary fs-4 me-3"></i>
+                <div>
                     <h6 class="fw-bold mb-1">
                         Cancellation
                     </h6>
-
                     <p class="text-muted mb-0">
-                        Cancellation availability depends on the booking
-                        policy configured for the property.
+                        Cancelling this booking may result in a full, partial, or no refund depending on the cancellation policy and your check-in date.
                     </p>
-
                 </div>
-
             </div>
 
-            <div class="d-flex align-items-start">
-
+            <div class="d-flex align-items-start mb-4">
                 <i class="fa-solid fa-user-tie text-warning fs-4 me-3"></i>
-
                 <div>
-
                     <h6 class="fw-bold mb-1">
                         Need Help?
                     </h6>
-
                     <p class="text-muted mb-0">
-                        Contact your host if you have questions about
-                        cancelling or modifying your stay.
+                        Contact your host if you have questions about cancelling or modifying your stay.
                     </p>
-
                 </div>
+            </div>
 
+            <hr>
+
+            <div class="d-grid">
+                <form
+                    action="/bookings/<%= booking._id %>/cancel?_method=PUT"
+                    method="POST"
+                    onsubmit="return confirm('Are you sure you want to cancel this booking? The applicable refund will be calculated according to the cancellation policy.');"
+                >
+                    <button
+                        type="submit"
+                        class="btn btn-outline-danger rounded-pill py-2"
+                    >
+                        <i class="fa-solid fa-ban me-2"></i>
+                        Cancel Booking
+                    </button>
+                </form>
             </div>
 
         <% } %>
-
     </div>
-
 </div>

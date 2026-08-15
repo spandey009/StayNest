@@ -11,6 +11,7 @@ const mongoose = require('mongoose');
 const Listing = require('./models/listing.js');
 const path = require('path');
 const paymentRoutes = require("./routes/payment");
+const paymentController = require("./controllers/payment");
 const methodOverride = require('method-override');
 app.use(methodOverride('_method'));
 const ejsMate = require('ejs-mate');
@@ -53,8 +54,15 @@ app.engine('ejs', ejsMate);
 app.set("view engine", "ejs");
 app.set("views", path.join(__dirname, "views"));
 app.use(express.urlencoded({ extended: true }));
+
+app.post(
+    "/payments/webhook",
+    express.raw({ type: "application/json" }),
+    paymentController.handleWebhook
+);
+
 app.use(express.json());
-app.use(express.static(path.join(__dirname, 'public')));
+app.use(express.static(path.join(__dirname, "public")));
 
 const store = MongoStore.create({
     mongoUrl: dbUrl,
@@ -72,12 +80,14 @@ const sessionOptions = {
     store: store,
     secret: process.env.SECRET,
     resave:false,
-    saveUninitialized:true,
-    cookie:{
-        expires:Date.now() + 1000 * 60 * 60 * 24 * 7,
-        maxAge:1000 * 60 * 60 * 24 * 7,
-        httpOnly:true
-    }
+    saveUninitialized:false,
+    cookie: {
+    expires: Date.now() + 1000 * 60 * 60 * 24 * 7,
+    maxAge: 1000 * 60 * 60 * 24 * 7,
+    httpOnly: true,
+    secure: process.env.NODE_ENV === "production",
+    sameSite: "lax"
+}
 };
 
 app.get('/', (req, res) => {
@@ -97,41 +107,39 @@ passport.deserializeUser(User.deserializeUser());
 const Notification = require("./models/notification");
 
 app.use(async (req, res, next) => {
-
     res.locals.success = req.flash("success");
     res.locals.error = req.flash("error");
     res.locals.currUser = req.user;
     res.locals.moment = moment;
-    if (req.user) {
+    res.locals.unreadNotifications = 0;
+    res.locals.latestNotifications = [];
 
-        res.locals.unreadNotifications =
-            await Notification.countDocuments({
-
-                user: req.user._id,
-
-                isRead: false
-
-            });
-
-        res.locals.latestNotifications =
-            await Notification.find({
-
-                user: req.user._id
-
-            })
-            .sort({ createdAt: -1 })
-            .limit(5);
-
-    } else {
-
-        res.locals.unreadNotifications = 0;
-
-        res.locals.latestNotifications = [];
-
+    if (!req.user) {
+        return next();
     }
 
-    next();
+    try {
+        const [unreadNotifications, latestNotifications] = await Promise.all([
+            Notification.countDocuments({
+                user: req.user._id,
+                isRead: false
+            }),
+            Notification.find({
+                user: req.user._id
+            })
+            .sort({ createdAt: -1 })
+            .limit(5)
+            .lean()
+        ]);
 
+        res.locals.unreadNotifications = unreadNotifications;
+        res.locals.latestNotifications = latestNotifications;
+
+        next();
+    } catch (err) {
+        console.log("Notification middleware error:", err);
+        next();
+    }
 });
 
 app.get("/demouser", async (req, res) => {

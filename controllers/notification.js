@@ -1,11 +1,10 @@
 const Notification = require("../models/notification");
 
-// =====================================
-// Create Notification
-// =====================================
-
 module.exports.createNotification = async ({
     user,
+    sender,
+    booking,
+    listing,
     title,
     message,
     type = "general"
@@ -14,11 +13,11 @@ module.exports.createNotification = async ({
     const notification = new Notification({
 
         user,
-
+        sender,
+        booking,
+        listing,
         title,
-
         message,
-
         type
 
     });
@@ -30,10 +29,6 @@ module.exports.createNotification = async ({
 };
 
 
-// =====================================
-// Get All Notifications
-// =====================================
-
 module.exports.getNotifications = async (req, res) => {
 
     try {
@@ -43,7 +38,10 @@ module.exports.getNotifications = async (req, res) => {
             user: req.user._id
 
         })
-        .sort({ createdAt: -1 });
+            .populate("sender")
+            .populate("booking")
+            .populate("listing")
+            .sort({ createdAt: -1 });
 
         res.render("notifications/index", {
 
@@ -64,22 +62,19 @@ module.exports.getNotifications = async (req, res) => {
 };
 
 
-// =====================================
-// Mark Notification as Read
-// =====================================
-
 module.exports.markAsRead = async (req, res) => {
 
     try {
 
-        await Notification.findByIdAndUpdate(
-
-            req.params.id,
+        await Notification.findOneAndUpdate(
 
             {
+                _id: req.params.id,
+                user: req.user._id
+            },
 
+            {
                 isRead: true
-
             }
 
         );
@@ -97,19 +92,16 @@ module.exports.markAsRead = async (req, res) => {
 };
 
 
-// =====================================
-// Delete Notification
-// =====================================
-
 module.exports.deleteNotification = async (req, res) => {
 
     try {
 
-        await Notification.findByIdAndDelete(
+        await Notification.findOneAndDelete({
 
-            req.params.id
+            _id: req.params.id,
+            user: req.user._id
 
-        );
+        });
 
         req.flash("success", "Notification deleted.");
 
@@ -124,49 +116,46 @@ module.exports.deleteNotification = async (req, res) => {
     }
 
 };
+
 module.exports.openNotification = async (req, res) => {
-
     try {
-
-        const notification = await Notification.findById(req.params.id);
+        const notification = await Notification.findOne({
+            _id: req.params.id,
+            user: req.user._id
+        })
+        .populate("booking")
+        .populate("listing");
 
         if (!notification) {
-
             req.flash("error", "Notification not found.");
-
             return res.redirect("/notifications");
-
         }
 
         notification.isRead = true;
-
         await notification.save();
 
-        switch (notification.type) {
-
-            case "booking":
-                return res.redirect("/trips");
-
-            case "payment":
-                return res.redirect("/trips");
-
-            case "review":
-                return res.redirect("/listings");
-
-            default:
-                return res.redirect("/notifications");
-
+        if (notification.type === "booking" && notification.booking) {
+            return res.redirect(`/trips/${notification.booking._id}`);
         }
 
+        switch (notification.type) {
+            case "payment":
+                return res.redirect("/trips");
+            case "review":
+                if (notification.listing) {
+                    return res.redirect(`/listings/${notification.listing._id}`);
+                }
+                return res.redirect("/listings");
+            default:
+                return res.redirect("/notifications");
+        }
     } catch (err) {
-
-        console.log(err);
-
+        console.log("Open notification error:", err);
+        req.flash("error", "Unable to open notification.");
         res.redirect("/notifications");
-
     }
-
 };
+
 module.exports.markAllRead = async (req, res) => {
 
     try {

@@ -1,79 +1,94 @@
 <% layout("layouts/boilerplate") %>
 
 <div class="container mt-5">
+    <div class="d-flex justify-content-between align-items-center mb-4">
+        <h2 class="mb-0">🔔 Notifications</h2>
 
-    <h2 class="mb-4">
-        🔔 Notifications
-    </h2>
+        <% if(notifications.some(notification => !notification.isRead)){ %>
+<form action="/notifications/mark-all-read?_method=PUT" method="POST">
+                <button class="btn btn-outline-primary btn-sm">
+                    Mark All as Read
+                </button>
+            </form>
+        <% } %>
+    </div>
 
     <% if(notifications.length === 0){ %>
-
         <div class="alert alert-info">
-
             No notifications yet.
-
         </div>
-
     <% } %>
 
     <% notifications.forEach(notification => { %>
-
-        <div class="card mb-3 shadow-sm">
-
+        <div class="card mb-3 shadow-sm <%= !notification.isRead ? 'border-primary' : '' %>">
             <div class="card-body">
+                <div class="d-flex justify-content-between align-items-start">
+                    <div>
+                        <h5 class="mb-2">
+                            <% if(notification.type === "booking"){ %>
+                                📅
+                            <% } else if(notification.type === "payment"){ %>
+                                💳
+                            <% } else if(notification.type === "review"){ %>
+                                ⭐
+                            <% } else { %>
+                                🔔
+                            <% } %>
 
-                <h5>
-                    <%= notification.title %>
-                </h5>
+                            <%= notification.title %>
 
-                <p>
-                    <%= notification.message %>
-                </p>
+                            <% if(!notification.isRead){ %>
+                                <span class="badge bg-primary ms-2">New</span>
+                            <% } %>
+                        </h5>
 
-                <small class="text-muted">
+                        <p class="mb-2">
+                            <%= notification.message %>
+                        </p>
 
-                   <%= moment(notification.createdAt).fromNow() %>
+                        <% if(notification.listing){ %>
+                            <small class="text-muted">
+                                Property:
+                                <%= notification.listing.title %>
+                            </small>
+                        <% } %>
+                    </div>
 
-                </small>
+                    <small class="text-muted text-nowrap ms-3">
+                        <%= moment(notification.createdAt).fromNow() %>
+                    </small>
+                </div>
 
                 <div class="mt-3">
+                    <% if(notification.booking){ %>
+                        <a
+                            href="/notifications/<%= notification._id %>/open"
+                            class="btn btn-primary btn-sm">
+                            View Booking
+                        </a>
+                    <% } %>
 
                     <% if(!notification.isRead){ %>
-
                         <form
                             action="/notifications/<%= notification._id %>/read?_method=PUT"
                             method="POST"
                             class="d-inline">
-
                             <button class="btn btn-success btn-sm">
-
                                 Mark as Read
-
                             </button>
-
                         </form>
-
                     <% } %>
 
                     <form
                         action="/notifications/<%= notification._id %>?_method=DELETE"
                         method="POST"
                         class="d-inline">
-
                         <button class="btn btn-danger btn-sm">
-
                             Delete
-
                         </button>
-
                     </form>
-
                 </div>
-
             </div>
-
         </div>
-
     <% }) %>
-
 </div>
