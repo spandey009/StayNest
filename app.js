@@ -89,7 +89,7 @@ const sessionOptions = {
     sameSite: "lax"
 }
 };
-
+app.set("trust proxy", 1);
 app.get('/', (req, res) => {
     res.redirect('/listings');
 });
