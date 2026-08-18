@@ -1,0 +1,146 @@
+<% layout("layouts/boilerplate") %>
+<div class="container py-5">
+<div class="text-center mb-5">
+<h1 class="fw-bold"><i class="fa-solid fa-wand-magic-sparkles me-2"></i>Your StayNest AI Trip</h1>
+<h3 class="mt-3"><%= itinerary.destination %></h3>
+<p class="text-muted"><%= trip.startDate %> → <%= trip.endDate %> · <%= trip.travelers %> travelers</p>
+<p class="lead"><%= itinerary.summary %></p>
+</div>
+
+<% if (budgetSummary) { %>
+<section class="trip-budget-section mb-5">
+<div class="card border-0 shadow-sm trip-budget-card">
+<div class="card-body">
+<h2 class="fw-bold mb-4">💰 Trip Budget</h2>
+<div class="trip-budget-grid">
+<div class="trip-budget-box"><span>Your Budget</span><strong>₹<%= Number(budgetSummary.budget).toLocaleString("en-IN") %></strong></div>
+<div class="trip-budget-box"><span>Accommodation</span><strong>₹<%= Number(budgetSummary.accommodation).toLocaleString("en-IN") %></strong></div>
+<div class="trip-budget-box"><span>Food + Activities</span><strong>₹<%= Number(budgetSummary.dailyExpenses).toLocaleString("en-IN") %></strong></div>
+<div class="trip-budget-box"><span>Estimated Total</span><strong>₹<%= Number(budgetSummary.total).toLocaleString("en-IN") %></strong></div>
+</div>
+<% if (budgetSummary.overBudget) { %>
+<div class="alert alert-warning mt-4 mb-0">
+<div class="d-flex justify-content-between align-items-center flex-wrap gap-3">
+<div><strong>⚠️ Your trip is over budget.</strong><div class="small mt-1">₹<%= Number(Math.abs(budgetSummary.remaining)).toLocaleString("en-IN") %> over your budget.</div></div>
+<% if (savedTripId) { %>
+<form action="/trip-planner/my-trips/<%= savedTripId %>/optimize-budget" method="POST"><button type="submit" class="btn btn-dark">🤖 Optimize My Trip</button></form>
+<% } %>
+</div>
+</div>
+<% } else { %>
+<div class="alert alert-success mt-4 mb-0"><strong>✅ Your trip is within budget.</strong><div class="small mt-1">₹<%= Number(budgetSummary.remaining).toLocaleString("en-IN") %> remaining.</div></div>
+<% } %>
+</div>
+</div>
+</section>
+<% } %>
+
+<% if (recommendedListings && recommendedListings.length > 0) { %>
+<section class="mb-5">
+<div class="d-flex align-items-center mb-4"><h2 class="fw-bold mb-0"><i class="fa-solid fa-house me-2"></i>Recommended StayNest Properties</h2></div>
+<div class="row g-4">
+<% recommendedListings.forEach(listing => { %>
+<div class="col-md-6 col-lg-4">
+<div class="card h-100 border-0 shadow-sm listing-card">
+<% if (listing.image) { %>
+<img src="<%= listing.image.url || listing.image %>" class="card-img-top" alt="<%= listing.title %>" style="height:220px;object-fit:cover;">
+<% } else { %>
+<div class="bg-light d-flex align-items-center justify-content-center" style="height:220px;"><i class="fa-solid fa-house fa-3x text-muted"></i></div>
+<% } %>
+<div class="card-body d-flex flex-column">
+<h4 class="card-title fw-bold"><%= listing.title %></h4>
+<p class="text-muted mb-2"><i class="fa-solid fa-location-dot me-1"></i><%= listing.location %><% if (listing.country) { %>, <%= listing.country %><% } %></p>
+<% if (listing.description) { %>
+<p class="text-muted small"><%= listing.description.length > 120 ? listing.description.substring(0, 120) + "..." : listing.description %></p>
+<% } %>
+<div class="mt-auto">
+<div class="mb-3"><strong class="fs-5">₹<%= Number(listing.price).toLocaleString("en-IN") %></strong><span class="text-muted"> / night</span></div>
+<div class="d-flex gap-2">
+<a href="/listings/<%= listing._id %>" class="btn btn-outline-dark flex-grow-1"><i class="fa-solid fa-eye me-1"></i>View</a>
+<a href="/listings/<%= listing._id %>#booking" class="btn btn-dark flex-grow-1"><i class="fa-solid fa-calendar-check me-1"></i>Book</a>
+</div>
+</div>
+</div>
+</div>
+</div>
+<% }) %>
+</div>
+</section>
+<% } else { %>
+<section class="mb-5">
+<div class="card border-0 shadow-sm">
+<div class="card-body text-center py-5">
+<i class="fa-solid fa-house-circle-exclamation fa-3x mb-3 text-muted"></i>
+<h3>No StayNest properties found</h3>
+<p class="text-muted">We couldn't find properties matching <strong><%= itinerary.destination %></strong>.</p>
+<a href="/listings" class="btn btn-dark"><i class="fa-solid fa-house me-2"></i>Browse All Properties</a>
+</div>
+</div>
+</section>
+<% } %>
+
+<section class="mb-5">
+<h2 class="fw-bold mb-4">🗺️ Day-by-Day Itinerary</h2>
+<% if (itinerary.days && itinerary.days.length) { %>
+<% itinerary.days.forEach(day => { %>
+<div class="card shadow-sm border-0 mb-4 day-card">
+<div class="card-body p-4">
+<div class="d-flex justify-content-between align-items-start flex-wrap gap-2 mb-4">
+<div><h3 class="fw-bold mb-1">Day <%= day.day %></h3><p class="text-muted mb-0"><%= day.date %></p></div>
+<div class="day-total">₹<%= Number(day.dailyCost || 0).toLocaleString("en-IN") %></div>
+</div>
+<div class="row g-3">
+<div class="col-md-4"><div class="activity-card p-3 bg-light rounded h-100"><h5 class="fw-semibold">🌅 Morning</h5><p><%= day.morning?.activity || "No activity planned." %></p><strong>₹<%= Number(day.morning?.estimatedCost || 0).toLocaleString("en-IN") %></strong></div></div>
+<div class="col-md-4"><div class="activity-card p-3 bg-light rounded h-100"><h5 class="fw-semibold">☀️ Afternoon</h5><p><%= day.afternoon?.activity || "No activity planned." %></p><strong>₹<%= Number(day.afternoon?.estimatedCost || 0).toLocaleString("en-IN") %></strong></div></div>
+<div class="col-md-4"><div class="activity-card p-3 bg-light rounded h-100"><h5 class="fw-semibold">🌙 Evening</h5><p><%= day.evening?.activity || "No activity planned." %></p><strong>₹<%= Number(day.evening?.estimatedCost || 0).toLocaleString("en-IN") %></strong></div></div>
+</div>
+<hr class="my-4">
+<p class="mb-2">🍴 <strong>Food:</strong> <%= day.foodRecommendation || "Explore local cuisine." %></p>
+<p class="mb-0">💰 <strong>Daily estimate:</strong> ₹<%= Number(day.dailyCost || 0).toLocaleString("en-IN") %></p>
+</div>
+</div>
+<% }) %>
+<% } else { %>
+<div class="alert alert-info">No itinerary days were generated.</div>
+<% } %>
+</section>
+
+<div class="card shadow-sm border-0 mb-4">
+<div class="card-body">
+<h3>💡 Travel Tips</h3>
+<ul>
+<% if (itinerary.travelTips && itinerary.travelTips.length) { %>
+<% itinerary.travelTips.forEach(tip => { %>
+<li class="mb-2"><%= tip %></li>
+<% }) %>
+<% } else { %>
+<li>No travel tips were generated.</li>
+<% } %>
+</ul>
+</div>
+</div>
+
+<div class="text-center">
+<a href="/trip-planner" class="btn btn-dark"><i class="fa-solid fa-rotate me-2"></i>Plan Another Trip</a>
+<a href="/trip-planner/my-trips" class="btn btn-outline-dark ms-2"><i class="fa-solid fa-bookmark me-2"></i>My Trips</a>
+<a href="/listings" class="btn btn-outline-dark ms-2"><i class="fa-solid fa-house me-2"></i>Browse StayNest</a>
+</div>
+</div>
+
+<style>
+.listing-card{transition:transform .2s ease,box-shadow .2s ease}
+.listing-card:hover{transform:translateY(-5px);box-shadow:0 12px 30px rgba(0,0,0,.12)!important}
+.trip-budget-section{width:100%;max-width:1200px;margin:0 auto}
+.trip-budget-card{width:100%;border-radius:20px}
+.trip-budget-card .card-body{padding:30px}
+.trip-budget-grid{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:20px;width:100%}
+.trip-budget-box{width:100%;min-height:145px;padding:24px 16px;background:#f7f8fa;border-radius:14px;box-sizing:border-box;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center}
+.trip-budget-box span{display:block;margin-bottom:12px;color:#5f6673;font-size:16px;line-height:1.4;white-space:normal;overflow-wrap:break-word}
+.trip-budget-box strong{display:block;color:#18213d;font-size:28px;font-weight:700;line-height:1.2;white-space:nowrap}
+.day-card{overflow:hidden}
+.day-total{font-size:1.35rem;font-weight:700;white-space:nowrap}
+.activity-card{min-height:190px}
+.activity-card p{line-height:1.6}
+@media(max-width:900px){.trip-budget-grid{grid-template-columns:repeat(2,minmax(0,1fr))}}
+@media(max-width:550px){.trip-budget-card .card-body{padding:20px 14px}.trip-budget-grid{grid-template-columns:1fr}.trip-budget-box{min-height:120px}.trip-budget-box strong{font-size:24px}.day-total{font-size:1.15rem}}
+</style>

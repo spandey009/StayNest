@@ -1,0 +1,376 @@
+<% layout("layouts/boilerplate") %>
+<style>
+.trip-summary-grid{display:grid;grid-template-columns:1.2fr 1.7fr 1fr 1fr;gap:30px;align-items:center}
+.trip-summary-item{min-width:0}
+.trip-summary-item small{display:block;font-size:16px}
+.trip-summary-item .value{margin-top:8px;color:#18213d;font-size:28px;line-height:1.25;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+@media(max-width:900px){.trip-summary-grid{grid-template-columns:repeat(2,minmax(0,1fr))}}
+@media(max-width:600px){.trip-summary-grid{grid-template-columns:1fr}.trip-summary-item .value{font-size:24px}}
+</style>
+<div class="container py-4">
+
+    <div class="d-flex justify-content-between align-items-center mb-4">
+
+        <div>
+            <h2 class="fw-bold mb-1">
+                <i class="fa-solid fa-bookmark me-2"></i>
+                Saved Trip
+            </h2>
+
+            <p class="text-muted mb-0">
+                Your saved StayNest itinerary
+            </p>
+        </div>
+
+        <a
+            href="/trip-planner/my-trips"
+            class="btn btn-outline-dark"
+        >
+            <i class="fa-solid fa-arrow-left me-2"></i>
+            My Trips
+        </a>
+
+    </div>
+
+    <!-- SAVED TRIP INFO -->
+
+    <div class="card border-0 shadow-sm mb-4">
+        <div class="card-body">
+            <div class="trip-summary-grid">
+                <div class="trip-summary-item">
+                    <small class="text-muted">Destination</small>
+                    <div class="value"><%= trip.destination %></div>
+                </div>
+                <div class="trip-summary-item">
+                    <small class="text-muted">Dates</small>
+                    <div class="value"><%= trip.startDate.toISOString().split("T")[0] %> → <%= trip.endDate.toISOString().split("T")[0] %></div>
+                </div>
+                <div class="trip-summary-item">
+                    <small class="text-muted">Travelers</small>
+                    <div class="value"><%= trip.travelers %></div>
+                </div>
+                <div class="trip-summary-item">
+                    <small class="text-muted">Budget</small>
+                    <div class="value">₹<%= Number(trip.budget).toLocaleString("en-IN") %></div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="card border-0 shadow-sm mb-4">
+<div class="card-body">
+<h3 class="fw-bold mb-3">💸 Trip Expenses</h3>
+<form action="/trip-planner/my-trips/<%= trip._id %>/expenses" method="POST" class="row g-2 mb-4">
+<div class="col-md-4"><input name="title" class="form-control" placeholder="Expense e.g. Lunch" required></div>
+<div class="col-md-2"><select name="category" class="form-select"><option>Accommodation</option><option>Food</option><option>Transport</option><option>Activities</option><option>Other</option></select></div>
+<div class="col-md-2"><input name="amount" type="number" min="0" class="form-control" placeholder="Amount ₹" required></div>
+<div class="col-md-2"><input name="date" type="date" class="form-control"></div>
+<div class="col-md-2"><button class="btn btn-dark w-100">Add Expense</button></div>
+</form>
+<% const totalExpenses=(trip.expenses||[]).reduce((sum,e)=>sum+Number(e.amount||0),0); %>
+<div class="alert alert-light border">
+<strong>Total Spent:</strong> ₹<%= totalExpenses.toLocaleString("en-IN") %>
+</div>
+<% if(trip.expenses?.length){ %>
+<div class="table-responsive">
+<table class="table align-middle">
+<thead><tr><th>Expense</th><th>Category</th><th>Amount</th><th>Date</th><th></th></tr></thead>
+<tbody>
+<% trip.expenses.slice().reverse().forEach(expense=>{ %>
+<tr>
+<td><%= expense.title %></td>
+<td><%= expense.category %></td>
+<td>₹<%= Number(expense.amount).toLocaleString("en-IN") %></td>
+<td><%= new Date(expense.date).toLocaleDateString("en-IN") %></td>
+<td>
+<form action="/trip-planner/my-trips/<%= trip._id %>/expenses/<%= expense._id %>?_method=DELETE" method="POST">
+<button class="btn btn-sm btn-outline-danger">Delete</button>
+</form>
+</td>
+</tr>
+<% }) %>
+</tbody>
+</table>
+</div>
+<% }else{ %>
+<p class="text-muted mb-0">No expenses recorded yet.</p>
+<% } %>
+</div>
+</div>
+
+<% const expenseStats=(trip.expenses||[]).reduce((stats,e)=>{
+    const amount=Number(e.amount||0);
+    stats[e.category]=(stats[e.category]||0)+amount;
+    stats.total+=amount;
+    return stats;
+},{total:0}); %>
+
+<div class="card border-0 shadow-sm mb-4">
+<div class="card-body">
+<h3 class="fw-bold mb-4">📊 Spending Overview</h3>
+
+<div class="row g-3 text-center">
+<div class="col-4">
+<div class="p-3 bg-light rounded">
+<small class="text-muted">Budget</small>
+<h5>₹<%= Number(trip.budget).toLocaleString("en-IN") %></h5>
+</div>
+</div>
+
+<div class="col-4">
+<div class="p-3 bg-light rounded">
+<small class="text-muted">Spent</small>
+<h5>₹<%= expenseStats.total.toLocaleString("en-IN") %></h5>
+</div>
+</div>
+
+<div class="col-4">
+<div class="p-3 bg-light rounded">
+<small class="text-muted">Remaining</small>
+<h5>₹<%= (Number(trip.budget)-expenseStats.total).toLocaleString("en-IN") %></h5>
+</div>
+</div>
+</div>
+
+<div class="card border-0 shadow-sm mb-4">
+<div class="card-body">
+<div class="d-flex justify-content-between align-items-center">
+<h3 class="fw-bold mb-0">🧠 AI Trip Insights</h3>
+<button id="insightsBtn" class="btn btn-dark">Generate Insights</button>
+</div>
+<div id="insightsBox" class="mt-4">
+<p class="text-muted mb-0">Get AI insights based on your actual spending and itinerary.</p>
+</div>
+</div>
+</div>
+
+<script>
+document.getElementById("insightsBtn").addEventListener("click",async()=>{
+    const btn=document.getElementById("insightsBtn");
+    const box=document.getElementById("insightsBox");
+    btn.disabled=true;
+    btn.textContent="Analyzing...";
+    box.innerHTML='<p class="text-muted">🤖 Analyzing your trip...</p>';
+    try{
+        const res=await fetch("/trip-planner/my-trips/<%= trip._id %>/insights");
+        const data=await res.json();
+        if(!res.ok)throw new Error(data.error);
+        box.innerHTML=data.insights.map(i=>`<div class="alert alert-light border mb-2">💡 ${i}</div>`).join("");
+    }catch(err){
+        box.innerHTML='<div class="alert alert-danger">Unable to generate insights.</div>';
+    }
+    btn.disabled=false;
+    btn.textContent="Refresh Insights";
+});
+</script>
+
+<hr>
+
+<% ["Accommodation","Food","Transport","Activities","Other"].forEach(category=>{ %>
+<div class="d-flex justify-content-between mb-2">
+<span><%= category %></span>
+<strong>₹<%= Number(expenseStats[category]||0).toLocaleString("en-IN") %></strong>
+</div>
+<% }) %>
+
+</div>
+</div>
+
+<div class="card border-0 shadow-sm mb-5">
+    <div class="card-body">
+
+        <h3 class="fw-bold mb-3">
+            🤖 Modify Your Trip
+        </h3>
+
+        <form
+            action="/trip-planner/my-trips/<%= trip._id %>/modify"
+            method="POST"
+        >
+
+            <div class="input-group">
+
+                <input
+                    type="text"
+                    name="instruction"
+                    class="form-control"
+                    placeholder="e.g. Make this trip cheaper..."
+                    required
+                    maxlength="500"
+                >
+
+                <button
+                    type="submit"
+                    class="btn btn-dark"
+                >
+                    <i class="fa-solid fa-wand-magic-sparkles me-2"></i>
+                    Modify
+                </button>
+
+            </div>
+
+            <small class="text-muted d-block mt-2">
+                Try: "Make it cheaper", "Add adventure",
+                "Focus on food", or "Make it family friendly".
+            </small>
+
+        </form>
+
+    </div>
+</div>
+<div class="card border-0 shadow-sm mb-5">
+    <div class="card-body">
+
+        <h3 class="fw-bold mb-3">
+            🤖 StayNest AI Assistant
+        </h3>
+
+        <div id="tripChat"
+             class="bg-light rounded p-3 mb-3"
+             style="max-height:350px; overflow-y:auto;">
+
+            <div class="mb-3">
+                <strong>🤖 StayNest AI</strong>
+                <div class="mt-1">
+                    Ask me anything about this trip or ask me to change it.
+                </div>
+            </div>
+
+        </div>
+
+        <form id="tripChatForm">
+
+            <div class="input-group">
+
+                <input
+                    id="tripMessage"
+                    type="text"
+                    class="form-control"
+                    placeholder="e.g. Make Day 1 less tiring..."
+                    maxlength="500"
+                    required
+                >
+
+                <button
+                    type="submit"
+                    class="btn btn-dark"
+                >
+                    <i class="fa-solid fa-paper-plane"></i>
+                </button>
+
+            </div>
+
+        </form>
+
+    </div>
+</div>
+<script>
+const chatForm = document.getElementById("tripChatForm");
+const messageInput = document.getElementById("tripMessage");
+const chat = document.getElementById("tripChat");
+
+chatForm.addEventListener("submit", async (e) => {
+    e.preventDefault();
+
+    const message = messageInput.value.trim();
+
+    if (!message) return;
+
+    chat.insertAdjacentHTML(
+        "beforeend",
+        `
+        <div class="mb-3 text-end">
+            <strong>🧑 You</strong>
+            <div class="mt-1">${message}</div>
+        </div>
+        `
+    );
+
+    messageInput.value = "";
+
+    const loading = document.createElement("div");
+    loading.className = "mb-3";
+    loading.innerHTML = `
+        <strong>🤖 StayNest AI</strong>
+        <div class="mt-1 text-muted">Thinking...</div>
+    `;
+
+    chat.appendChild(loading);
+    chat.scrollTop = chat.scrollHeight;
+
+    try {
+
+        const response = await fetch(
+            "/trip-planner/my-trips/<%= trip._id %>/chat",
+            {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json"
+                },
+                body: JSON.stringify({ message })
+            }
+        );
+
+        const data = await response.json();
+
+        loading.innerHTML = `
+            <strong>🤖 StayNest AI</strong>
+            <div class="mt-1">
+                ${data.reply || "Something went wrong."}
+            </div>
+        `;
+
+    } catch (err) {
+
+        loading.innerHTML = `
+            <strong>🤖 StayNest AI</strong>
+            <div class="mt-1 text-danger">
+                Unable to contact AI right now.
+            </div>
+        `;
+
+    }
+
+    chat.scrollTop = chat.scrollHeight;
+});
+</script>
+    <!-- REUSE ITINERARY -->
+
+    <%- include("_itinerary", {
+        itinerary: itinerary,
+        recommendedListings: recommendedListings,
+        trip: trip
+    }) %>
+
+<!-- ACTIONS -->
+<div class="text-center mt-4 mb-5 d-flex justify-content-center gap-2 flex-wrap">
+
+<% if(trip.isPublic){ %>
+<form action="/trip-planner/my-trips/<%= trip._id %>/share?_method=DELETE" method="POST">
+<button class="btn btn-outline-danger">
+<i class="fa-solid fa-lock me-2"></i>
+Make Private
+</button>
+</form>
+<% }else{ %>
+<form action="/trip-planner/my-trips/<%= trip._id %>/share" method="POST">
+<button class="btn btn-outline-dark">
+<i class="fa-solid fa-share-nodes me-2"></i>
+Share Trip
+</button>
+</form>
+<% } %>
+
+<a href="/trip-planner" class="btn btn-dark">
+<i class="fa-solid fa-wand-magic-sparkles me-2"></i>
+Plan Another Trip
+</a>
+
+<a href="/trip-planner/my-trips" class="btn btn-outline-dark">
+<i class="fa-solid fa-map me-2"></i>
+My Trips
+</a>
+
+</div>
+
+</div>

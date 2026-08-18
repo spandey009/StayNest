@@ -28,6 +28,31 @@ module.exports.index = async (req, res) => {
 
     const allListings = await Listing.find(query).populate("owner").populate("reviews");
 
+    const destinationListings = await Listing.find({})
+    .select("location");
+
+const destinationMap = {};
+
+destinationListings.forEach(listing => {
+
+    if (!listing.location) return;
+
+    const location = listing.location.trim();
+
+    if (!destinationMap[location]) {
+        destinationMap[location] = {
+            name: location,
+            count: 0
+        };
+    }
+
+    destinationMap[location].count++;
+
+});
+
+const destinations = Object.values(destinationMap)
+    .sort((a, b) => b.count - a.count)
+    .slice(0, 5);
     let wishlist = [];
 
 if (req.user) {
@@ -40,7 +65,135 @@ res.render("listings/index.ejs", {
     category,
     search,
     wishlist,
+    destinations,
 });
+};
+
+module.exports.allListings = async (req, res) => {
+
+    const {
+        location,
+        checkIn,
+        checkOut,
+        guests,
+        category,
+        minPrice,
+        maxPrice,
+        sort
+    } = req.query;
+
+    let query = {};
+
+    /* =========================
+       LOCATION
+       ========================= */
+
+    if (location && location.trim()) {
+
+        query.location = {
+            $regex: location.trim(),
+            $options: "i"
+        };
+
+    }
+
+
+    /* =========================
+       CATEGORY
+       ========================= */
+
+    if (category && category !== "All") {
+
+        query.category = category;
+
+    }
+
+
+    /* =========================
+       PRICE
+       ========================= */
+
+    if (minPrice || maxPrice) {
+
+        query.price = {};
+
+        if (minPrice) {
+            query.price.$gte = Number(minPrice);
+        }
+
+        if (maxPrice) {
+            query.price.$lte = Number(maxPrice);
+        }
+
+    }
+
+
+    /* =========================
+       SORT
+       ========================= */
+
+    let sortOption = {};
+
+    if (sort === "price-low") {
+
+        sortOption.price = 1;
+
+    } else if (sort === "price-high") {
+
+        sortOption.price = -1;
+
+    } else if (sort === "name") {
+
+        sortOption.title = 1;
+
+    } else {
+
+        sortOption.createdAt = -1;
+
+    }
+
+
+    const allListings = await Listing.find(query)
+        .populate("owner")
+        .populate("reviews")
+        .sort(sortOption);
+
+
+    /* =========================
+       WISHLIST
+       ========================= */
+
+    let wishlist = [];
+
+    if (req.user) {
+
+        const user =
+            await User.findById(req.user._id);
+
+        wishlist =
+            user.wishlist.map(
+                id => id.toString()
+            );
+
+    }
+
+
+    res.render("listings/all.ejs", {
+
+        allListings,
+        wishlist,
+
+        location,
+        checkIn,
+        checkOut,
+        guests,
+
+        category,
+        minPrice,
+        maxPrice,
+        sort
+
+    });
 
 };
 

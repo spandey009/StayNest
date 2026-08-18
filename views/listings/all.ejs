@@ -1,0 +1,1024 @@
+<% layout("layouts/boilerplate") %>
+
+<style>
+
+/* =========================================
+   PAGE
+   ========================================= */
+
+.all-listings-page {
+    max-width: 1500px;
+    margin: 45px auto 80px;
+    padding: 0 30px;
+}
+
+
+/* =========================================
+   HEADER
+   ========================================= */
+
+.all-listings-header {
+    display: flex;
+    align-items: flex-end;
+    justify-content: space-between;
+
+    gap: 20px;
+
+    margin-bottom: 25px;
+}
+
+.all-listings-header h1 {
+    margin: 5px 0 8px;
+
+    color: #18213d;
+
+    font-size: 42px;
+    font-weight: 800;
+
+    letter-spacing: -1px;
+}
+
+.all-listings-header p {
+    margin: 0;
+
+    color: #737986;
+
+    font-size: 16px;
+}
+
+.listing-count {
+    padding: 9px 15px;
+
+    border-radius: 999px;
+
+    background: #fff0f1;
+
+    color: #ff5a5f;
+
+    font-size: 14px;
+    font-weight: 700;
+}
+
+
+/* =========================================
+   FILTER BAR
+   ========================================= */
+
+.stn-filter-bar {
+    display: flex;
+
+    align-items: center;
+
+    gap: 10px;
+
+    padding: 12px;
+
+    margin-bottom: 32px;
+
+    border: 1px solid #ececef;
+
+    border-radius: 18px;
+
+    background: #fff;
+
+    box-shadow:
+        0 8px 25px rgba(0, 0, 0, .05);
+
+    flex-wrap: wrap;
+}
+
+.stn-filter-form {
+    display: flex;
+
+    align-items: center;
+
+    gap: 10px;
+
+    width: 100%;
+
+    flex-wrap: wrap;
+}
+
+.stn-filter-item {
+    display: flex;
+
+    align-items: center;
+
+    gap: 8px;
+
+    min-height: 44px;
+
+    padding: 0 12px;
+
+    border: 1px solid #e4e5e8;
+
+    border-radius: 12px;
+
+    background: #fff;
+}
+
+.stn-filter-item i {
+    color: #ff5a5f;
+
+    font-size: 14px;
+}
+
+.stn-filter-item select,
+.stn-filter-item input {
+    border: none;
+
+    outline: none;
+
+    background: transparent;
+
+    color: #18213d;
+
+    font-family: inherit;
+
+    font-size: 14px;
+}
+
+.stn-filter-item select {
+    min-width: 125px;
+
+    cursor: pointer;
+}
+
+.stn-price-input {
+    width: 90px;
+}
+
+.stn-filter-apply {
+    min-height: 44px;
+
+    padding: 0 20px;
+
+    border: none;
+
+    border-radius: 12px;
+
+    background: #ff5a5f;
+
+    color: #fff;
+
+    font-size: 14px;
+
+    font-weight: 700;
+
+    cursor: pointer;
+
+    transition: .2s ease;
+}
+
+.stn-filter-apply:hover {
+    transform: translateY(-1px);
+
+    box-shadow:
+        0 7px 18px rgba(255, 90, 95, .25);
+}
+
+.stn-clear-filter {
+    min-height: 44px;
+
+    display: inline-flex;
+
+    align-items: center;
+
+    justify-content: center;
+
+    padding: 0 16px;
+
+    border: 1px solid #ddd;
+
+    border-radius: 12px;
+
+    color: #555;
+
+    background: #fff;
+
+    text-decoration: none;
+
+    font-size: 14px;
+
+    font-weight: 600;
+
+    transition: .2s ease;
+}
+
+.stn-clear-filter:hover {
+    background: #f7f7f7;
+
+    color: #18213d;
+}
+
+
+/* =========================================
+   GRID
+   ========================================= */
+
+.all-listings-grid {
+    display: grid;
+
+    grid-template-columns:
+        repeat(4, minmax(0, 1fr));
+
+    gap: 35px 22px;
+}
+
+.all-listing-link {
+    color: inherit;
+
+    text-decoration: none;
+}
+
+
+/* =========================================
+   CARD
+   ========================================= */
+
+.all-listing-card {
+    position: relative;
+
+    overflow: hidden;
+
+    border-radius: 20px;
+
+    background: #fff;
+
+    transition:
+        transform .25s ease,
+        box-shadow .25s ease;
+}
+
+.all-listing-card:hover {
+    transform: translateY(-5px);
+
+    box-shadow:
+        0 15px 35px rgba(0,0,0,.10);
+}
+
+
+/* =========================================
+   IMAGE
+   ========================================= */
+
+.all-listing-image-wrapper {
+    position: relative;
+
+    height: 270px;
+
+    overflow: hidden;
+
+    border-radius: 20px;
+}
+
+.all-listing-image-wrapper img {
+    width: 100%;
+    height: 100%;
+
+    object-fit: cover;
+
+    transition: transform .45s ease;
+}
+
+.all-listing-card:hover
+.all-listing-image-wrapper img {
+    transform: scale(1.04);
+}
+
+
+/* =========================================
+   WISHLIST
+   ========================================= */
+
+.all-listing-wishlist {
+    position: absolute;
+
+    top: 12px;
+    right: 12px;
+
+    z-index: 5;
+
+    width: 38px;
+    height: 38px;
+
+    display: flex;
+
+    align-items: center;
+    justify-content: center;
+
+    border: none;
+
+    border-radius: 50%;
+
+    background: rgba(255,255,255,.95);
+
+    color: #555;
+
+    font-size: 16px;
+
+    cursor: pointer;
+
+    box-shadow:
+        0 4px 12px rgba(0,0,0,.12);
+
+    transition: .2s ease;
+}
+
+.all-listing-wishlist:hover {
+    transform: scale(1.08);
+
+    color: #ff5a5f;
+}
+
+.all-listing-wishlist.active {
+    color: #ff5a5f;
+}
+
+
+/* =========================================
+   BADGE
+   ========================================= */
+
+.rating-badge {
+    position: absolute;
+
+    left: 12px;
+    top: 12px;
+
+    z-index: 3;
+
+    padding: 6px 10px;
+
+    border-radius: 999px;
+
+    background: rgba(255,255,255,.95);
+
+    color: #18213d;
+
+    font-size: 12px;
+
+    font-weight: 700;
+}
+
+.rating-badge i {
+    color: #ffb400;
+
+    margin-right: 3px;
+}
+
+
+/* =========================================
+   BODY
+   ========================================= */
+
+.all-listing-body {
+    padding: 14px 4px 0;
+}
+
+.all-listing-body h3 {
+    margin: 0 0 6px;
+
+    color: #18213d;
+
+    font-size: 17px;
+
+    font-weight: 750;
+
+    white-space: nowrap;
+
+    overflow: hidden;
+
+    text-overflow: ellipsis;
+}
+
+.all-listing-location {
+    margin: 0;
+
+    color: #737986;
+
+    font-size: 13px;
+
+    white-space: nowrap;
+
+    overflow: hidden;
+
+    text-overflow: ellipsis;
+}
+
+.all-listing-location i {
+    color: #ff5a5f;
+
+    margin-right: 4px;
+}
+
+.all-listing-price {
+    margin-top: 10px;
+
+    color: #18213d;
+}
+
+.all-listing-price strong {
+    font-size: 17px;
+}
+
+.all-listing-price span {
+    color: #737986;
+
+    font-size: 13px;
+}
+
+
+/* =========================================
+   NO RESULTS
+   ========================================= */
+
+.no-results {
+    min-height: 430px;
+
+    display: flex;
+
+    flex-direction: column;
+
+    align-items: center;
+
+    justify-content: center;
+
+    text-align: center;
+
+    padding: 60px 25px;
+
+    border: 1px solid #eee;
+
+    border-radius: 24px;
+
+    background: #fff;
+}
+
+.no-results-icon {
+    width: 72px;
+    height: 72px;
+
+    display: flex;
+
+    align-items: center;
+    justify-content: center;
+
+    margin-bottom: 20px;
+
+    border-radius: 50%;
+
+    background: #fff1f2;
+
+    color: #ff5a5f;
+
+    font-size: 30px;
+}
+
+.no-results h2 {
+    margin: 0 0 10px;
+
+    color: #18213d;
+
+    font-size: 28px;
+
+    font-weight: 800;
+}
+
+.no-results p {
+    max-width: 500px;
+
+    margin: 0 auto 25px;
+
+    color: #737986;
+
+    font-size: 15px;
+
+    line-height: 1.6;
+}
+
+.no-results-actions {
+    display: flex;
+
+    gap: 12px;
+}
+
+.no-results-primary,
+.no-results-secondary {
+    display: inline-flex;
+
+    align-items: center;
+    justify-content: center;
+
+    gap: 8px;
+
+    padding: 12px 20px;
+
+    border-radius: 12px;
+
+    text-decoration: none;
+
+    font-size: 14px;
+
+    font-weight: 700;
+}
+
+.no-results-primary {
+    background: #ff5a5f;
+
+    color: #fff;
+}
+
+.no-results-secondary {
+    border: 1px solid #ddd;
+
+    color: #18213d;
+
+    background: #fff;
+}
+
+
+/* =========================================
+   RESPONSIVE
+   ========================================= */
+
+@media(max-width:1100px) {
+
+    .all-listings-grid {
+        grid-template-columns:
+            repeat(3, minmax(0, 1fr));
+    }
+
+}
+
+@media(max-width:800px) {
+
+    .all-listings-page {
+        padding: 0 20px;
+    }
+
+    .all-listings-grid {
+        grid-template-columns:
+            repeat(2, minmax(0, 1fr));
+    }
+
+    .stn-filter-item {
+        flex: 1 1 180px;
+    }
+
+}
+
+@media(max-width:600px) {
+
+    .all-listings-page {
+        margin-top: 30px;
+
+        padding: 0 14px;
+    }
+
+    .all-listings-header {
+        align-items: flex-start;
+
+        flex-direction: column;
+    }
+
+    .all-listings-header h1 {
+        font-size: 32px;
+    }
+
+    .all-listings-grid {
+        grid-template-columns: 1fr;
+
+        gap: 28px;
+    }
+
+    .all-listing-image-wrapper {
+        height: 250px;
+    }
+
+    .stn-filter-form {
+        flex-direction: column;
+
+        align-items: stretch;
+    }
+
+    .stn-filter-item {
+        width: 100%;
+
+        flex: none;
+
+        box-sizing: border-box;
+    }
+
+    .stn-filter-item select,
+    .stn-filter-item input {
+        flex: 1;
+    }
+
+    .stn-filter-apply,
+    .stn-clear-filter {
+        width: 100%;
+    }
+
+    .no-results-actions {
+        flex-direction: column;
+
+        width: 100%;
+    }
+
+    .no-results-primary,
+    .no-results-secondary {
+        width: 100%;
+    }
+
+}
+
+</style>
+
+
+<div class="all-listings-page">
+
+
+    <!-- =========================================
+         HEADER
+         ========================================= -->
+
+    <div class="all-listings-header">
+
+        <div>
+
+            <span class="stn-eyebrow">
+                EXPLORE STAYNEST
+            </span>
+
+            <% if (location) { %>
+
+                <h1>
+                    Stays in <%= location %>
+                </h1>
+
+                <p>
+                    Discover beautiful stays in <%= location %>.
+                </p>
+
+            <% } else { %>
+
+                <h1>
+                    All Stays
+                </h1>
+
+                <p>
+                    Discover all the places you can stay with StayNest.
+                </p>
+
+            <% } %>
+
+        </div>
+
+
+        <span class="listing-count">
+            <%= allListings.length %> stays
+        </span>
+
+    </div>
+
+
+    <!-- =========================================
+         FILTERS
+         ========================================= -->
+
+    <div class="stn-filter-bar">
+
+        <form
+            action="/listings/all"
+            method="GET"
+            class="stn-filter-form"
+        >
+
+            <% if (location) { %>
+
+                <input
+                    type="hidden"
+                    name="location"
+                    value="<%= location %>"
+                >
+
+            <% } %>
+
+
+            <div class="stn-filter-item">
+
+                <i class="fa-solid fa-layer-group"></i>
+
+                <select name="category">
+
+                    <option value="All">
+                        All categories
+                    </option>
+
+                    <option
+                        value="Trending"
+                        <%= category === "Trending" ? "selected" : "" %>
+                    >
+                        Trending
+                    </option>
+
+                    <option
+                        value="Rooms"
+                        <%= category === "Rooms" ? "selected" : "" %>
+                    >
+                        Rooms
+                    </option>
+
+                    <option
+                        value="Mountains"
+                        <%= category === "Mountains" ? "selected" : "" %>
+                    >
+                        Mountains
+                    </option>
+
+                    <option
+                        value="Beach"
+                        <%= category === "Beach" ? "selected" : "" %>
+                    >
+                        Beach
+                    </option>
+
+                    <option
+                        value="Luxury"
+                        <%= category === "Luxury" ? "selected" : "" %>
+                    >
+                        Luxury
+                    </option>
+
+                </select>
+
+            </div>
+
+
+            <div class="stn-filter-item">
+
+                <i class="fa-solid fa-indian-rupee-sign"></i>
+
+                <input
+                    class="stn-price-input"
+                    type="number"
+                    name="minPrice"
+                    min="0"
+                    placeholder="Min ₹"
+                    value="<%= minPrice || '' %>"
+                >
+
+            </div>
+
+
+            <div class="stn-filter-item">
+
+                <i class="fa-solid fa-indian-rupee-sign"></i>
+
+                <input
+                    class="stn-price-input"
+                    type="number"
+                    name="maxPrice"
+                    min="0"
+                    placeholder="Max ₹"
+                    value="<%= maxPrice || '' %>"
+                >
+
+            </div>
+
+
+            <div class="stn-filter-item">
+
+                <i class="fa-solid fa-arrow-down-wide-short"></i>
+
+                <select name="sort">
+
+                    <option value="">
+                        Recommended
+                    </option>
+
+                    <option
+                        value="price-low"
+                        <%= sort === "price-low" ? "selected" : "" %>
+                    >
+                        Price: Low to High
+                    </option>
+
+                    <option
+                        value="price-high"
+                        <%= sort === "price-high" ? "selected" : "" %>
+                    >
+                        Price: High to Low
+                    </option>
+
+                    <option
+                        value="name"
+                        <%= sort === "name" ? "selected" : "" %>
+                    >
+                        Name: A to Z
+                    </option>
+
+                </select>
+
+            </div>
+
+
+            <button
+                type="submit"
+                class="stn-filter-apply"
+            >
+                Apply filters
+            </button>
+
+
+            <a
+                href="<%= location
+                    ? '/listings/all?location=' + encodeURIComponent(location)
+                    : '/listings/all'
+                %>"
+                class="stn-clear-filter"
+            >
+                Clear filters
+            </a>
+
+        </form>
+
+    </div>
+
+
+    <!-- =========================================
+         NO RESULTS
+         ========================================= -->
+
+    <% if (allListings.length === 0) { %>
+
+        <div class="no-results">
+
+            <div class="no-results-icon">
+
+                <i class="fa-solid fa-house-circle-exclamation"></i>
+
+            </div>
+
+
+            <h2>
+
+                <% if (location) { %>
+
+                    No stays found in <%= location %>
+
+                <% } else { %>
+
+                    No stays found
+
+                <% } %>
+
+            </h2>
+
+
+            <p>
+
+                We couldn't find any stays matching your filters.
+                Try changing your destination, category, or price range.
+
+            </p>
+
+
+            <div class="no-results-actions">
+
+                <a
+                    href="/listings/all"
+                    class="no-results-primary"
+                >
+                    <i class="fa-solid fa-compass"></i>
+                    Explore all stays
+                </a>
+
+
+                <a
+                    href="/listings"
+                    class="no-results-secondary"
+                >
+                    Back to home
+                </a>
+
+            </div>
+
+        </div>
+
+
+    <% } else { %>
+
+
+        <!-- =========================================
+             LISTINGS
+             ========================================= -->
+
+        <div class="all-listings-grid">
+
+            <% for (let listing of allListings) { %>
+
+                <div class="all-listing-card">
+
+
+                    <div class="all-listing-image-wrapper">
+
+
+                        <a
+                            href="/listings/<%= listing._id %>"
+                        >
+
+                            <img
+                                src="<%= listing.image.url %>"
+                                alt="<%= listing.title %>"
+                            >
+
+                        </a>
+
+
+                        <div class="rating-badge">
+
+                            <i class="fa-solid fa-star"></i>
+
+                            New
+
+                        </div>
+
+
+                        <% if (typeof user !== "undefined" && user) { %>
+
+                            <form
+                                action="/wishlist/<%= listing._id %>"
+                                method="POST"
+                            >
+
+                                <button
+                                    type="submit"
+                                    class="all-listing-wishlist
+                                    <%= wishlist.includes(listing._id.toString())
+                                        ? 'active'
+                                        : '' %>"
+                                    aria-label="Wishlist"
+                                >
+
+                                    <i class="fa-regular fa-heart"></i>
+
+                                </button>
+
+                            </form>
+
+                        <% } %>
+
+
+                    </div>
+
+
+                    <a
+                        href="/listings/<%= listing._id %>"
+                        class="all-listing-link"
+                    >
+
+                        <div class="all-listing-body">
+
+                            <h3>
+                                <%= listing.title %>
+                            </h3>
+
+
+                            <p class="all-listing-location">
+
+                                <i class="fa-solid fa-location-dot"></i>
+
+                                <%= listing.location %>,
+                                <%= listing.country %>
+
+                            </p>
+
+
+                            <div class="all-listing-price">
+
+                                <strong>
+                                    ₹<%= Number(listing.price)
+                                        .toLocaleString("en-IN") %>
+                                </strong>
+
+                                <span>
+                                    / night
+                                </span>
+
+                            </div>
+
+                        </div>
+
+                    </a>
+
+                </div>
+
+            <% } %>
+
+        </div>
+
+    <% } %>
+
+</div>

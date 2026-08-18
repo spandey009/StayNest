@@ -7,6 +7,8 @@ require("dotenv").config();
 
 const express = require('express');
 const app = express();
+const http = require("http");
+const { Server } = require("socket.io");
 const mongoose = require('mongoose');
 const Listing = require('./models/listing.js');
 const path = require('path');
@@ -41,7 +43,9 @@ const wishlistRoutes = require("./routes/wishlist");
 const bookingRoutes = require("./routes/booking");
 const tripRoutes = require("./routes/trip");
 //console.log("ATLASDB_URL:", process.env.ATLASDB_URL);
-
+const tripPlannerRoutes = require("./routes/tripPlanner");
+const supportRoutes = require("./routes/support");
+const adminRoutes = require("./routes/admin");
 main()
   .then(() => console.log("Connected to MongoDB"))
   .catch(err => console.error(err));
@@ -168,6 +172,20 @@ app.use("/trips", tripRoutes);
 app.use("/payments", paymentRoutes);
 app.use("/invoice", invoiceRoutes);
 app.use("/notifications", notificationRoutes);
+app.use("/trip-planner", tripPlannerRoutes);
+app.use("/support", supportRoutes);
+app.use("/admin", adminRoutes);
+app.get("/contact", (req, res) => {
+    res.render("pages/contact");
+});
+
+app.get("/privacy", (req, res) => {
+    res.render("pages/privacy");
+});
+
+app.get("/terms", (req, res) => {
+    res.render("pages/terms");
+});
 
 app.all('/*splat', wrapAsync(async (req, res, next) => {
     throw new ExpressError(404, "Page Not Found");
@@ -179,8 +197,33 @@ app.use((err, req, res, next) => {
     res.status(statusCode).render("error.ejs", { err });
 });
 
+const server = http.createServer(app);
+
+const io = new Server(server, {
+    cors: {
+        origin: true,
+        credentials: true
+    }
+});
+
+app.set("io", io);
+global.stayNestIO = io;
+
+io.on("connection", socket => {
+    console.log("Support socket connected:", socket.id);
+
+    socket.on("join-conversation", conversationId => {
+        if (!conversationId) return;
+        socket.join(`conversation:${conversationId}`);
+    });
+
+    socket.on("disconnect", () => {
+        console.log("Support socket disconnected:", socket.id);
+    });
+});
+
 const PORT = process.env.PORT || 3000;
 
-app.listen(PORT, () => {
+server.listen(PORT, () => {
     console.log(`Server is running on port ${PORT}`);
 });

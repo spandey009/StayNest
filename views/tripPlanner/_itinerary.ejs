@@ -1,0 +1,245 @@
+<div class="container py-5">
+
+    <!-- HEADER -->
+    <div class="text-center mb-5">
+        <h1 class="fw-bold">
+            <i class="fa-solid fa-wand-magic-sparkles me-2"></i>
+            Your StayNest AI Trip
+        </h1>
+
+        <h3 class="mt-3">
+            <%= itinerary.destination %>
+        </h3>
+
+        <% if (trip) { %>
+            <p class="text-muted">
+                <%= trip.startDate.toISOString
+                    ? trip.startDate.toISOString().split("T")[0]
+                    : trip.startDate %>
+                →
+                <%= trip.endDate.toISOString
+                    ? trip.endDate.toISOString().split("T")[0]
+                    : trip.endDate %>
+                · <%= trip.travelers %> travelers
+            </p>
+        <% } %>
+
+        <p class="lead">
+            <%= itinerary.summary %>
+        </p>
+    </div>
+
+
+    <!-- BUDGET -->
+    <div class="row g-3 mb-5">
+
+        <% Object.entries(itinerary.estimatedBudget).forEach(([key, value]) => { %>
+
+            <div class="col-6 col-md-3">
+
+                <div class="card shadow-sm border-0 h-100">
+
+                    <div class="card-body text-center">
+
+                        <small class="text-muted text-capitalize">
+                            <%= key %>
+                        </small>
+
+                        <h5 class="mt-2">
+                            ₹<%= Number(value).toLocaleString("en-IN") %>
+                        </h5>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        <% }) %>
+
+    </div>
+
+
+    <!-- RECOMMENDED PROPERTIES -->
+    <% if (recommendedListings && recommendedListings.length) { %>
+
+        <section class="mb-5">
+
+            <h2 class="fw-bold mb-4">
+                <i class="fa-solid fa-house me-2"></i>
+                Recommended StayNest Properties
+            </h2>
+
+            <div class="row g-4">
+
+                <% recommendedListings.forEach(listing => { %>
+
+                    <div class="col-md-6 col-lg-4">
+
+                        <div class="card h-100 border-0 shadow-sm">
+
+                            <% if (listing.image) { %>
+
+                                <img
+                                    src="<%= listing.image.url || listing.image %>"
+                                    class="card-img-top"
+                                    alt="<%= listing.title %>"
+                                    style="height:220px;object-fit:cover;"
+                                >
+
+                            <% } %>
+
+                            <div class="card-body d-flex flex-column">
+
+                                <h4 class="fw-bold">
+                                    <%= listing.title %>
+                                </h4>
+
+                                <p class="text-muted">
+                                    <i class="fa-solid fa-location-dot me-1"></i>
+                                    <%= listing.location %>
+                                    <% if (listing.country) { %>
+                                        , <%= listing.country %>
+                                    <% } %>
+                                </p>
+
+                                <p>
+                                    <strong>
+                                        ₹<%= Number(listing.price).toLocaleString("en-IN") %>
+                                    </strong>
+                                    <span class="text-muted">/ night</span>
+                                </p>
+
+                                <a
+                                    href="/listings/<%= listing._id %>"
+                                    class="btn btn-dark mt-auto"
+                                >
+                                    <i class="fa-solid fa-eye me-2"></i>
+                                    View Property
+                                </a>
+
+                            </div>
+
+                        </div>
+
+                    </div>
+
+                <% }) %>
+
+            </div>
+
+        </section>
+
+    <% } %>
+
+
+    <!-- DAILY ITINERARY -->
+    <% itinerary.days.forEach(day => { %>
+
+        <div class="card shadow-sm border-0 mb-4">
+
+            <div class="card-body">
+
+                <h3 class="fw-bold">
+                    Day <%= day.day %>
+                </h3>
+
+                <p class="text-muted">
+                    <%= day.date %>
+                </p>
+
+                <div class="row g-3">
+
+                    <div class="col-md-4">
+                        <div class="p-3 bg-light rounded h-100">
+                            <h5>🌅 Morning</h5>
+
+                            <p>
+                                <%= day.morning.activity %>
+                            </p>
+
+                            <strong>
+                                ₹<%= Number(day.morning.estimatedCost)
+                                    .toLocaleString("en-IN") %>
+                            </strong>
+                        </div>
+                    </div>
+
+
+                    <div class="col-md-4">
+                        <div class="p-3 bg-light rounded h-100">
+                            <h5>☀️ Afternoon</h5>
+
+                            <p>
+                                <%= day.afternoon.activity %>
+                            </p>
+
+                            <strong>
+                                ₹<%= Number(day.afternoon.estimatedCost)
+                                    .toLocaleString("en-IN") %>
+                            </strong>
+                        </div>
+                    </div>
+
+
+                    <div class="col-md-4">
+                        <div class="p-3 bg-light rounded h-100">
+                            <h5>🌙 Evening</h5>
+
+                            <p>
+                                <%= day.evening.activity %>
+                            </p>
+
+                            <strong>
+                                ₹<%= Number(day.evening.estimatedCost)
+                                    .toLocaleString("en-IN") %>
+                            </strong>
+                        </div>
+                    </div>
+
+                </div>
+
+                <hr>
+
+                <p>
+                    🍴 <strong>Food:</strong>
+                    <%= day.foodRecommendation %>
+                </p>
+
+                <p class="mb-0">
+                    💰 <strong>Daily estimate:</strong>
+                    ₹<%= Number(day.dailyCost)
+                        .toLocaleString("en-IN") %>
+                </p>
+
+            </div>
+
+        </div>
+
+    <% }) %>
+
+
+    <!-- TRAVEL TIPS -->
+    <div class="card shadow-sm border-0 mb-4">
+
+        <div class="card-body">
+
+            <h3>💡 Travel Tips</h3>
+
+            <ul>
+
+                <% itinerary.travelTips.forEach(tip => { %>
+
+                    <li class="mb-2">
+                        <%= tip %>
+                    </li>
+
+                <% }) %>
+
+            </ul>
+
+        </div>
+
+    </div>
+
+</div>

@@ -1,0 +1,1078 @@
+<% layout("layouts/boilerplate") %>
+<style>
+.sn-support-page{
+    width:100%!important;
+    margin:0!important;
+    padding:25px 15px 35px!important;
+    box-sizing:border-box!important;
+    background:#f7f8fa!important;
+}
+
+.sn-support-container{
+    width:100%!important;
+    max-width:850px!important;
+    margin:0 auto!important;
+    padding:0!important;
+    box-sizing:border-box!important;
+}
+
+.sn-support-header{
+    display:flex!important;
+    align-items:flex-end!important;
+    justify-content:space-between!important;
+    width:100%!important;
+    margin:0 0 16px!important;
+    padding:0!important;
+    box-sizing:border-box!important;
+    gap:20px!important;
+}
+
+.sn-support-header-left{
+    min-width:0!important;
+}
+
+.sn-support-badge{
+    display:block!important;
+    width:auto!important;
+    height:auto!important;
+    margin:0 0 5px!important;
+    padding:0!important;
+    color:#ff5a5f!important;
+    font-size:11px!important;
+    line-height:1.2!important;
+    font-weight:800!important;
+    letter-spacing:1px!important;
+}
+
+.sn-support-title{
+    display:block!important;
+    width:auto!important;
+    height:auto!important;
+    margin:0 0 5px!important;
+    padding:0!important;
+    color:#18213d!important;
+    font-size:32px!important;
+    line-height:1.15!important;
+    font-weight:800!important;
+    text-align:left!important;
+}
+
+.sn-support-subtitle{
+    display:block!important;
+    width:auto!important;
+    height:auto!important;
+    margin:0!important;
+    padding:0!important;
+    color:#737986!important;
+    font-size:15px!important;
+    line-height:1.4!important;
+    text-align:left!important;
+}
+
+.sn-support-status{
+    display:flex!important;
+    align-items:center!important;
+    gap:7px!important;
+    width:auto!important;
+    height:auto!important;
+    margin:0!important;
+    padding:0!important;
+    color:#398f55!important;
+    font-size:15px!important;
+    line-height:1.2!important;
+    font-weight:700!important;
+    white-space:nowrap!important;
+}
+
+.sn-support-status-dot{
+    display:block!important;
+    width:9px!important;
+    height:9px!important;
+    min-width:9px!important;
+    min-height:9px!important;
+    margin:0!important;
+    padding:0!important;
+    border-radius:50%!important;
+    background:#398f55!important;
+}
+
+/* CHAT */
+
+.sn-support-chat{
+    display:flex!important;
+    flex-direction:column!important;
+    width:100%!important;
+    height:400px!important;
+    min-height:400px!important;
+    max-height:400px!important;
+    margin:0!important;
+    padding:0!important;
+    box-sizing:border-box!important;
+    overflow:hidden!important;
+    border-radius:20px!important;
+    background:#fff!important;
+    box-shadow:0 10px 30px rgba(0,0,0,.07)!important;
+}
+
+/* MESSAGE AREA */
+
+#snSupportMessages{
+    flex:1 1 auto!important;
+    display:block!important;
+    width:100%!important;
+    height:auto!important;
+    min-height:0!important;
+    max-height:none!important;
+    margin:0!important;
+    padding:16px!important;
+    box-sizing:border-box!important;
+    overflow-y:auto!important;
+    overflow-x:hidden!important;
+    background:#fff!important;
+}
+
+/* MESSAGE ROW */
+
+.sn-support-row{
+    display:flex!important;
+    width:100%!important;
+    height:auto!important;
+    min-height:0!important;
+    max-height:none!important;
+    margin:0 0 14px!important;
+    padding:0!important;
+    box-sizing:border-box!important;
+}
+
+.sn-support-row-user{
+    justify-content:flex-end!important;
+    align-items:flex-start!important;
+}
+
+.sn-support-row-ai{
+    justify-content:flex-start!important;
+    align-items:flex-start!important;
+}
+
+/* USER WRAPPER */
+
+.sn-support-user-wrapper{
+    display:flex!important;
+    flex-direction:column!important;
+    align-items:flex-end!important;
+    width:auto!important;
+    max-width:72%!important;
+    min-width:0!important;
+}
+
+/* AI WRAPPER */
+
+.sn-support-ai-wrapper{
+    display:flex!important;
+    flex-direction:column!important;
+    align-items:flex-start!important;
+    width:auto!important;
+    max-width:72%!important;
+    min-width:0!important;
+}
+
+/* AI LABEL */
+
+.sn-support-ai-label{
+    display:block!important;
+    width:auto!important;
+    height:auto!important;
+    margin:0 0 5px 4px!important;
+    padding:0!important;
+    color:#687080!important;
+    font-size:12px!important;
+    line-height:1.2!important;
+    font-weight:700!important;
+    text-align:left!important;
+}
+
+/* BUBBLES */
+
+.sn-support-bubble{
+    display:block!important;
+    width:auto!important;
+    height:auto!important;
+    min-width:0!important;
+    min-height:0!important;
+    max-width:100%!important;
+    max-height:none!important;
+    margin:0!important;
+    padding:11px 15px!important;
+    box-sizing:border-box!important;
+    border:0!important;
+    border-radius:16px!important;
+    font-family:"Plus Jakarta Sans",Arial,sans-serif!important;
+    font-size:15px!important;
+    line-height:1.45!important;
+    font-weight:400!important;
+    white-space:pre-wrap!important;
+    overflow-wrap:anywhere!important;
+    word-break:normal!important;
+    text-align:left!important;
+    vertical-align:top!important;
+}
+
+.sn-support-row-user .sn-support-bubble{
+    width:auto!important;
+    max-width:100%!important;
+    background:#ff5a5f!important;
+    color:#fff!important;
+    border-bottom-right-radius:4px!important;
+}
+
+.sn-support-row-ai .sn-support-bubble{
+    width:auto!important;
+    max-width:100%!important;
+    background:#f0f2f5!important;
+    color:#18213d!important;
+    border-bottom-left-radius:4px!important;
+}
+
+/* KEEP AI BUBBLE FROM BECOMING FULL WIDTH */
+
+.sn-support-ai-wrapper .sn-support-bubble{
+    display:inline-block!important;
+    width:auto!important;
+    max-width:100%!important;
+}
+
+/* MARKDOWN TEXT */
+
+.sn-support-bubble strong{
+    font-weight:800!important;
+}
+
+.sn-support-bubble em{
+    font-style:italic!important;
+}
+
+.sn-support-bubble ul{
+    margin:6px 0 4px 18px!important;
+    padding:0!important;
+}
+
+.sn-support-bubble ol{
+    margin:6px 0 4px 20px!important;
+    padding:0!important;
+}
+
+.sn-support-bubble li{
+    margin-bottom:3px!important;
+}
+
+/* EMPTY STATE */
+
+.sn-support-empty{
+    display:flex!important;
+    flex-direction:column!important;
+    align-items:center!important;
+    justify-content:center!important;
+    width:100%!important;
+    height:100%!important;
+    margin:0!important;
+    padding:0!important;
+    box-sizing:border-box!important;
+    text-align:center!important;
+    color:#737986!important;
+}
+
+.sn-support-empty-icon{
+    display:block!important;
+    width:auto!important;
+    height:auto!important;
+    margin:0 0 8px!important;
+    padding:0!important;
+    font-size:35px!important;
+}
+
+.sn-support-empty-title{
+    display:block!important;
+    width:auto!important;
+    height:auto!important;
+    margin:0 0 5px!important;
+    padding:0!important;
+    color:#18213d!important;
+    font-size:18px!important;
+}
+
+.sn-support-empty-text{
+    display:block!important;
+    width:auto!important;
+    height:auto!important;
+    margin:0!important;
+    padding:0!important;
+    color:#737986!important;
+    font-size:14px!important;
+}
+
+/* INPUT */
+
+.sn-support-input{
+    flex:0 0 62px!important;
+    display:flex!important;
+    align-items:center!important;
+    width:100%!important;
+    height:62px!important;
+    min-height:62px!important;
+    margin:0!important;
+    padding:8px 12px!important;
+    gap:9px!important;
+    box-sizing:border-box!important;
+    border-top:1px solid #eee!important;
+    background:#fff!important;
+}
+
+.sn-support-input-field{
+    flex:1 1 auto!important;
+    display:block!important;
+    width:auto!important;
+    height:44px!important;
+    min-width:0!important;
+    min-height:44px!important;
+    margin:0!important;
+    padding:0 14px!important;
+    box-sizing:border-box!important;
+    border:1px solid #ddd!important;
+    border-radius:12px!important;
+    outline:none!important;
+    background:#fff!important;
+    color:#18213d!important;
+    font-family:"Plus Jakarta Sans",Arial,sans-serif!important;
+    font-size:14px!important;
+    line-height:44px!important;
+    text-align:left!important;
+}
+
+.sn-support-input-field:focus{
+    border-color:#ff5a5f!important;
+}
+
+.sn-support-send{
+    flex:0 0 44px!important;
+    display:flex!important;
+    align-items:center!important;
+    justify-content:center!important;
+    width:44px!important;
+    height:44px!important;
+    min-width:44px!important;
+    min-height:44px!important;
+    margin:0!important;
+    padding:0!important;
+    box-sizing:border-box!important;
+    border:0!important;
+    border-radius:12px!important;
+    background:#ff5a5f!important;
+    color:#fff!important;
+    cursor:pointer!important;
+    font-size:14px!important;
+}
+
+.sn-support-send:disabled{
+    opacity:.6!important;
+    cursor:not-allowed!important;
+}
+
+/* SCROLLBAR */
+
+#snSupportMessages::-webkit-scrollbar{
+    width:7px!important;
+}
+
+#snSupportMessages::-webkit-scrollbar-track{
+    background:transparent!important;
+}
+
+#snSupportMessages::-webkit-scrollbar-thumb{
+    background:#cfd3d8!important;
+    border-radius:10px!important;
+}
+
+#snSupportMessages{
+    scrollbar-width:thin!important;
+    scrollbar-color:#cfd3d8 transparent!important;
+}
+
+/* MOBILE */
+
+@media(max-width:600px){
+
+    .sn-support-page{
+        padding:20px 10px 25px!important;
+    }
+
+    .sn-support-header{
+        align-items:flex-start!important;
+        flex-direction:column!important;
+        gap:10px!important;
+    }
+
+    .sn-support-title{
+        font-size:28px!important;
+    }
+
+    .sn-support-subtitle{
+        font-size:14px!important;
+    }
+
+    .sn-support-chat{
+        height:400px!important;
+        min-height:400px!important;
+        max-height:400px!important;
+        border-radius:18px!important;
+    }
+
+    .sn-support-user-wrapper,
+    .sn-support-ai-wrapper{
+        max-width:85%!important;
+    }
+
+    .sn-support-bubble{
+        max-width:100%!important;
+        font-size:14px!important;
+    }
+
+    .sn-support-input{
+        padding:8px 10px!important;
+    }
+}
+.sn-support-header-actions{
+    display:flex!important;
+    align-items:center!important;
+    gap:14px!important;
+}
+
+.sn-support-clear-btn{
+    display:flex!important;
+    align-items:center!important;
+    justify-content:center!important;
+    gap:7px!important;
+    height:38px!important;
+    padding:0 13px!important;
+    margin:0!important;
+    border:1px solid #e1e3e8!important;
+    border-radius:10px!important;
+    background:#fff!important;
+    color:#687080!important;
+    font-family:"Plus Jakarta Sans",Arial,sans-serif!important;
+    font-size:12px!important;
+    font-weight:700!important;
+    cursor:pointer!important;
+    transition:.2s ease!important;
+}
+
+.sn-support-clear-btn:hover{
+    border-color:#ff5a5f!important;
+    color:#ff5a5f!important;
+    background:#fff7f7!important;
+}
+
+.sn-support-clear-btn:disabled{
+    opacity:.6!important;
+    cursor:not-allowed!important;
+}
+
+.sn-support-clear-btn i{
+    font-size:12px!important;
+}
+
+@media(max-width:600px){
+
+    .sn-support-header-actions{
+        width:100%!important;
+        justify-content:space-between!important;
+    }
+
+    .sn-support-clear-btn{
+        height:36px!important;
+        padding:0 11px!important;
+    }
+}
+</style>
+
+
+<div class="sn-support-page">
+
+    <div class="sn-support-container">
+
+        <div class="sn-support-header">
+
+            <div class="sn-support-header-left">
+
+                <span class="sn-support-badge">
+                    24×7 SUPPORT
+                </span>
+
+                <h1 class="sn-support-title">
+                    StayNest Support
+                </h1>
+
+                <p class="sn-support-subtitle">
+                    How can we help you today?
+                </p>
+
+            </div>
+
+         <div class="sn-support-header-actions">
+
+    <button
+        type="button"
+        id="clearChatBtn"
+        class="sn-support-clear-btn"
+    >
+        <i class="fa-solid fa-trash"></i>
+        Clear Chat
+    </button>
+
+    <div class="sn-support-status">
+        <span class="sn-support-status-dot"></span>
+        Online
+    </div>
+
+</div>
+
+        </div>
+
+
+        <div class="sn-support-chat">
+
+            <div id="snSupportMessages">
+
+                <% if (!messages.length) { %>
+
+                    <div
+                        class="sn-support-empty"
+                        id="supportEmpty"
+                    >
+
+                        <div class="sn-support-empty-icon">
+                            💬
+                        </div>
+
+                        <h3 class="sn-support-empty-title">
+                            Welcome to StayNest Support
+                        </h3>
+
+                        <p class="sn-support-empty-text">
+                            Send us a message and we'll help you with your stay.
+                        </p>
+
+                    </div>
+
+                <% } %>
+
+
+                <% messages.forEach(message => { %>
+
+                    <% if (message.senderType === "user") { %>
+
+                        <div class="sn-support-row sn-support-row-user">
+
+                            <div class="sn-support-user-wrapper">
+
+                                <div class="sn-support-bubble">
+                                    <%= message.message %>
+                                </div>
+
+                            </div>
+
+                        </div>
+
+                    <% } else { %>
+
+                        <div class="sn-support-row sn-support-row-ai">
+
+                            <div class="sn-support-ai-wrapper">
+
+                                <div class="sn-support-ai-label">
+                                    🤖 StayNest AI
+                                </div>
+
+                                <div class="sn-support-bubble">
+                                    <%= message.message %>
+                                </div>
+
+                            </div>
+
+                        </div>
+
+                    <% } %>
+
+                <% }) %>
+
+            </div>
+
+
+            <form
+                id="supportForm"
+                class="sn-support-input"
+            >
+
+                <input
+                    id="supportInput"
+                    class="sn-support-input-field"
+                    type="text"
+                    placeholder="Type your message..."
+                    maxlength="2000"
+                    autocomplete="off"
+                >
+
+                <button
+                    type="submit"
+                    id="supportSend"
+                    class="sn-support-send"
+                >
+
+                    <i class="fa-solid fa-paper-plane"></i>
+
+                </button>
+
+            </form>
+
+        </div>
+
+    </div>
+
+</div>
+
+
+<script src="/socket.io/socket.io.js"></script>
+
+<script>
+
+const conversationId =
+    "<%= conversation._id %>";
+
+const socket =
+    io();
+
+const messagesContainer =
+    document.getElementById(
+        "snSupportMessages"
+    );
+
+const form =
+    document.getElementById(
+        "supportForm"
+    );
+
+const input =
+    document.getElementById(
+        "supportInput"
+    );
+
+const sendButton =
+    document.getElementById(
+        "supportSend"
+    );
+const clearChatBtn =
+    document.getElementById("clearChatBtn");
+
+socket.on(
+    "connect",
+    () => {
+
+        console.log(
+            "Support socket connected:",
+            socket.id
+        );
+
+        socket.emit(
+            "join-conversation",
+            conversationId
+        );
+
+    }
+);
+
+
+socket.on(
+    "new-message",
+    message => {
+
+        if (
+            String(message.conversation) !==
+            String(conversationId)
+        ) {
+            return;
+        }
+
+        /*
+         * User messages are already added
+         * after the POST request succeeds.
+         *
+         * Socket only adds AI / agent messages.
+         */
+
+        if (
+            message.senderType !==
+            "user"
+        ) {
+
+            addMessage(
+                message.message,
+                false
+            );
+
+        }
+
+    }
+);
+
+
+socket.on(
+    "connect_error",
+    error => {
+
+        console.error(
+            "Support socket error:",
+            error.message
+        );
+
+    }
+);
+
+
+socket.on(
+    "conversation-resolved",
+    data => {
+
+        if (
+            String(data.conversationId) !==
+            String(conversationId)
+        ) {
+            return;
+        }
+
+        input.disabled = true;
+        sendButton.disabled = true;
+
+    }
+);
+
+
+socket.on(
+    "support-escalated",
+    data => {
+
+        if (
+            String(data.conversationId) !==
+            String(conversationId)
+        ) {
+            return;
+        }
+
+        input.disabled = true;
+        sendButton.disabled = true;
+
+    }
+);
+
+
+form.addEventListener(
+    "submit",
+    async event => {
+
+        event.preventDefault();
+
+        const message =
+            input.value.trim();
+
+        if (
+            !message ||
+            sendButton.disabled
+        ) {
+            return;
+        }
+
+        sendButton.disabled = true;
+        input.disabled = true;
+
+        try {
+
+            const response =
+                await fetch(
+                    `/support/${conversationId}/messages`,
+                    {
+                        method:"POST",
+
+                        headers:{
+                            "Content-Type":
+                                "application/json"
+                        },
+
+                        body:JSON.stringify({
+                            message
+                        })
+                    }
+                );
+
+
+            const data =
+                await response.json();
+
+
+            if (
+                !response.ok ||
+                !data.success
+            ) {
+
+                throw new Error(
+                    data.message ||
+                    "Unable to send message."
+                );
+
+            }
+
+
+            /*
+             * Add the user's message
+             * immediately.
+             */
+
+            addMessage(
+                data.message.message,
+                true
+            );
+
+
+            input.value = "";
+
+        }
+        catch(error){
+
+            console.error(
+                "Send message error:",
+                error
+            );
+
+            alert(
+                error.message
+            );
+
+        }
+        finally{
+
+            /*
+             * If conversation is still active,
+             * enable the input again.
+             */
+
+            if (
+                input.disabled &&
+                sendButton.disabled
+            ) {
+
+                const currentConversation =
+                    await getConversationStatus();
+
+                if (
+                    currentConversation !==
+                    "waiting" &&
+                    currentConversation !==
+                    "resolved"
+                ) {
+
+                    sendButton.disabled =
+                        false;
+
+                    input.disabled =
+                        false;
+
+                }
+
+            }
+
+            input.focus();
+
+        }
+
+    }
+);
+
+
+async function getConversationStatus(){
+
+    try{
+
+        const response =
+            await fetch(
+                `/support/${conversationId}/messages`
+            );
+
+        if(
+            !response.ok
+        ){
+
+            return "open";
+
+        }
+
+        return "open";
+
+    }
+    catch(error){
+
+        return "open";
+
+    }
+
+}
+
+
+function addMessage(
+    message,
+    isUser
+){
+
+    const empty =
+        document.getElementById(
+            "supportEmpty"
+        );
+
+    if(empty){
+
+        empty.remove();
+
+    }
+
+
+    const row =
+        document.createElement(
+            "div"
+        );
+
+    row.className =
+        `sn-support-row ${
+            isUser
+                ? "sn-support-row-user"
+                : "sn-support-row-ai"
+        }`;
+
+
+    const wrapper =
+        document.createElement(
+            "div"
+        );
+
+
+    if(isUser){
+
+        wrapper.className =
+            "sn-support-user-wrapper";
+
+    }
+    else{
+
+        wrapper.className =
+            "sn-support-ai-wrapper";
+
+
+        const label =
+            document.createElement(
+                "div"
+            );
+
+        label.className =
+            "sn-support-ai-label";
+
+        label.textContent =
+            "🤖 StayNest AI";
+
+        wrapper.appendChild(
+            label
+        );
+
+    }
+
+
+    const bubble =
+        document.createElement(
+            "div"
+        );
+
+    bubble.className =
+        "sn-support-bubble";
+
+    bubble.textContent =
+        message;
+
+
+    wrapper.appendChild(
+        bubble
+    );
+
+    row.appendChild(
+        wrapper
+    );
+
+    messagesContainer.appendChild(
+        row
+    );
+
+
+    messagesContainer.scrollTop =
+        messagesContainer.scrollHeight;
+
+}
+
+
+/*
+ * Scroll to the latest message
+ * when the page loads.
+ */
+
+messagesContainer.scrollTop =
+    messagesContainer.scrollHeight;
+
+    clearChatBtn.addEventListener("click", async () => {
+
+    const confirmed = confirm(
+        "Are you sure you want to clear this chat?"
+    );
+
+    if (!confirmed) {
+        return;
+    }
+
+    clearChatBtn.disabled = true;
+
+    try {
+
+        const response = await fetch(
+            `/support/${conversationId}/resolve`,
+            {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json"
+                }
+            }
+        );
+
+        const data = await response.json();
+
+        if (!response.ok || !data.success) {
+            throw new Error(
+                data.message || "Unable to clear chat."
+            );
+        }
+
+        window.location.reload();
+
+    } catch (error) {
+
+        console.error(
+            "Clear chat error:",
+            error
+        );
+
+        alert(error.message);
+
+        clearChatBtn.disabled = false;
+    }
+});
+</script>

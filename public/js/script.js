@@ -17,28 +17,28 @@
   })
 })();
 
-
-//filter scroll
+// Filter scroll
 const filters = document.getElementById("filters");
+const leftBtn = document.querySelector(".scroll-btn.left");
+const rightBtn = document.querySelector(".scroll-btn.right");
 
-if (filters) {
+if(filters && leftBtn && rightBtn){
+    filters.scrollLeft = 0;
 
-    const leftBtn = document.querySelector(".left");
-    const rightBtn = document.querySelector(".right");
-
-    rightBtn.addEventListener("click", () => {
+    rightBtn.addEventListener("click",()=>{
         filters.scrollBy({
-            left: 300,
-            behavior: "smooth"
+            left:300,
+            behavior:"smooth"
         });
     });
 
-    leftBtn.addEventListener("click", () => {
+    leftBtn.addEventListener("click",()=>{
         filters.scrollBy({
-            left: -300,
-            behavior: "smooth"
+            left:-300,
+            behavior:"smooth"
         });
     });
+}
 
     // Active Filter
     const allFilters = document.querySelectorAll(".filter");

@@ -1,100 +1,1987 @@
 <% layout('layouts/boilerplate') %> 
 <!-- <h3>All Listings</h3> -->
 <style>
-    
+.ai-hub{position:relative;margin:35px auto 45px;padding:34px 38px 20px;border-radius:32px;overflow:hidden;background:linear-gradient(135deg,#f4eaff 0%,#edf2ff 48%,#fff0f6 100%);box-shadow:0 18px 45px rgba(48,38,100,.10)}
+.ai-hub:before{content:"";position:absolute;width:430px;height:430px;left:-180px;bottom:-250px;border-radius:50%;background:radial-gradient(circle,#ffcdbb 0%,transparent 68%);opacity:.75}
+.ai-hub:after{content:"";position:absolute;width:450px;height:450px;right:-180px;top:-280px;border-radius:50%;background:radial-gradient(circle,#cbd7ff 0%,transparent 68%);opacity:.7}
+.ai-sparkle{position:absolute;z-index:1;font-size:24px;opacity:.65}
+.sparkle-one{left:5%;top:20%}.sparkle-two{left:35%;top:8%}.sparkle-three{right:4%;bottom:24%}
+.ai-content{position:relative;z-index:2;display:grid;grid-template-columns:34% 66%;gap:28px;align-items:stretch}
+.ai-intro{position:relative;display:flex;flex-direction:column;justify-content:center;padding:28px 20px 28px 12px;min-height:360px}
+.ai-badge{display:inline-flex;align-items:center;width:max-content;padding:8px 15px;border-radius:30px;background:rgba(255,255,255,.85);color:#6941e8;font-weight:700;font-size:14px;box-shadow:0 5px 15px rgba(80,50,150,.07)}
+.ai-intro h2{font-size:46px;line-height:1.05;font-weight:850;letter-spacing:-2px;color:#18213d;margin:20px 0 12px}
+.ai-intro h2 span{color:#6941e8}
+.ai-tagline{font-size:19px;line-height:1.55;color:#515b75;max-width:430px;margin:0 0 25px}
+.ai-actions{display:flex;gap:12px;flex-wrap:wrap}
+.ai-primary,.ai-secondary{display:inline-flex;align-items:center;padding:13px 20px;border-radius:13px;text-decoration:none;font-weight:700;transition:.25s}
+.ai-primary{background:#38227d;color:#fff;box-shadow:0 8px 18px rgba(56,34,125,.2)}
+.ai-primary:hover{background:#2b195f;color:#fff;transform:translateY(-3px)}
+.ai-secondary{background:rgba(255,255,255,.85);border:1px solid #c9cde0;color:#202943}
+.ai-secondary:hover{background:#fff;color:#202943;transform:translateY(-3px)}
+.ai-travel-art{position:absolute;right:5px;bottom:8px;font-size:54px;opacity:.9;filter:drop-shadow(0 8px 8px rgba(0,0,0,.08))}
+.ai-features{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+.ai-feature-link{display:block;text-decoration:none;color:inherit}
+.ai-feature{position:relative;min-height:170px;padding:23px 24px;border:1px solid rgba(255,255,255,.95);border-radius:23px;background:rgba(255,255,255,.76);backdrop-filter:blur(10px);box-shadow:0 9px 25px rgba(42,42,90,.07);overflow:hidden;transition:.28s}
+.ai-feature:after{content:"";position:absolute;width:100px;height:100px;right:-35px;bottom:-45px;border-radius:50%;background:rgba(110,80,240,.08)}
+.ai-feature-link:hover .ai-feature{transform:translateY(-6px);background:rgba(255,255,255,.95);box-shadow:0 17px 32px rgba(42,42,90,.13)}
+.ai-icon-box{width:54px;height:54px;display:flex;align-items:center;justify-content:center;border-radius:16px;font-size:29px;background:#f1eaff;margin-bottom:15px}
+.ai-feature:nth-child(2) .ai-icon-box{background:#fff0d9}
+.ai-feature:nth-child(3) .ai-icon-box{background:#e6f8ee}
+.ai-feature:nth-child(4) .ai-icon-box{background:#e5f0ff}
+.ai-feature h4{font-size:21px;line-height:1.2;font-weight:750;color:#19223e;margin:0 0 8px}
+.ai-feature p{font-size:15px;line-height:1.45;color:#626b82;margin:0;max-width:300px}
+.ai-explore{display:inline-block;margin-top:13px;color:#6540e8;font-weight:750;font-size:14px}
+.ai-bottom{position:relative;z-index:3;margin-top:22px;padding:6px;background:rgba(255,255,255,.88);border:1px solid rgba(255,255,255,.95);border-radius:21px;display:grid;grid-template-columns:repeat(4,1fr);box-shadow:0 8px 24px rgba(40,40,80,.06)}
+.ai-mini{display:flex;align-items:center;gap:13px;padding:18px 22px;color:inherit;text-decoration:none;border-right:1px solid #ddd;transition:.25s}
+.ai-mini:last-child{border-right:0}
+.ai-mini:hover{background:#fff;border-radius:15px;transform:translateY(-2px)}
+.ai-mini:hover strong{color:#6540e8}
+.ai-mini-icon{width:42px;height:42px;flex-shrink:0;display:flex;align-items:center;justify-content:center;border-radius:13px;background:#f1eaff;font-size:22px}
+.ai-mini strong{display:block;font-size:16px;color:#1b2440;margin-bottom:3px}
+.ai-mini span{display:block;font-size:13px;color:#70788d;line-height:1.35}
+.ai-section-label{display:flex;align-items:center;justify-content:space-between;margin:0 4px 18px}
+.ai-section-label h3{font-size:25px;font-weight:800;margin:0;color:#1b2440}
+.ai-section-label span{font-size:14px;color:#6540e8;font-weight:700}
+@media(max-width:992px){.ai-content{grid-template-columns:1fr}.ai-intro{text-align:center;align-items:center}.ai-travel-art{display:none}.ai-bottom{grid-template-columns:1fr 1fr}.ai-mini:nth-child(2){border-right:0}.ai-intro h2{font-size:40px}}
+@media(max-width:650px){.ai-hub{padding:24px 18px 18px}.ai-features{grid-template-columns:1fr}.ai-bottom{grid-template-columns:1fr}.ai-mini{border-right:0;border-bottom:1px solid #ddd}.ai-mini:last-child{border-bottom:0}.ai-intro h2{font-size:36px}}
+
+/* ================================
+   STAYNEST HERO
+================================ */
+
+.stn-hero {
+    position: relative;
+    min-height: 430px;
+    margin: 25px auto 35px;
+    width: calc(100% - 40px);
+    max-width: 1500px;
+    border-radius: 28px;
+    overflow: hidden;
+
+    background-image: url("https://images.unsplash.com/photo-1500534623283-312aade485b7?auto=format&fit=crop&w=1800&q=85");
+    background-size: cover;
+    background-position: center;
+}
+
+.stn-hero-overlay {
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(
+        90deg,
+        rgba(0,0,0,.65) 0%,
+        rgba(0,0,0,.35) 45%,
+        rgba(0,0,0,.15) 100%
+    );
+}
+
+.stn-hero-content {
+    position: relative;
+    z-index: 2;
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 75px 45px 50px;
+    color: white;
+}
+
+.stn-hero-badge {
+    display: inline-flex;
+    padding: 9px 16px;
+    border-radius: 999px;
+    background: rgba(255,255,255,.18);
+    backdrop-filter: blur(10px);
+    font-size: 14px;
+    font-weight: 600;
+    margin-bottom: 18px;
+}
+
+.stn-hero h1 {
+    margin: 0;
+    font-size: clamp(42px, 5vw, 68px);
+    line-height: 1.05;
+    font-weight: 800;
+    letter-spacing: -2px;
+}
+
+.stn-hero p {
+    margin: 18px 0 35px;
+    font-size: 20px;
+    color: rgba(255,255,255,.9);
+}
+
+.stn-hero-search {
+    display: flex;
+    align-items: center;
+    width: 100%;
+    padding: 8px;
+    background: white;
+    border-radius: 18px;
+    box-shadow: 0 15px 40px rgba(0,0,0,.22);
+}
+
+.stn-hero-search .stn-search-field {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    flex: 1;
+    padding: 12px 16px;
+}
+
+.stn-hero-search .stn-search-field > i {
+    color: #ff5a5f;
+    font-size: 19px;
+}
+
+.stn-hero-search .stn-search-field label {
+    display: block;
+    margin-bottom: 4px;
+    font-size: 12px;
+    font-weight: 700;
+    color: #222;
+}
+
+.stn-hero-search .stn-search-field input {
+    width: 100%;
+    border: none;
+    outline: none;
+    font-size: 14px;
+    color: #555;
+    background: transparent;
+}
+
+.stn-hero-search .stn-search-divider {
+    width: 1px;
+    height: 40px;
+    background: #e5e5e5;
+}
+
+.stn-hero-search .stn-search-btn {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+
+    min-width: 125px;
+    height: 55px;
+
+    border: none;
+    border-radius: 14px;
+
+    background: #ff5a5f;
+    color: white;
+
+    font-size: 15px;
+    font-weight: 700;
+
+    cursor: pointer;
+    transition: .25s;
+}
+
+.stn-hero-search .stn-search-btn:hover {
+    background: #e94b50;
+    transform: translateY(-2px);
+}
+
+@media(max-width: 1000px) {
+
+    .stn-hero-search {
+        flex-wrap: wrap;
+    }
+
+    .stn-hero-search .stn-search-field {
+        min-width: 45%;
+    }
+
+    .stn-hero-search .stn-search-divider {
+        display: none;
+    }
+
+    .stn-hero-search .stn-search-btn {
+        width: 100%;
+    }
+}
+
+@media(max-width: 600px) {
+
+    .stn-hero {
+        width: calc(100% - 20px);
+        min-height: 550px;
+        border-radius: 20px;
+    }
+
+    .stn-hero-content {
+        padding: 50px 22px 30px;
+    }
+
+    .stn-hero h1 {
+        font-size: 42px;
+    }
+
+    .stn-hero p {
+        font-size: 17px;
+    }
+
+    .stn-hero-search {
+        flex-direction: column;
+    }
+
+    .stn-hero-search .stn-search-field {
+        width: 100%;
+        min-width: 100%;
+    }
+
+    .stn-hero-search .stn-search-btn {
+        width: 100%;
+    }
+}
+/* ================================
+   STAYNEST CATEGORY BAR
+================================ */
+
+.stn-category-wrapper {
+    position: relative;
+
+    display: flex;
+    align-items: center;
+
+    max-width: 1500px;
+    margin: 0 auto 35px;
+    padding: 0 55px;
+
+    background: #fff;
+}
+
+.stn-categories {
+    display: flex;
+    align-items: flex-start;
+    gap: 34px;
+
+    width: 100%;
+
+    overflow-x: auto;
+    scroll-behavior: smooth;
+
+    scrollbar-width: none;
+}
+
+.stn-categories::-webkit-scrollbar {
+    display: none;
+}
+
+.stn-categories .filter {
+    position: relative;
+
+    flex: 0 0 auto;
+
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+
+    min-width: 65px;
+    padding: 8px 4px 12px;
+
+    color: #6b7280;
+
+    cursor: pointer;
+
+    transition: all .25s ease;
+}
+
+.stn-categories .filter i {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    width: 48px;
+    height: 48px;
+
+    margin-bottom: 7px;
+
+    border-radius: 50%;
+
+    background: #f5f5f7;
+
+    font-size: 20px;
+
+    transition: all .25s ease;
+}
+
+.stn-categories .filter p {
+    margin: 0;
+
+    font-size: 13px;
+    font-weight: 600;
+
+    white-space: nowrap;
+}
+
+.stn-categories .filter:hover {
+    color: #ff5a5f;
+}
+
+.stn-categories .filter:hover i {
+    transform: translateY(-3px);
+    background: #fff0f1;
+    color: #ff5a5f;
+}
+
+.stn-categories .filter.active {
+    color: #ff5a5f;
+}
+
+.stn-categories .filter.active i {
+    background: #ff5a5f;
+    color: white;
+
+    box-shadow:
+        0 7px 18px rgba(255, 90, 95, .25);
+}
+
+.stn-categories .filter.active::after {
+    content: "";
+
+    position: absolute;
+
+    bottom: 0;
+    left: 50%;
+
+    width: 45px;
+    height: 3px;
+
+    border-radius: 5px;
+
+    background: #ff5a5f;
+
+    transform: translateX(-50%);
+}
+
+
+/* CATEGORY ARROWS */
+
+.stn-category-arrow {
+    position: absolute;
+    z-index: 5;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    width: 42px;
+    height: 42px;
+
+    border: 1px solid #e5e7eb;
+    border-radius: 50%;
+
+    background: white;
+
+    color: #444;
+
+    cursor: pointer;
+
+    box-shadow: 0 5px 15px rgba(0,0,0,.08);
+
+    transition: all .2s ease;
+}
+
+.stn-category-arrow:hover {
+    transform: scale(1.05);
+    box-shadow: 0 7px 18px rgba(0,0,0,.13);
+}
+
+.stn-category-left {
+    left: 8px;
+}
+
+.stn-category-right {
+    right: 8px;
+}
+
+
+/* DESKTOP */
+
+@media (min-width: 1200px) {
+
+    .stn-categories {
+        justify-content: space-between;
+    }
+
+}
+
+
+/* TABLET */
+
+@media (max-width: 900px) {
+
+    .stn-category-wrapper {
+        padding: 0 45px;
+    }
+
+    .stn-categories {
+        gap: 25px;
+    }
+
+}
+
+
+/* MOBILE */
+
+@media (max-width: 600px) {
+
+    .stn-category-wrapper {
+        padding: 0 40px;
+        margin-bottom: 25px;
+    }
+
+    .stn-categories {
+        gap: 20px;
+    }
+
+    .stn-categories .filter i {
+        width: 43px;
+        height: 43px;
+        font-size: 18px;
+    }
+
+    .stn-categories .filter p {
+        font-size: 12px;
+    }
+
+    .stn-category-arrow {
+        width: 36px;
+        height: 36px;
+    }
+
+}
+/* ================================
+   EXPLORE DESTINATIONS
+================================ */
+
+.stn-destinations {
+    max-width: 1500px;
+    margin: 55px auto 65px;
+    padding: 0 20px;
+}
+
+.stn-section-heading {
+    display: flex;
+    align-items: flex-end;
+    justify-content: space-between;
+    gap: 20px;
+    margin-bottom: 24px;
+}
+
+.stn-eyebrow {
+    display: block;
+    margin-bottom: 7px;
+
+    color: #ff5a5f;
+
+    font-size: 12px;
+    font-weight: 800;
+    letter-spacing: 1.5px;
+}
+
+.stn-section-heading h2 {
+    margin: 0;
+
+    color: #18213d;
+
+    font-size: 30px;
+    font-weight: 800;
+    letter-spacing: -0.8px;
+}
+
+.stn-section-heading p {
+    margin: 7px 0 0;
+
+    color: #6b7280;
+    font-size: 15px;
+}
+
+.stn-view-all {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+
+    color: #ff5a5f;
+    text-decoration: none;
+
+    font-size: 14px;
+    font-weight: 700;
+
+    white-space: nowrap;
+
+    transition: .2s;
+}
+
+.stn-view-all:hover {
+    color: #e5484d;
+    gap: 12px;
+}
+
+
+/* DESTINATION GRID */
+
+.stn-destination-grid {
+    display: grid;
+
+    grid-template-columns: 1.35fr 1fr 1fr;
+    grid-template-rows: 230px 230px;
+
+    gap: 16px;
+}
+
+.stn-destination-card {
+    position: relative;
+
+    display: block;
+
+    overflow: hidden;
+
+    border-radius: 22px;
+
+    text-decoration: none;
+
+    background: #eee;
+}
+
+.stn-destination-large {
+    grid-row: span 2;
+}
+
+.stn-destination-card img {
+    width: 100%;
+    height: 100%;
+
+    object-fit: cover;
+
+    transition: transform .55s ease;
+}
+
+.stn-destination-card:hover img {
+    transform: scale(1.07);
+}
+
+.stn-destination-overlay {
+    position: absolute;
+    inset: 0;
+
+    background: linear-gradient(
+        to top,
+        rgba(0,0,0,.65),
+        rgba(0,0,0,.05) 65%
+    );
+}
+
+.stn-destination-info {
+    position: absolute;
+
+    left: 22px;
+    bottom: 20px;
+
+    color: white;
+}
+
+.stn-destination-info h3 {
+    margin: 0 0 4px;
+
+    font-size: 24px;
+    font-weight: 800;
+}
+
+.stn-destination-info span {
+    font-size: 13px;
+
+    color: rgba(255,255,255,.9);
+}
+
+
+/* RESPONSIVE */
+
+@media (max-width: 900px) {
+
+    .stn-destination-grid {
+        grid-template-columns: 1fr 1fr;
+        grid-template-rows: 230px 200px 200px;
+    }
+
+    .stn-destination-large {
+        grid-column: span 2;
+        grid-row: auto;
+    }
+
+}
+
+@media (max-width: 600px) {
+
+    .stn-destinations {
+        margin: 40px auto 45px;
+        padding: 0 14px;
+    }
+
+    .stn-section-heading {
+        align-items: flex-start;
+    }
+
+    .stn-section-heading h2 {
+        font-size: 25px;
+    }
+
+    .stn-section-heading p {
+        font-size: 14px;
+    }
+
+    .stn-destination-grid {
+        display: flex;
+        flex-direction: column;
+    }
+
+    .stn-destination-card,
+    .stn-destination-large {
+        height: 210px;
+    }
+
+    .stn-destination-info h3 {
+        font-size: 22px;
+    }
+}
+/* ================================
+   FEATURED STAYS
+================================ */
+
+.stn-featured-heading {
+    max-width: 1500px;
+    margin: 65px auto 25px;
+    padding: 0 20px;
+
+    display: flex;
+    align-items: flex-end;
+    justify-content: space-between;
+    gap: 20px;
+}
+
+.stn-featured-heading h2 {
+    margin: 0;
+
+    color: #18213d;
+
+    font-size: 30px;
+    font-weight: 800;
+    letter-spacing: -.8px;
+}
+
+.stn-featured-heading p {
+    margin: 7px 0 0;
+
+    color: #6b7280;
+    font-size: 15px;
+}
+
+
+/* Make listing cards feel premium */
+
+.listing-link {
+    display: block;
+    text-decoration: none;
+    color: inherit;
+}
+
+.listing-card {
+    position: relative;
+
+    overflow: hidden;
+
+    border-radius: 18px;
+
+    background: #fff;
+
+    transition:
+        transform .3s ease,
+        box-shadow .3s ease;
+}
+
+.listing-card:hover {
+    transform: translateY(-6px);
+
+    box-shadow:
+        0 18px 40px rgba(0,0,0,.12);
+}
+
+.listing-card .card-img-top {
+    height: 245px;
+
+    object-fit: cover;
+
+    transition: transform .45s ease;
+}
+
+.listing-card:hover .card-img-top {
+    transform: scale(1.04);
+}
+
+.listing-card .card-body {
+    padding: 15px 4px 10px;
+}
+
+.listing-title {
+    margin-bottom: 6px;
+
+    color: #18213d;
+
+    font-size: 16px;
+    font-weight: 700;
+}
+
+.listing-location {
+    color: #737986;
+
+    font-size: 13px;
+}
+
+.price-row {
+    margin-top: 10px;
+}
+
+.listing-price {
+    color: #18213d;
+    font-weight: 800;
+}
+
+.night {
+    color: #737986;
+    font-size: 13px;
+}
+
+.text-muted-custom {
+    color: #777;
+    font-size: 12px;
+}
+
+
+/* RESPONSIVE */
+
+@media(max-width:600px) {
+
+    .stn-featured-heading {
+        margin-top: 45px;
+        padding: 0 14px;
+    }
+
+    .stn-featured-heading h2 {
+        font-size: 25px;
+    }
+
+    .stn-featured-heading p {
+        font-size: 13px;
+    }
+
+    .stn-featured-heading .stn-view-all {
+        font-size: 13px;
+    }
+
+    .listing-card .card-img-top {
+        height: 210px;
+    }
+
+}
+/* ================================
+   FEATURED STAYS CAROUSEL
+================================ */
+
+.stn-featured-wrapper {
+    position: relative;
+
+    max-width: 1500px;
+
+    margin: 0 auto 65px;
+    padding: 0 55px;
+}
+
+.stn-featured-slider {
+    display: flex;
+
+    gap: 22px;
+
+    overflow-x: auto;
+
+    scroll-behavior: smooth;
+
+    scrollbar-width: none;
+
+    padding: 8px 4px 20px;
+}
+
+.stn-featured-slider::-webkit-scrollbar {
+    display: none;
+}
+
+.stn-featured-item {
+    flex: 0 0 calc(25% - 17px);
+
+    min-width: 260px;
+}
+
+
+/* ARROWS */
+
+.stn-featured-arrow {
+    position: absolute;
+    z-index: 10;
+
+    top: 42%;
+
+    width: 44px;
+    height: 44px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    border: 1px solid #e5e7eb;
+    border-radius: 50%;
+
+    background: white;
+
+    color: #333;
+
+    cursor: pointer;
+
+    box-shadow: 0 6px 18px rgba(0,0,0,.12);
+
+    transition: all .2s ease;
+}
+
+.stn-featured-arrow:hover {
+    transform: scale(1.08);
+
+    box-shadow:
+        0 9px 25px rgba(0,0,0,.16);
+}
+
+.stn-featured-left {
+    left: 5px;
+}
+
+.stn-featured-right {
+    right: 5px;
+}
+
+
+/* RESPONSIVE */
+
+@media(max-width:1100px) {
+
+    .stn-featured-item {
+        flex: 0 0 calc(33.333% - 15px);
+    }
+
+}
+
+@media(max-width:800px) {
+
+    .stn-featured-wrapper {
+        padding: 0 45px;
+    }
+
+    .stn-featured-item {
+        flex: 0 0 calc(50% - 11px);
+    }
+
+}
+
+@media(max-width:550px) {
+
+    .stn-featured-wrapper {
+        padding: 0 35px;
+    }
+
+    .stn-featured-slider {
+        gap: 15px;
+    }
+
+    .stn-featured-item {
+        flex: 0 0 82%;
+    }
+
+    .stn-featured-arrow {
+        width: 38px;
+        height: 38px;
+    }
+
+}
+/* ================================
+   STAYNEST AI
+================================ */
+
+.stn-ai-section {
+    position: relative;
+    max-width: 1500px;
+    margin: 65px auto;
+    padding: 38px;
+    border-radius: 30px;
+    overflow: hidden;
+
+    background: linear-gradient(
+        135deg,
+        #f5efff 0%,
+        #edf3ff 50%,
+        #fff1f6 100%
+    );
+
+    box-shadow: 0 18px 45px rgba(48,38,100,.09);
+}
+
+.stn-ai-section::before {
+    content: "";
+    position: absolute;
+
+    width: 400px;
+    height: 400px;
+
+    left: -180px;
+    bottom: -240px;
+
+    border-radius: 50%;
+
+    background: radial-gradient(
+        circle,
+        #ffcdbb,
+        transparent 70%
+    );
+
+    opacity: .6;
+}
+
+.stn-ai-section::after {
+    content: "";
+    position: absolute;
+
+    width: 420px;
+    height: 420px;
+
+    right: -180px;
+    top: -260px;
+
+    border-radius: 50%;
+
+    background: radial-gradient(
+        circle,
+        #cbd7ff,
+        transparent 70%
+    );
+
+    opacity: .6;
+}
+
+.stn-ai-header {
+    position: relative;
+    z-index: 2;
+
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+
+    gap: 30px;
+    margin-bottom: 28px;
+}
+
+.stn-ai-badge {
+    display: inline-flex;
+
+    padding: 7px 14px;
+
+    border-radius: 999px;
+
+    background: rgba(255,255,255,.8);
+
+    color: #6941e8;
+
+    font-size: 13px;
+    font-weight: 800;
+}
+
+.stn-ai-header h2 {
+    margin: 12px 0 7px;
+
+    color: #18213d;
+
+    font-size: 32px;
+    font-weight: 800;
+
+    letter-spacing: -.8px;
+}
+
+.stn-ai-header h2 span {
+    color: #6941e8;
+}
+
+.stn-ai-header p {
+    margin: 0;
+
+    color: #626b82;
+    font-size: 15px;
+}
+
+.stn-ai-actions {
+    display: flex;
+    gap: 10px;
+    flex-shrink: 0;
+}
+
+.stn-ai-primary,
+.stn-ai-secondary {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+
+    padding: 12px 18px;
+
+    border-radius: 12px;
+
+    text-decoration: none;
+
+    font-size: 14px;
+    font-weight: 700;
+
+    transition: .25s;
+}
+
+.stn-ai-primary {
+    background: #38227d;
+    color: white;
+
+    box-shadow: 0 7px 18px rgba(56,34,125,.18);
+}
+
+.stn-ai-primary:hover {
+    background: #2b195f;
+    color: white;
+    transform: translateY(-2px);
+}
+
+.stn-ai-secondary {
+    background: rgba(255,255,255,.8);
+
+    border: 1px solid #d5d8e5;
+
+    color: #202943;
+}
+
+.stn-ai-secondary:hover {
+    background: white;
+    color: #202943;
+    transform: translateY(-2px);
+}
+
+.stn-ai-features {
+    position: relative;
+    z-index: 2;
+
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+
+    gap: 14px;
+}
+
+.stn-ai-card {
+    position: relative;
+
+    display: flex;
+    align-items: center;
+
+    gap: 14px;
+
+    min-height: 115px;
+
+    padding: 18px;
+
+    border-radius: 19px;
+
+    background: rgba(255,255,255,.78);
+
+    border: 1px solid rgba(255,255,255,.9);
+
+    text-decoration: none;
+
+    box-shadow: 0 8px 22px rgba(42,42,90,.06);
+
+    transition: .28s;
+
+    overflow: hidden;
+}
+
+.stn-ai-card:hover {
+    transform: translateY(-5px);
+
+    background: white;
+
+    box-shadow: 0 15px 30px rgba(42,42,90,.12);
+}
+
+.stn-ai-icon {
+    flex-shrink: 0;
+
+    width: 52px;
+    height: 52px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    border-radius: 15px;
+
+    font-size: 27px;
+}
+
+.stn-ai-icon.purple {
+    background: #f1eaff;
+}
+
+.stn-ai-icon.orange {
+    background: #fff0d9;
+}
+
+.stn-ai-icon.green {
+    background: #e6f8ee;
+}
+
+.stn-ai-icon.blue {
+    background: #e5f0ff;
+}
+
+.stn-ai-card h3 {
+    margin: 0 0 5px;
+
+    color: #19223e;
+
+    font-size: 16px;
+    font-weight: 750;
+}
+
+.stn-ai-card p {
+    margin: 0;
+
+    color: #737b8f;
+
+    font-size: 13px;
+    line-height: 1.35;
+}
+
+.stn-ai-arrow {
+    position: absolute;
+
+    right: 14px;
+    bottom: 14px;
+
+    color: #6941e8;
+    font-size: 12px;
+}
+
+.stn-ai-tools {
+    position: relative;
+    z-index: 2;
+
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+
+    margin-top: 16px;
+    padding: 5px;
+
+    border-radius: 17px;
+
+    background: rgba(255,255,255,.75);
+}
+
+.stn-ai-tools a {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    gap: 8px;
+
+    padding: 13px;
+
+    color: #555e73;
+    text-decoration: none;
+
+    font-size: 13px;
+    font-weight: 650;
+
+    border-right: 1px solid #ddd;
+
+    transition: .2s;
+}
+
+.stn-ai-tools a:last-child {
+    border-right: 0;
+}
+
+.stn-ai-tools a:hover {
+    color: #6941e8;
+    background: white;
+    border-radius: 12px;
+}
+
+@media(max-width:1000px) {
+
+    .stn-ai-header {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+
+    .stn-ai-features {
+        grid-template-columns: repeat(2, 1fr);
+    }
+
+}
+
+@media(max-width:600px) {
+
+    .stn-ai-section {
+        margin: 45px 14px;
+        padding: 24px 18px;
+        border-radius: 24px;
+    }
+
+    .stn-ai-header h2 {
+        font-size: 27px;
+    }
+
+    .stn-ai-actions {
+        width: 100%;
+    }
+
+    .stn-ai-primary,
+    .stn-ai-secondary {
+        flex: 1;
+        justify-content: center;
+    }
+
+    .stn-ai-features {
+        grid-template-columns: 1fr;
+    }
+
+    .stn-ai-tools {
+        grid-template-columns: 1fr 1fr;
+    }
+
+    .stn-ai-tools a {
+        border-right: 0;
+        border-bottom: 1px solid #ddd;
+    }
+
+}
+/* ================================
+   MAP EXPLORER
+================================ */
+
+.stn-map-section {
+    max-width: 1500px;
+
+    margin: 70px auto;
+
+    padding: 0 20px;
+}
+
+.stn-map-heading {
+    display: flex;
+
+    align-items: flex-end;
+
+    justify-content: space-between;
+
+    gap: 20px;
+
+    margin-bottom: 24px;
+}
+
+.stn-map-heading h2 {
+    margin: 0;
+
+    color: #18213d;
+
+    font-size: 30px;
+
+    font-weight: 800;
+
+    letter-spacing: -.8px;
+}
+
+.stn-map-heading p {
+    margin: 7px 0 0;
+
+    color: #6b7280;
+
+    font-size: 15px;
+}
+
+.stn-map-button {
+    display: inline-flex;
+
+    align-items: center;
+
+    gap: 8px;
+
+    padding: 11px 17px;
+
+    border-radius: 12px;
+
+    background: #18213d;
+
+    color: white;
+
+    text-decoration: none;
+
+    font-size: 14px;
+
+    font-weight: 700;
+
+    white-space: nowrap;
+
+    transition: .25s;
+}
+
+.stn-map-button:hover {
+    background: #ff5a5f;
+
+    color: white;
+
+    transform: translateY(-2px);
+}
+
+
+/* MAP */
+
+.stn-map-container {
+    position: relative;
+
+    width: 100%;
+
+    height: 450px;
+
+    overflow: hidden;
+
+    border-radius: 25px;
+
+    background: #e8edf2;
+
+    box-shadow:
+        0 15px 40px rgba(0,0,0,.10);
+}
+
+#stn-home-map {
+    width: 100%;
+
+    height: 100%;
+}
+
+
+/* MAP OVERLAY */
+
+.stn-map-overlay {
+    position: absolute;
+
+    z-index: 500;
+
+    left: 20px;
+
+    bottom: 20px;
+
+    display: flex;
+
+    align-items: center;
+
+    gap: 12px;
+
+    padding: 13px 17px;
+
+    border-radius: 15px;
+
+    background: rgba(255,255,255,.94);
+
+    box-shadow:
+        0 8px 25px rgba(0,0,0,.13);
+
+    backdrop-filter: blur(10px);
+}
+
+.stn-map-overlay-icon {
+    width: 42px;
+
+    height: 42px;
+
+    display: flex;
+
+    align-items: center;
+
+    justify-content: center;
+
+    border-radius: 12px;
+
+    background: #fff0f1;
+
+    color: #ff5a5f;
+
+    font-size: 18px;
+}
+
+.stn-map-overlay strong {
+    display: block;
+
+    color: #18213d;
+
+    font-size: 14px;
+}
+
+.stn-map-overlay span {
+    display: block;
+
+    margin-top: 2px;
+
+    color: #737986;
+
+    font-size: 12px;
+}
+
+
+/* MOBILE */
+
+@media(max-width:600px) {
+
+    .stn-map-section {
+        margin: 50px auto;
+
+        padding: 0 14px;
+    }
+
+    .stn-map-heading {
+        align-items: flex-start;
+
+        flex-direction: column;
+    }
+
+    .stn-map-heading h2 {
+        font-size: 25px;
+    }
+
+    .stn-map-heading p {
+        font-size: 14px;
+    }
+
+    .stn-map-container {
+        height: 360px;
+
+        border-radius: 20px;
+    }
+
+    .stn-map-overlay {
+        left: 12px;
+
+        bottom: 12px;
+    }
+
+}
+/* ================================
+   WHY STAYNEST
+================================ */
+
+.stn-benefits {
+    max-width: 1500px;
+    margin: 65px auto 70px;
+    padding: 0 20px;
+}
+
+.stn-benefits-heading {
+    margin-bottom: 22px;
+}
+
+.stn-benefits-heading h2 {
+    margin: 0;
+
+    color: #18213d;
+
+    font-size: 30px;
+    font-weight: 800;
+
+    letter-spacing: -.8px;
+}
+
+.stn-benefits-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+
+    gap: 14px;
+}
+
+.stn-benefit {
+    display: flex;
+    align-items: center;
+
+    gap: 14px;
+
+    padding: 20px;
+
+    border: 1px solid #eeeef2;
+    border-radius: 18px;
+
+    background: #fff;
+
+    transition: .25s;
+}
+
+.stn-benefit:hover {
+    transform: translateY(-4px);
+
+    border-color: #e2dff5;
+
+    box-shadow:
+        0 12px 28px rgba(0,0,0,.07);
+}
+
+.stn-benefit-icon {
+    flex-shrink: 0;
+
+    width: 48px;
+    height: 48px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    border-radius: 14px;
+
+    background: #f5f0ff;
+
+    color: #6941e8;
+
+    font-size: 19px;
+}
+
+.stn-benefit h3 {
+    margin: 0 0 4px;
+
+    color: #18213d;
+
+    font-size: 15px;
+    font-weight: 750;
+}
+
+.stn-benefit p {
+    margin: 0;
+
+    color: #737986;
+
+    font-size: 12px;
+
+    line-height: 1.4;
+}
+
+@media(max-width:1000px) {
+
+    .stn-benefits-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+
+}
+
+@media(max-width:600px) {
+
+    .stn-benefits {
+        margin: 45px auto 50px;
+        padding: 0 14px;
+    }
+
+    .stn-benefits-heading h2 {
+        font-size: 25px;
+    }
+
+    .stn-benefits-grid {
+        grid-template-columns: 1fr;
+    }
+
+}
 </style>
 
-<div class="filter-container">
+<!-- STAYNEST HERO -->
+<section class="stn-hero">
+    <div class="stn-hero-overlay"></div>
 
-    <button class="scroll-btn left">
+    <div class="stn-hero-content">
+        <span class="stn-hero-badge">
+            ✨ Discover stays you'll love
+        </span>
+
+        <h1>Find your perfect stay</h1>
+
+        <p>
+            Discover beautiful places to stay, experience, and unwind.
+        </p>
+
+        <form
+    action="/listings/all"
+    method="GET"
+    class="stn-hero-search"
+    id="heroSearchForm"
+>
+
+    <div class="stn-search-field">
+
+        <i class="fa-solid fa-location-dot"></i>
+
+        <div>
+            <label>Location</label>
+
+            <input
+                type="text"
+                name="location"
+                id="heroLocation"
+                placeholder="Where are you going?"
+                autocomplete="off"
+                required
+            >
+        </div>
+
+    </div>
+
+
+    <div class="stn-search-divider"></div>
+
+
+    <div class="stn-search-field">
+
+        <i class="fa-regular fa-calendar"></i>
+
+        <div>
+            <label>Check-in</label>
+
+            <input
+                type="date"
+                name="checkIn"
+            >
+        </div>
+
+    </div>
+
+
+    <div class="stn-search-divider"></div>
+
+
+    <div class="stn-search-field">
+
+        <i class="fa-regular fa-calendar"></i>
+
+        <div>
+            <label>Check-out</label>
+
+            <input
+                type="date"
+                name="checkOut"
+            >
+        </div>
+
+    </div>
+
+
+    <div class="stn-search-divider"></div>
+
+
+    <div class="stn-search-field">
+
+        <i class="fa-solid fa-user-group"></i>
+
+        <div>
+            <label>Guests</label>
+
+            <input
+                type="number"
+                name="guests"
+                min="1"
+                value="1"
+                placeholder="Add guests"
+            >
+        </div>
+
+    </div>
+
+
+    <button
+        type="submit"
+        class="stn-search-button"
+    >
+
+        <i class="fa-solid fa-magnifying-glass"></i>
+
+        Search
+
+    </button>
+
+</form>
+
+    </div>
+</section>
+
+<!-- CATEGORY BAR -->
+<div class="stn-category-wrapper">
+
+    <button class="stn-category-arrow stn-category-left">
         <i class="fa-solid fa-chevron-left"></i>
     </button>
 
-   <div id="filters">
+    <div id="filters" class="stn-categories">
 
-<div class="filter <%= !category ? 'active' : '' %>" data-category="">
-    <i class="fa-solid fa-border-all"></i>
-    <p>All</p>
-</div>
-
-<div class="filter <%= category === 'Trending' ? 'active' : '' %>" data-category="Trending">
-    <i class="fa-solid fa-fire"></i>
-    <p>Trending</p>
-</div>
-
-<div class="filter <%= category === 'Rooms' ? 'active' : '' %>" data-category="Rooms">
-    <i class="fa-solid fa-bed"></i>
-    <p>Rooms</p>
-</div>
-
-<div class="filter <%= category === 'Cities' ? 'active' : '' %>" data-category="Cities">
-    <i class="fa-solid fa-mountain-city"></i>
-    <p>Cities</p>
-</div>
-
-<div class="filter <%= category === 'Beach' ? 'active' : '' %>" data-category="Beach">
-    <i class="fa-solid fa-umbrella-beach"></i>
-    <p>Beach</p>
-</div>
-
-<div class="filter <%= category === 'Mountains' ? 'active' : '' %>" data-category="Mountains">
-    <i class="fa-solid fa-mountain"></i>
-    <p>Mountains</p>
-</div>
-
-<div class="filter <%= category === 'Pools' ? 'active' : '' %>" data-category="Pools">
-    <i class="fa-solid fa-person-swimming"></i>
-    <p>Pools</p>
-</div>
-
-<div class="filter <%= category === 'Cabins' ? 'active' : '' %>" data-category="Cabins">
-    <i class="fa-solid fa-house"></i>
-    <p>Cabins</p>
-</div>
-
-<div class="filter <%= category === 'Luxury' ? 'active' : '' %>" data-category="Luxury">
-    <i class="fa-solid fa-gem"></i>
-    <p>Luxury</p>
-</div>
-
-<div class="filter <%= category === 'Camping' ? 'active' : '' %>" data-category="Camping">
-    <i class="fa-solid fa-campground"></i>
-    <p>Camping</p>
-</div>
-
-<div class="filter <%= category === 'Lakefront' ? 'active' : '' %>" data-category="Lakefront">
-    <i class="fa-solid fa-water"></i>
-    <p>Lakefront</p>
-</div>
-
-<div class="filter <%= category === 'Historic' ? 'active' : '' %>" data-category="Historic">
-    <i class="fa-solid fa-building-columns"></i>
-    <p>Historic</p>
-</div>
-
-</div>
-
-    <div class="tax-toggle">
-        <div class="form-check form-switch">
-            <input
-                class="form-check-input"
-                type="checkbox"
-                id="taxSwitch">
-
-            <label
-                class="form-check-label"
-                for="taxSwitch">
-                Display total after tax
-            </label>
+        <div class="filter <%= !category ? 'active' : '' %>" data-category="">
+            <i class="fa-solid fa-border-all"></i>
+            <p>All</p>
         </div>
+
+        <div class="filter <%= category === 'Trending' ? 'active' : '' %>" data-category="Trending">
+            <i class="fa-solid fa-fire"></i>
+            <p>Trending</p>
+        </div>
+
+        <div class="filter <%= category === 'Rooms' ? 'active' : '' %>" data-category="Rooms">
+            <i class="fa-solid fa-bed"></i>
+            <p>Rooms</p>
+        </div>
+
+        <div class="filter <%= category === 'Cities' ? 'active' : '' %>" data-category="Cities">
+            <i class="fa-solid fa-mountain-city"></i>
+            <p>Cities</p>
+        </div>
+
+        <div class="filter <%= category === 'Beach' ? 'active' : '' %>" data-category="Beach">
+            <i class="fa-solid fa-umbrella-beach"></i>
+            <p>Beach</p>
+        </div>
+
+        <div class="filter <%= category === 'Mountains' ? 'active' : '' %>" data-category="Mountains">
+            <i class="fa-solid fa-mountain"></i>
+            <p>Mountains</p>
+        </div>
+
+        <div class="filter <%= category === 'Pools' ? 'active' : '' %>" data-category="Pools">
+            <i class="fa-solid fa-person-swimming"></i>
+            <p>Pools</p>
+        </div>
+
+        <div class="filter <%= category === 'Cabins' ? 'active' : '' %>" data-category="Cabins">
+            <i class="fa-solid fa-house"></i>
+            <p>Cabins</p>
+        </div>
+
+        <div class="filter <%= category === 'Luxury' ? 'active' : '' %>" data-category="Luxury">
+            <i class="fa-solid fa-gem"></i>
+            <p>Luxury</p>
+        </div>
+
+        <div class="filter <%= category === 'Camping' ? 'active' : '' %>" data-category="Camping">
+            <i class="fa-solid fa-campground"></i>
+            <p>Camping</p>
+        </div>
+
+        <div class="filter <%= category === 'Lakefront' ? 'active' : '' %>" data-category="Lakefront">
+            <i class="fa-solid fa-water"></i>
+            <p>Lakefront</p>
+        </div>
+
+        <div class="filter <%= category === 'Historic' ? 'active' : '' %>" data-category="Historic">
+            <i class="fa-solid fa-building-columns"></i>
+            <p>Historic</p>
+        </div>
+
     </div>
 
-    <button class="scroll-btn right">
+    <button class="stn-category-arrow stn-category-right">
         <i class="fa-solid fa-chevron-right"></i>
     </button>
 
 </div>
+<!-- EXPLORE DESTINATIONS -->
+<section class="stn-destinations">
 
+    <div class="stn-section-heading">
+        <div>
+            <span class="stn-eyebrow">EXPLORE</span>
+            <h2>Explore by destination</h2>
+            <p>Discover beautiful places and find your perfect stay.</p>
+        </div>
+
+        <a href="/listings/all" class="stn-view-all">
+            View all <i class="fa-solid fa-arrow-right"></i>
+        </a>
+    </div>
+
+   <div class="stn-destination-grid">
+
+    <% destinations.forEach((destination, index) => { %>
+
+        <a
+            href="/listings/all?location=<%= encodeURIComponent(destination.name) %>"
+            class="stn-destination-card <%= index === 0 ? 'stn-destination-large' : '' %>"
+        >
+
+            <img
+                src="<%= [
+                    'https://images.unsplash.com/photo-1507525428034-b723cf961d3e?auto=format&fit=crop&w=1200&q=85',
+                    'https://images.unsplash.com/photo-1544735716-392fe2489ffa?auto=format&fit=crop&w=900&q=85',
+                    'https://images.unsplash.com/photo-1602216056096-3b40cc0c9944?auto=format&fit=crop&w=900&q=85',
+                    'https://images.unsplash.com/photo-1599661046289-e31897846e41?auto=format&fit=crop&w=900&q=85',
+                    'https://images.unsplash.com/photo-1548013146-72479768bada?auto=format&fit=crop&w=900&q=85'
+                ][index % 5] %>"
+                alt="<%= destination.name %>"
+            >
+
+            <div class="stn-destination-overlay"></div>
+
+            <div class="stn-destination-info">
+
+                <h3>
+                    <%= destination.name %>
+                </h3>
+
+                <span>
+                    <%= destination.count %>
+                    <%= destination.count === 1 ? 'stay' : 'stays' %>
+                </span>
+
+            </div>
+
+        </a>
+
+    <% }) %>
+
+</div>
+
+</section>
+
+<!-- STAYNEST AI -->
+
+<section class="stn-ai-section">
+
+    <div class="stn-ai-header">
+
+        <div>
+            <span class="stn-ai-badge">
+                ✨ Powered by AI
+            </span>
+
+            <h2>
+                Your intelligent
+                <span>travel companion</span>
+            </h2>
+
+            <p>
+                Plan smarter trips, discover better stays,
+                and manage your journey in one place.
+            </p>
+        </div>
+
+        <div class="stn-ai-actions">
+
+            <a href="/trip-planner" class="stn-ai-primary">
+                <i class="fa-solid fa-wand-magic-sparkles"></i>
+                Plan My Trip
+            </a>
+
+            <a href="/trip-planner/my-trips" class="stn-ai-secondary">
+                <i class="fa-solid fa-map"></i>
+                My Trips
+            </a>
+
+        </div>
+
+    </div>
+
+
+    <div class="stn-ai-features">
+
+        <a href="/trip-planner" class="stn-ai-card">
+
+            <div class="stn-ai-icon purple">
+                🗺️
+            </div>
+
+            <div>
+                <h3>AI Trip Planner</h3>
+                <p>Generate personalized itineraries.</p>
+            </div>
+
+            <i class="fa-solid fa-arrow-right stn-ai-arrow"></i>
+
+        </a>
+
+
+        <a href="/trip-planner/my-trips" class="stn-ai-card">
+
+            <div class="stn-ai-icon orange">
+                💰
+            </div>
+
+            <div>
+                <h3>Budget Optimizer</h3>
+                <p>Plan and optimize your travel budget.</p>
+            </div>
+
+            <i class="fa-solid fa-arrow-right stn-ai-arrow"></i>
+
+        </a>
+
+
+        <a href="/trip-planner/my-trips" class="stn-ai-card">
+
+            <div class="stn-ai-icon green">
+                🏠
+            </div>
+
+            <div>
+                <h3>Smart Stay Recommendations</h3>
+                <p>Find stays matched to your trip.</p>
+            </div>
+
+            <i class="fa-solid fa-arrow-right stn-ai-arrow"></i>
+
+        </a>
+
+
+        <a href="/trip-planner/my-trips" class="stn-ai-card">
+
+            <div class="stn-ai-icon blue">
+                💸
+            </div>
+
+            <div>
+                <h3>Expense Tracker</h3>
+                <p>Track your actual trip spending.</p>
+            </div>
+
+            <i class="fa-solid fa-arrow-right stn-ai-arrow"></i>
+
+        </a>
+
+    </div>
+
+
+    <div class="stn-ai-tools">
+
+        <a href="/trip-planner/my-trips">
+            🧠 <span>AI Insights</span>
+        </a>
+
+        <a href="/trip-planner/my-trips">
+            💬 <span>AI Trip Chat</span>
+        </a>
+
+        <a href="/trip-planner/my-trips">
+            🔗 <span>Share Trips</span>
+        </a>
+
+        <a href="/trip-planner/my-trips">
+            💖 <span>Save & Manage</span>
+        </a>
+
+    </div>
+
+</section>
 
 <% if(allListings.length===0){ %>
 
@@ -108,104 +1995,227 @@
 
 <% } %>
 
-<div class="row">
-<% for(let listing of allListings){ %>
-
-<div class="col-xl-3 col-lg-4 col-md-6 col-sm-6 mb-4">
-
-<a href="/listings/<%= listing._id %>" class="listing-link">
-
-<div class="listing-card">
-
-<% if(currUser){ %>
-
-<form
-action="/wishlist/<%= listing._id %>"
-method="POST"
-class="wishlist-form">
-
-<button
-type="submit"
-class="wishlist-btn">
-
-<i class="fa-<%= wishlist.includes(listing._id.toString()) ? 'solid' : 'regular' %> fa-heart"></i>
-
-</button>
-
-</form>
-
-<% } %>
-<div class="rating-badge">
-    <i class="fa-solid fa-star"></i>
-
-    <% if(listing.reviewCount > 0){ %>
-        <%= listing.avgRating %>
-    <% } else { %>
-        New
-    <% } %>
-</div>
-
-<img
-src="<%= listing.image.url %>"
-class="card-img-top"
-alt="<%= listing.title %>">
-
-<div class="card-body">
-
-<h5 class="listing-title">
-<%= listing.title %>
-</h5>
-
-<div class="listing-location">
-<i class="fa-solid fa-location-dot"></i>
-<%= listing.location %>, <%= listing.country %>
-</div>
-
-
-<div class="price-row">
-
-<div>
-
-<span
-class="listing-price price"
-data-price="<%= listing.price %>">
-
-₹ <%= listing.price.toLocaleString("en-IN") %>
-
-</span>
-
-<span class="night">
-/ night
-</span>
-
-</div>
-
-<div>
-
-<span class="text-muted-custom">
-
-Guest Favourite
-
-</span>
-
-</div>
-
-</div>
-
-</div>
-
-</div>
-
+<div class="stn-featured-heading">
+    <div>
+        <span class="stn-eyebrow">CURATED FOR YOU</span>
+        <h2>✨ Featured Stays</h2>
+        <p>Handpicked places for your next adventure.</p>
+    </div>
+    <a href="/listings/all" class="stn-view-all">
+    Explore all stays
+    <i class="fa-solid fa-arrow-right"></i>
 </a>
-
+    
 </div>
+
+<div class="stn-featured-wrapper">
+
+    <button class="stn-featured-arrow stn-featured-left">
+        <i class="fa-solid fa-chevron-left"></i>
+    </button>
+
+    <div class="stn-featured-slider" id="featuredSlider">
+
+        
+<% for(let listing of allListings.slice(0, 8)){ %>
+
+    <div class="stn-featured-item">
+
+        <a href="/listings/<%= listing._id %>" class="listing-link">
+
+            <div class="listing-card">
+
+                <% if(currUser){ %>
+
+                    <form
+                        action="/wishlist/<%= listing._id %>"
+                        method="POST"
+                        class="wishlist-form"
+                    >
+                        <button
+                            type="submit"
+                            class="wishlist-btn"
+                        >
+                            <i class="fa-<%= wishlist.includes(listing._id.toString()) ? 'solid' : 'regular' %> fa-heart"></i>
+                        </button>
+                    </form>
+
+                <% } %>
+
+                <div class="rating-badge">
+                    <i class="fa-solid fa-star"></i>
+
+                    <% if(listing.reviewCount > 0){ %>
+                        <%= listing.avgRating %>
+                    <% } else { %>
+                        New
+                    <% } %>
+                </div>
+
+                <img
+                    src="<%= listing.image.url %>"
+                    class="card-img-top"
+                    alt="<%= listing.title %>"
+                >
+
+                <div class="card-body">
+
+                    <h5 class="listing-title">
+                        <%= listing.title %>
+                    </h5>
+
+                    <div class="listing-location">
+                        <i class="fa-solid fa-location-dot"></i>
+                        <%= listing.location %>, <%= listing.country %>
+                    </div>
+
+                    <div class="price-row">
+
+                        <div>
+                            <span
+                                class="listing-price price"
+                                data-price="<%= listing.price %>"
+                            >
+                                ₹ <%= listing.price.toLocaleString("en-IN") %>
+                            </span>
+
+                            <span class="night">
+                                / night
+                            </span>
+                        </div>
+
+                        <div>
+                            <span class="text-muted-custom">
+                                Guest Favourite
+                            </span>
+                        </div>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </a>
+
+    </div>
 
 <% } %>
 
+    </div>
 
+    <button class="stn-featured-arrow stn-featured-right">
+        <i class="fa-solid fa-chevron-right"></i>
+    </button>
 
 </div>
+<!-- MAP EXPLORER -->
 
+<section class="stn-map-section">
+
+    <div class="stn-map-heading">
+
+        <div>
+            <span class="stn-eyebrow">DISCOVER NEARBY</span>
+
+            <h2>Explore stays on the map</h2>
+
+            <p>
+                Find beautiful stays by location and discover
+                what's nearby.
+            </p>
+        </div>
+
+        <a href="/listings/all" class="stn-map-button">
+            <i class="fa-solid fa-map"></i>
+            Explore all stays
+        </a>
+
+    </div>
+
+
+    <div class="stn-map-container">
+
+        <div id="stn-home-map"></div>
+
+        <div class="stn-map-overlay">
+
+            <div class="stn-map-overlay-icon">
+                <i class="fa-solid fa-location-dot"></i>
+            </div>
+
+            <div>
+                <strong>Find your perfect location</strong>
+                <span>Explore stays around you</span>
+            </div>
+
+        </div>
+
+    </div>
+
+</section>
+
+<!-- WHY STAYNEST -->
+
+<section class="stn-benefits">
+
+    <div class="stn-benefits-heading">
+        <span class="stn-eyebrow">WHY STAYNEST</span>
+        <h2>Everything you need for a better stay</h2>
+    </div>
+
+    <div class="stn-benefits-grid">
+
+        <div class="stn-benefit">
+            <div class="stn-benefit-icon">
+                <i class="fa-solid fa-shield-heart"></i>
+            </div>
+
+            <div>
+                <h3>Trusted stays</h3>
+                <p>Discover quality listings from verified hosts.</p>
+            </div>
+        </div>
+
+
+        <div class="stn-benefit">
+            <div class="stn-benefit-icon">
+                <i class="fa-solid fa-wand-magic-sparkles"></i>
+            </div>
+
+            <div>
+                <h3>AI-powered planning</h3>
+                <p>Build smarter trips with your personal AI companion.</p>
+            </div>
+        </div>
+
+
+        <div class="stn-benefit">
+            <div class="stn-benefit-icon">
+                <i class="fa-solid fa-location-dot"></i>
+            </div>
+
+            <div>
+                <h3>Explore anywhere</h3>
+                <p>Find stays by destination, category, or map.</p>
+            </div>
+        </div>
+
+
+        <div class="stn-benefit">
+            <div class="stn-benefit-icon">
+                <i class="fa-solid fa-headset"></i>
+            </div>
+
+            <div>
+                <h3>Travel support</h3>
+                <p>Get help whenever you need it during your journey.</p>
+            </div>
+        </div>
+
+    </div>
+
+</section>
 
 <script>
 
@@ -256,11 +2266,8 @@ document.querySelectorAll(".filter").forEach(filter => {
 document.querySelectorAll(".wishlist-btn").forEach(btn=>{
 
 btn.addEventListener("click",function(e){
-
 e.preventDefault();
-
 const icon=this.querySelector("i");
-
 icon.classList.toggle("fa-regular");
 
 icon.classList.toggle("fa-solid");
@@ -268,37 +2275,267 @@ icon.classList.toggle("fa-solid");
 icon.style.color="#ff385c";
 
 });
-
 });
+</script>
 
+<script>
+const filters = document.getElementById("filters");
+const leftButton = document.querySelector(".stn-category-left");
+const rightButton =document.querySelector(".stn-category-right");
+if (filters && leftButton && rightButton) {
+    rightButton.addEventListener("click", () => {
+        filters.scrollBy({
+            left: 300,
+            behavior: "smooth"
+        });
+    });
+    leftButton.addEventListener("click", () => {
+        filters.scrollBy({
+            left: -300,
+            behavior: "smooth"
+        });
+    });
+}
 </script>
 <script>
 
-const filters = document.getElementById("filters");
+const featuredSlider =
+    document.getElementById("featuredSlider");
 
-const leftButton = document.querySelector(".scroll-btn.left");
-const rightButton = document.querySelector(".scroll-btn.right");
+const featuredLeft =
+    document.querySelector(".stn-featured-left");
 
-if (filters && leftButton && rightButton) {
+const featuredRight =
+    document.querySelector(".stn-featured-right");
 
-    rightButton.addEventListener("click", function () {
 
-        filters.scrollBy({
-            left: 250,
+if (featuredSlider && featuredLeft && featuredRight) {
+
+    featuredRight.addEventListener("click", () => {
+
+        featuredSlider.scrollBy({
+            left: 350,
             behavior: "smooth"
         });
 
     });
 
-    leftButton.addEventListener("click", function () {
 
-        filters.scrollBy({
-            left: -250,
+    featuredLeft.addEventListener("click", () => {
+
+        featuredSlider.scrollBy({
+            left: -350,
             behavior: "smooth"
         });
 
     });
-
 }
+</script>
+<script>
+
+document.addEventListener("DOMContentLoaded", () => {
+
+    const mapElement = document.getElementById("stn-home-map");
+
+    if (!mapElement || typeof L === "undefined") {
+        return;
+    }
+
+    const listings = <%- JSON.stringify(
+        allListings.map(listing => ({
+            id: listing._id,
+            title: listing.title,
+            price: listing.price,
+            location: listing.location,
+            country: listing.country,
+            coordinates: listing.geometry?.coordinates || []
+        }))
+    ) %>;
+
+
+    const validListings = listings.filter(listing => {
+
+        return (
+            Array.isArray(listing.coordinates) &&
+            listing.coordinates.length === 2 &&
+            Number.isFinite(Number(listing.coordinates[0])) &&
+            Number.isFinite(Number(listing.coordinates[1]))
+        );
+
+    });
+
+
+    const map = L.map("stn-home-map", {
+        zoomControl: true,
+        scrollWheelZoom: false
+    });
+
+
+    L.tileLayer(
+        "https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png",
+        {
+            maxZoom: 19,
+            attribution:
+                '&copy; OpenStreetMap contributors'
+        }
+    ).addTo(map);
+
+
+    /*
+     * No valid listing coordinates
+     */
+
+    if (validListings.length === 0) {
+
+        map.setView(
+            [20.5937, 78.9629],
+            5
+        );
+
+        setTimeout(() => {
+            map.invalidateSize();
+        }, 300);
+
+        return;
+    }
+
+
+    /*
+     * Store all listing locations
+     */
+
+    const bounds = L.latLngBounds();
+
+
+    /*
+     * Create markers
+     */
+
+    validListings.forEach(listing => {
+
+        const longitude =
+            Number(listing.coordinates[0]);
+
+        const latitude =
+            Number(listing.coordinates[1]);
+
+
+        const marker = L.marker([
+            latitude,
+            longitude
+        ]).addTo(map);
+
+
+        bounds.extend([
+            latitude,
+            longitude
+        ]);
+
+
+        marker.bindPopup(`
+
+            <div style="
+                min-width:190px;
+                font-family:Arial,sans-serif;
+            ">
+
+                <strong style="
+                    font-size:15px;
+                ">
+                    ${listing.title}
+                </strong>
+
+                <br>
+
+                <span style="
+                    color:#666;
+                    font-size:13px;
+                ">
+                    ${listing.location},
+                    ${listing.country}
+                </span>
+
+                <br><br>
+
+                <strong>
+                    ₹${Number(listing.price)
+                        .toLocaleString("en-IN")}
+                </strong>
+
+                <span style="
+                    color:#777;
+                    font-size:12px;
+                ">
+                    / night
+                </span>
+
+                <br><br>
+
+                <a
+                    href="/listings/${listing.id}"
+                    style="
+                        color:#ff5a5f;
+                        font-weight:700;
+                        text-decoration:none;
+                    "
+                >
+                    View stay →
+                </a>
+
+            </div>
+
+        `);
+
+    });
+
+
+    /*
+     * Show all real listing locations
+     */
+
+    if (validListings.length === 1) {
+
+        map.setView(
+            bounds.getCenter(),
+            10
+        );
+
+    } else {
+
+        map.fitBounds(
+            bounds,
+            {
+                padding: [50, 50],
+                maxZoom: 7
+            }
+        );
+
+    }
+
+
+    /*
+     * Leaflet sometimes needs a resize
+     * after the section becomes visible.
+     */
+
+    setTimeout(() => {
+
+        map.invalidateSize();
+
+        if (validListings.length > 1) {
+
+            map.fitBounds(
+                bounds,
+                {
+                    padding: [50, 50],
+                    maxZoom: 7
+                }
+            );
+
+        }
+
+    }, 300);
+
+});
 
 </script>

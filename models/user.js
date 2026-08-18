@@ -1,7 +1,6 @@
 const mongoose = require("mongoose");
 const Schema = mongoose.Schema;
 
-// For Node.js v25 compatibility
 const passportLocalMongoose =
     require("passport-local-mongoose").default ||
     require("passport-local-mongoose");
@@ -11,56 +10,65 @@ const UserSchema = new Schema({
         type: String,
         required: true,
         unique: true,
+        trim: true,
+        lowercase: true
     },
 
     profileImage: {
         url: {
             type: String,
-            default: "https://res.cloudinary.com/demo/image/upload/v1312461204/sample.jpg",
+            default:
+                "https://res.cloudinary.com/demo/image/upload/v1312461204/sample.jpg"
         },
+
         filename: {
             type: String,
-            default: "",
-        },
+            default: ""
+        }
     },
 
     bio: {
         type: String,
-        default: "",
+        default: ""
     },
 
     location: {
         type: String,
-        default: "",
+        default: ""
     },
 
     phone: {
         type: String,
-        default: "",
+        default: ""
     },
 
     joinedAt: {
         type: Date,
-        default: Date.now,
+        default: Date.now
     },
 
     wishlist: [
         {
             type: Schema.Types.ObjectId,
-            ref: "Listing",
-        },
+            ref: "Listing"
+        }
     ],
 
     bookings: [
         {
             type: Schema.Types.ObjectId,
-            ref: "Booking",
-        },
+            ref: "Booking"
+        }
     ],
+
+    isAdmin: {
+        type: Boolean,
+        default: false
+    }
 });
 
-console.log("passportLocalMongoose type:", typeof passportLocalMongoose);
 
 UserSchema.plugin(passportLocalMongoose);
+
 
 module.exports = mongoose.model("User", UserSchema);

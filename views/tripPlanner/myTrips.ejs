@@ -1,0 +1,98 @@
+<% layout("layouts/boilerplate") %>
+
+<div class="container py-5">
+
+    <div class="d-flex justify-content-between align-items-center mb-4">
+        <div>
+            <h1 class="fw-bold">🗺️ My Trips</h1>
+            <p class="text-muted mb-0">
+                Your saved StayNest AI itineraries
+            </p>
+        </div>
+
+        <a href="/trip-planner" class="btn btn-dark">
+            <i class="fa-solid fa-plus me-2"></i>
+            Plan New Trip
+        </a>
+    </div>
+
+    <% if (!trips.length) { %>
+
+        <div class="text-center py-5">
+            <h3>No saved trips yet.</h3>
+            <p class="text-muted">
+                Create your first AI-powered trip.
+            </p>
+
+            <a href="/trip-planner" class="btn btn-dark">
+                Start Planning
+            </a>
+        </div>
+
+    <% } else { %>
+
+        <div class="row g-4">
+
+            <% trips.forEach(trip => { %>
+
+                <div class="col-md-6 col-lg-4">
+
+                    <div class="card h-100 border-0 shadow-sm">
+
+                        <div class="card-body">
+
+                            <h4 class="fw-bold">
+                                <%= trip.destination %>
+                            </h4>
+
+                            <p class="text-muted">
+                                <%= trip.startDate.toISOString().split("T")[0] %>
+                                →
+                                <%= trip.endDate.toISOString().split("T")[0] %>
+                            </p>
+
+                            <div class="mb-3">
+                                👥 <%= trip.travelers %> travelers
+                                <br>
+                                💰 ₹<%= Number(trip.budget).toLocaleString("en-IN") %>
+                            </div>
+
+                           <div class="d-flex gap-2">
+
+    <a
+        href="/trip-planner/my-trips/<%= trip._id %>"
+        class="btn btn-dark flex-grow-1"
+    >
+        <i class="fa-solid fa-map me-2"></i>
+        View Trip
+    </a>
+
+    <form
+        action="/trip-planner/my-trips/<%= trip._id %>?_method=DELETE"
+        method="POST"
+        onsubmit="return confirm('Delete this saved trip?');"
+    >
+        <button
+            type="submit"
+            class="btn btn-outline-danger"
+            title="Delete trip"
+        >
+            <i class="fa-solid fa-trash"></i>
+        </button>
+    </form>
+
+</div>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+            <% }) %>
+
+        </div>
+
+    <% } %>
+
+</div>

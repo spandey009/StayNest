@@ -1,0 +1,119 @@
+<% layout("layouts/boilerplate") %>
+
+<div class="container py-5">
+    <div class="row justify-content-center">
+        <div class="col-lg-8">
+
+            <div class="text-center mb-5">
+                <h1 class="fw-bold">🤖 AI Trip Planner</h1>
+                <p class="text-muted">
+                    Let StayNest AI create a personalized trip for you.
+                </p>
+            </div>
+
+            <form action="/trip-planner/generate" method="POST" class="card p-4 shadow-sm">
+
+                <div class="row g-3">
+
+                    <div class="col-md-8">
+                        <label class="form-label">Destination</label>
+                        <input
+                            type="text"
+                            name="destination"
+                            class="form-control"
+                            placeholder="e.g. Manali"
+                            required
+                        >
+                    </div>
+
+                    <div class="col-md-4">
+                        <label class="form-label">Travelers</label>
+                        <input
+                            type="number"
+                            name="travelers"
+                            class="form-control"
+                            min="1"
+                            max="20"
+                            value="2"
+                            required
+                        >
+                    </div>
+
+                    <div class="col-md-6">
+                        <label class="form-label">Start Date</label>
+                        <input
+                            type="date"
+                            name="startDate"
+                            class="form-control"
+                            required
+                        >
+                    </div>
+
+                    <div class="col-md-6">
+                        <label class="form-label">End Date</label>
+                        <input
+                            type="date"
+                            name="endDate"
+                            class="form-control"
+                            required
+                        >
+                    </div>
+
+                    <div class="col-md-6">
+                        <label class="form-label">Budget (₹)</label>
+                        <input
+                            type="number"
+                            name="budget"
+                            class="form-control"
+                            min="1000"
+                            placeholder="e.g. 20000"
+                            required
+                        >
+                    </div>
+
+                    <div class="col-md-6">
+                        <label class="form-label">Travel Style</label>
+                        <select name="travelStyle" class="form-select" required>
+                            <option value="Budget">Budget</option>
+                            <option value="Balanced" selected>Balanced</option>
+                            <option value="Luxury">Luxury</option>
+                            <option value="Adventure">Adventure</option>
+                            <option value="Relaxed">Relaxed</option>
+                        </select>
+                    </div>
+
+                    <div class="col-12">
+                        <label class="form-label">Interests</label>
+                        <input
+                            type="text"
+                            name="interests"
+                            class="form-control"
+                            placeholder="Nature, adventure, food, shopping..."
+                            required
+                        >
+                    </div>
+
+                    <div class="col-12">
+                        <label class="form-label">Additional preferences</label>
+                        <textarea
+                            name="preferences"
+                            class="form-control"
+                            rows="3"
+                            placeholder="e.g. Avoid crowded places, prefer scenic locations..."
+                        ></textarea>
+                    </div>
+
+                    <div class="col-12 mt-4">
+                        <button type="submit" class="btn btn-dark w-100 py-2">
+                            <i class="fa-solid fa-wand-magic-sparkles me-2"></i>
+                            Generate My Trip
+                        </button>
+                    </div>
+
+                </div>
+
+            </form>
+
+        </div>
+    </div>
+</div>

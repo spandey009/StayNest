@@ -1,0 +1,198 @@
+<% layout("layouts/boilerplate") %>
+<style>
+.sn-contact-page{
+    min-height:70vh;
+    padding:55px 20px 70px;
+    background:#f7f8fa;
+}
+.sn-contact-container{
+    width:100%;
+    max-width:1000px;
+    margin:0 auto;
+}
+.sn-contact-card{
+    background:#fff;
+    border:1px solid #eceef1;
+    border-radius:26px;
+    padding:45px;
+    box-shadow:0 15px 45px rgba(0,0,0,.06);
+}
+.sn-contact-badge{
+    display:inline-block;
+    margin-bottom:10px;
+    color:#ff5a5f;
+    font-size:12px;
+    font-weight:800;
+    letter-spacing:1.6px;
+}
+.sn-contact-title{
+    margin:0 0 10px;
+    color:#18213d;
+    font-size:42px;
+    line-height:1.15;
+    font-weight:800;
+}
+.sn-contact-subtitle{
+    margin:0 0 35px;
+    color:#737986;
+    font-size:17px;
+    line-height:1.6;
+}
+.sn-contact-grid{
+    display:grid;
+    grid-template-columns:repeat(2,1fr);
+    gap:18px;
+    margin-bottom:30px;
+}
+.sn-contact-box{
+    padding:25px;
+    border:1px solid #eceef1;
+    border-radius:18px;
+    background:#fafafa;
+    transition:.2s ease;
+}
+.sn-contact-box:hover{
+    transform:translateY(-3px);
+    box-shadow:0 10px 25px rgba(0,0,0,.06);
+}
+.sn-contact-icon{
+    width:48px;
+    height:48px;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    margin-bottom:16px;
+    border-radius:14px;
+    background:#fff0f1;
+    color:#ff5a5f;
+    font-size:20px;
+}
+.sn-contact-box h3{
+    margin:0 0 8px;
+    color:#18213d;
+    font-size:18px;
+    font-weight:750;
+}
+.sn-contact-box p{
+    margin:0 0 10px;
+    color:#737986;
+    font-size:14px;
+    line-height:1.65;
+}
+.sn-contact-box a{
+    color:#ff5a5f;
+    text-decoration:none;
+    font-size:14px;
+    font-weight:700;
+}
+.sn-contact-box a:hover{
+    text-decoration:underline;
+}
+.sn-contact-actions{
+    display:flex;
+    gap:12px;
+    flex-wrap:wrap;
+}
+.sn-contact-primary{
+    display:inline-flex;
+    align-items:center;
+    gap:9px;
+    padding:13px 20px;
+    border-radius:13px;
+    background:#ff5a5f;
+    color:#fff;
+    text-decoration:none;
+    font-weight:700;
+    transition:.2s ease;
+}
+.sn-contact-primary:hover{
+    background:#e94d52;
+    color:#fff;
+    transform:translateY(-2px);
+}
+.sn-contact-secondary{
+    display:inline-flex;
+    align-items:center;
+    gap:9px;
+    padding:13px 20px;
+    border:1px solid #dfe2e7;
+    border-radius:13px;
+    background:#fff;
+    color:#18213d;
+    text-decoration:none;
+    font-weight:700;
+    transition:.2s ease;
+}
+.sn-contact-secondary:hover{
+    color:#ff5a5f;
+    border-color:#ff5a5f;
+}
+@media(max-width:700px){
+    .sn-contact-page{
+        padding:35px 14px 50px;
+    }
+    .sn-contact-card{
+        padding:28px 20px;
+        border-radius:20px;
+    }
+    .sn-contact-title{
+        font-size:32px;
+    }
+    .sn-contact-grid{
+        grid-template-columns:1fr;
+    }
+}
+</style>
+<div class="sn-contact-page">
+    <div class="sn-contact-container">
+        <div class="sn-contact-card">
+            <span class="sn-contact-badge">STAYNEST CONTACT</span>
+            <h1 class="sn-contact-title">How can we help?</h1>
+            <p class="sn-contact-subtitle">We're here to help you with bookings, stays, hosting, payments and your StayNest experience.</p>
+            <div class="sn-contact-grid">
+                <div class="sn-contact-box">
+                    <div class="sn-contact-icon">
+                        <i class="fa-solid fa-headset"></i>
+                    </div>
+                    <h3>24×7 Support</h3>
+                    <p>Get help with bookings, payments, account problems or any other StayNest issue.</p>
+                    <a href="/support">Open Support →</a>
+                </div>
+                <div class="sn-contact-box">
+                    <div class="sn-contact-icon">
+                        <i class="fa-solid fa-envelope"></i>
+                    </div>
+                    <h3>Email Support</h3>
+                    <p>For general questions and assistance, contact the StayNest support team.</p>
+                    <a href="mailto:saurabhpandey0040@gmail.com">Contact via Email</a>
+                </div>
+                <div class="sn-contact-box">
+                    <div class="sn-contact-icon">
+                        <i class="fa-solid fa-house"></i>
+                    </div>
+                    <h3>Hosting Help</h3>
+                    <p>Need assistance with your property, listing, availability or bookings?</p>
+                    <a href="/support">Get Hosting Help →</a>
+                </div>
+                <div class="sn-contact-box">
+                    <div class="sn-contact-icon">
+                        <i class="fa-solid fa-calendar-check"></i>
+                    </div>
+                    <h3>Booking Help</h3>
+                    <p>Having an issue with a reservation, payment or upcoming trip?</p>
+                    <a href="/support">Get Booking Help →</a>
+                </div>
+            </div>
+            <div class="sn-contact-actions">
+                <a href="/support" class="sn-contact-primary">
+                    <i class="fa-solid fa-headset"></i>
+                    Open 24×7 Support
+                </a>
+                <a href="/listings" class="sn-contact-secondary">
+                    <i class="fa-solid fa-house"></i>
+                    Browse Stays
+                </a>
+            </div>
+        </div>
+    </div>
+</div>
